@@ -23,10 +23,10 @@ public class AbstractHorseFactory implements HorseFactory {
     private TrackType trackType;
     private Random random;
 
-    public AbstractHorseFactory(Difficulty difficulty, TrackType trackType) {
+    public AbstractHorseFactory(Difficulty difficulty, TrackType trackType, Random random) {
         this.difficulty = difficulty;
         this.trackType = trackType;
-        this.random = new Random();
+        this.random = random;
     }
 
     public AbstractHorseFactory() {
@@ -40,11 +40,34 @@ public class AbstractHorseFactory implements HorseFactory {
 
     @Override
     public Horse createOpponentHorse(String name) {
-        return null;
+        Stats opponentStats = generateRandomStats();
+        return new Horse(name, opponentStats);
     }
 
     private Stats generateRandomStats() {
-        return null;
+        int overallStats = getOverallStatPoints();
+
+        int speed = MIN_STAT;
+        int stamina = MIN_STAT;
+        int power = MIN_STAT;
+
+        overallStats -= (3 * MIN_STAT);
+
+        while (overallStats > 0) {
+            int chosenStat = random.nextInt(3);
+
+            if (chosenStat == 0 && speed < MAX_STAT) {
+                speed++;
+                overallStats--;
+            } else if (chosenStat == 1 && stamina < MAX_STAT) {
+                stamina++;
+                overallStats--;
+            } else if (chosenStat == 2 && power < MAX_STAT && power < speed) {
+                power++;
+                overallStats--;
+            }
+        }
+        return new Stats(speed, stamina, power);
     }
 
     private int getDifficultyMultiplier() {
@@ -63,9 +86,9 @@ public class AbstractHorseFactory implements HorseFactory {
         };
     }
 
-    private int getOverallStatPoints(int difficultyMultiplier, int trackTypeMultiplier){
-        return (difficultyMultiplier * BASE_DIFFICULTY_STAT_MULTIPLIER) +
-                (trackTypeMultiplier * BASE_TRACK_STAT_MULTIPLIER);
+    private int getOverallStatPoints(){
+        return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER) +
+                (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
     }
 
 }

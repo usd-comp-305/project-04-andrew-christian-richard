@@ -25,17 +25,17 @@ public class AbstractHorseFactoryTests {
     void createOpponentHorse_returnsHorseWithRandomStats() {
         Random random = mock(Random.class);
         when(random.nextInt(anyInt()))
-                .thenReturn(2)
-                .thenReturn(3)
-                .thenReturn(3);
+                .thenReturn(0).thenReturn(0)
+                .thenReturn(1).thenReturn(1)
+                .thenReturn(2);
 
         HorseFactory testFactory =
-                new AbstractHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER);
+                new AbstractHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER, random);
 
         Horse opponentHorse = testFactory.createOpponentHorse("SeaBiscuit");
 
         assertEquals(3, opponentHorse.getStats().getSpeed());
-        assertEquals(4, opponentHorse.getStats().getPower());
-        assertEquals(4, opponentHorse.getStats().getStamina());
+        assertEquals(3, opponentHorse.getStats().getStamina());
+        assertEquals(2, opponentHorse.getStats().getPower());
     }
 }
