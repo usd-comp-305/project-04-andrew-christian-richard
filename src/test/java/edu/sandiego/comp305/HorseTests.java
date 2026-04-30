@@ -7,27 +7,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HorseTests {
     @Test
     void testHorse() {
-        Stats stats = new Stats(10, 5, 3);
-        Horse horse = new Horse("Thunder", stats);
+        Stats testStats = new Stats(10, 5, 3);
+        Horse testHorse = new Horse("Thunder", testStats);
 
-        assertEquals("Thunder", horse.getName());
-        assertEquals(stats, horse.getStats());
-        assertEquals(0, horse.getCurrentDistance());
-        assertEquals(0, horse.getTrophyCount());
+        assertEquals("Thunder", testHorse.getName());
+        assertEquals(testStats, testHorse.getStats());
+        assertEquals(0, testHorse.getCurrentDistance());
+        assertEquals(0, testHorse.getTrophyCount());
 
-        horse.addTrophies(2);
-        assertEquals(2, horse.getTrophyCount());
+        testHorse.addTrophies(2);
+        assertEquals(2, testHorse.getTrophyCount());
 
-        horse.move();
-        assertEquals(10, horse.getCurrentDistance());
+        testHorse.move();
+        assertEquals(10, testHorse.getCurrentDistance());
 
-        assertFalse(horse.hasFinished(20));
+        assertFalse(testHorse.hasFinished(20));
 
-        horse.move();
-        assertEquals(20, horse.getCurrentDistance());
-        assertTrue(horse.hasFinished(20));
+        testHorse.move();
+        assertEquals(20, testHorse.getCurrentDistance());
+        assertTrue(testHorse.hasFinished(20));
 
-        horse.resetForRace();
-        assertEquals(0, horse.getCurrentDistance());
+        testHorse.resetForCurrentRace();
+        assertEquals(0, testHorse.getCurrentDistance());
     }
 }
