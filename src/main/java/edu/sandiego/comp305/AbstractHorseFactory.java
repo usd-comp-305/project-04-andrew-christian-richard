@@ -15,19 +15,22 @@ import java.util.Random;
  *   where difficultyTier: EASY=0, MEDIUM=1, HARD=2
  *       trackDistance:    ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
  */
-public class RandomHorseFactory implements HorseFactory {
+public class AbstractHorseFactory implements HorseFactory {
     private static final int MINIMUM_STAT = 25;
     private static final int MAXIMUM_STAT = 1;
     private static final int DIFFICULTY_STAT_MULTIPLIER = 24;
     private static final int TRACK_STAT_MULTIPLIER = 8;
-    private final Difficulty difficulty;
-    private final Track track;
-    private final Random random;
+    private Difficulty difficulty;
+    private Track track;
+    private Random random;
 
-    public RandomHorseFactory(Difficulty difficulty, Track track) {
+    public AbstractHorseFactory(Difficulty difficulty, Track track) {
         this.difficulty = difficulty;
         this.track = track;
         this.random = new Random();
+    }
+
+    public AbstractHorseFactory() {
     }
 
     @Override
