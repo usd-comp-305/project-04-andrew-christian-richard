@@ -3,26 +3,30 @@ package edu.sandiego.comp305;
 public class Horse implements RaceParticipant {
     private final String name;
     private final Stats stats;
-    private int currentDistance;
-    private int trophies;
+    private int currentDistanceRan;
+    private int trophyCount;
 
     public Horse(String name, Stats stats) {
         this.name = name;
         this.stats = stats;
-        this.currentDistance = 0;
-        this.trophies = 0;
+        this.currentDistanceRan = 0;
+        this.trophyCount = 0;
     }
 
     public void addTrophies(int amount) {
-
+        trophyCount += amount;
     }
 
-    public int getTrophies() {
-        return trophies;
+    public int getTrophyCount() {
+        return trophyCount;
     }
 
-    public void resetForRace() {
+    public void resetForCurrentRace() {
+        currentDistanceRan = 0;
+    }
 
+    public int getCurrentDistanceRan() {
+        return currentDistanceRan;
     }
 
     @Override
@@ -36,22 +40,12 @@ public class Horse implements RaceParticipant {
     }
 
     @Override
-    public int move() {
-        return 0;
-    }
-
-    @Override
-    public int getCurrentDistance() {
-        return currentDistance;
-    }
-
-    @Override
     public boolean hasFinished(int trackLength) {
-        return false;
+        return currentDistanceRan >= trackLength;
     }
 
     @Override
     public void applyRaceEffect(RaceEffect effect) {
-
+        effect.apply(this);
     }
 }
