@@ -14,7 +14,7 @@ public class Horse implements RaceParticipant {
     }
 
     public void addTrophies(int amount) {
-
+        trophies += amount;
     }
 
     public int getTrophies() {
@@ -22,7 +22,7 @@ public class Horse implements RaceParticipant {
     }
 
     public void resetForRace() {
-
+        currentDistance = 0;
     }
 
     @Override
@@ -37,7 +37,8 @@ public class Horse implements RaceParticipant {
 
     @Override
     public int move() {
-        return 0;
+        currentDistance += stats.getSpeed();
+        return currentDistance;
     }
 
     @Override
@@ -47,11 +48,11 @@ public class Horse implements RaceParticipant {
 
     @Override
     public boolean hasFinished(int trackLength) {
-        return false;
+        return currentDistance >= trackLength;
     }
 
     @Override
     public void applyRaceEffect(RaceEffect effect) {
-
+        effect.apply(this);
     }
 }
