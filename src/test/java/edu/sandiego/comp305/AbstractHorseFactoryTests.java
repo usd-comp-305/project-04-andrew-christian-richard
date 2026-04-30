@@ -29,9 +29,7 @@ public class AbstractHorseFactoryTests {
                 .thenReturn(1).thenReturn(1)
                 .thenReturn(2);
 
-        HorseFactory testFactory =
-                new AbstractHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER, random);
-
+        HorseFactory testFactory = new AbstractHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER, random);
         Horse opponentHorse = testFactory.createOpponentHorse("SeaBiscuit");
 
         assertEquals(3, opponentHorse.getStats().getSpeed());
