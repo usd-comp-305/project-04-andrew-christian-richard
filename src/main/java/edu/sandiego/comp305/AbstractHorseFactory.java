@@ -16,8 +16,8 @@ import java.util.Random;
  *       trackDistance:    ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
  */
 public class AbstractHorseFactory implements HorseFactory {
-    private static final int MINIMUM_STAT = 25;
-    private static final int MAXIMUM_STAT = 1;
+    private static final int MAX_STAT = 25;
+    private static final int MIN_STAT = 1;
     private static final int DIFFICULTY_STAT_MULTIPLIER = 24;
     private static final int TRACK_STAT_MULTIPLIER = 8;
     private Difficulty difficulty;
@@ -35,7 +35,8 @@ public class AbstractHorseFactory implements HorseFactory {
 
     @Override
     public Horse createPlayerHorse(String name) {
-        return null;
+        Stats basicStats = new Stats(MIN_STAT, MIN_STAT, MIN_STAT);
+        return new Horse(name, basicStats);
     }
 
     @Override
