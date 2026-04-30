@@ -4,21 +4,21 @@ public class Horse implements RaceParticipant {
     private final String name;
     private final Stats stats;
     private int currentDistance;
-    private int trophies;
+    private int trophyCount;
 
     public Horse(String name, Stats stats) {
         this.name = name;
         this.stats = stats;
         this.currentDistance = 0;
-        this.trophies = 0;
+        this.trophyCount = 0;
     }
 
     public void addTrophies(int amount) {
-        trophies += amount;
+        trophyCount += amount;
     }
 
-    public int getTrophies() {
-        return trophies;
+    public int getTrophyCount() {
+        return trophyCount;
     }
 
     public void resetForRace() {

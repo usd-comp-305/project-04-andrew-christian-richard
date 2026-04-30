@@ -13,10 +13,10 @@ public class HorseTests {
         assertEquals("Thunder", horse.getName());
         assertEquals(stats, horse.getStats());
         assertEquals(0, horse.getCurrentDistance());
-        assertEquals(0, horse.getTrophies());
+        assertEquals(0, horse.getTrophyCount());
 
         horse.addTrophies(2);
-        assertEquals(2, horse.getTrophies());
+        assertEquals(2, horse.getTrophyCount());
 
         horse.move();
         assertEquals(10, horse.getCurrentDistance());
