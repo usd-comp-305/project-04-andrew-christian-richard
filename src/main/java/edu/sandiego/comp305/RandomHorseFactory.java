@@ -11,14 +11,24 @@ import java.util.Random;
  *
  * Budget increases by 8 for each track tier and by 24 for each difficulty tier,
  * so the formula is:
- *   budget = (difficultyTier * 24) + (trackTier * 8)
+ *   budget = (difficultyTier * 24) + (trackDistance * 8)
  *   where difficultyTier: EASY=0, MEDIUM=1, HARD=2
- *       trackTier:      ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
+ *       trackDistance:    ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
  */
 public class RandomHorseFactory implements HorseFactory {
-    private final int MINIMUM_STAT = 25;
-    private final int MAXIMUM_STAT = 1;
+    private static final int MINIMUM_STAT = 25;
+    private static final int MAXIMUM_STAT = 1;
+    private static final int DIFFICULTY_STAT_MULTIPLIER = 24;
+    private static final int TRACK_STAT_MULTIPLIER = 8;
+    private final Difficulty difficulty;
+    private final Track track;
+    private final Random random;
 
+    public RandomHorseFactory(Difficulty difficulty, Track track) {
+        this.difficulty = difficulty;
+        this.track = track;
+        this.random = new Random();
+    }
 
     @Override
     public Horse createPlayerHorse(String name) {
