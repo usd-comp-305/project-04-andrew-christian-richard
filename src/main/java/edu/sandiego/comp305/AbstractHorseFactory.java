@@ -17,8 +17,8 @@ import java.util.Random;
 public class AbstractHorseFactory implements HorseFactory {
     private static final int MAX_STAT = 25;
     private static final int MIN_STAT = 1;
-    private static final int DIFFICULTY_STAT_MULTIPLIER = 24;
-    private static final int TRACK_STAT_MULTIPLIER = 8;
+    private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 24;
+    private static final int BASE_TRACK_STAT_MULTIPLIER = 8;
     private Difficulty difficulty;
     private TrackType trackType;
     private Random random;
@@ -45,6 +45,27 @@ public class AbstractHorseFactory implements HorseFactory {
 
     private Stats generateRandomStats() {
         return null;
+    }
+
+    private int getDifficultyMultiplier() {
+        return switch (difficulty) {
+            case EASY -> 0;
+            case MEDIUM -> 1;
+            case HARD -> 2;
+        };
+    }
+
+    private int getTrackTypeMultiplier() {
+        return switch (trackType) {
+            case ONE_HUNDRED_METER -> 1;
+            case TWO_HUNDRED_METER -> 2;
+            case FOUR_HUNDRED_METER -> 3;
+        };
+    }
+
+    private int getOverallStatPoints(int difficultyMultiplier, int trackTypeMultiplier){
+        return (difficultyMultiplier * BASE_DIFFICULTY_STAT_MULTIPLIER) +
+                (trackTypeMultiplier * BASE_TRACK_STAT_MULTIPLIER);
     }
 
 }
