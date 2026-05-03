@@ -32,4 +32,15 @@ public class AbstractEventFactoryTests{
 
         assertInstanceOf(GoodEvent.class, testEvent);
     }
+
+    @Test
+    void createRandomEvent_returnsBadEvent(){
+        Random random = mock(Random.class);
+        when(random.nextInt(anyInt())).thenReturn(90);
+
+        AbstractEventFactory testFactory = new AbstractEventFactory();
+        Event testEvent = testFactory.createRandomEvent(random);
+
+        assertInstanceOf(GoodEvent.class, testEvent);
+    }
 }
