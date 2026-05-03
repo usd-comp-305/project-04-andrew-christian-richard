@@ -10,9 +10,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AbstractOpponentHorseFactoryTests {
-
-
-
     @Test
     void createOpponentHorse_returnsHorseWithRandomStats() {
         Random random = mock(Random.class);
