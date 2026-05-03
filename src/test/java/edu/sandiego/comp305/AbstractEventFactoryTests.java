@@ -41,6 +41,6 @@ public class AbstractEventFactoryTests{
         AbstractEventFactory testFactory = new AbstractEventFactory();
         Event testEvent = testFactory.createRandomEvent(random);
 
-        assertInstanceOf(GoodEvent.class, testEvent);
+        assertInstanceOf(BadEvent.class, testEvent);
     }
 }
