@@ -7,6 +7,11 @@ public class AbstractEventFactory implements EventFactory{
     private static final int GOOD_EVENT_THRESHOLD = 85;
 
     public Event createRandomEvent(Random random) {
+        int roll = RandomRoll(random);
+
+        if (roll < NEUTRAL_EVENT_THRESHOLD){
+            return new NeutralEvent();
+        }
         return null;
     }
 
