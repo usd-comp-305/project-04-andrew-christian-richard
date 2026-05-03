@@ -9,17 +9,9 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AbstractHorseFactoryTests {
+public class AbstractOpponentHorseFactoryTests {
 
-    @Test
-    void createPlayerHorse_returnsHorseWithMinStats() {
-        HorseFactory testFactory = new AbstractHorseFactory();
-        Horse playerHorse = testFactory.createPlayerHorse("SeaBiscuit");
 
-        assertEquals(1, playerHorse.getStats().getSpeed());
-        assertEquals(1, playerHorse.getStats().getPower());
-        assertEquals(1, playerHorse.getStats().getStamina());
-    }
 
     @Test
     void createOpponentHorse_returnsHorseWithRandomStats() {
@@ -30,9 +22,9 @@ public class AbstractHorseFactoryTests {
                 .thenReturn(2);
 
         HorseFactory testFactory =
-                new AbstractHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER, random);
+                new AbstractOpponentHorseFactory(Difficulty.EASY, TrackType.ONE_HUNDRED_METER, random);
 
-        Horse opponentHorse = testFactory.createOpponentHorse("SeaBiscuit");
+        Horse opponentHorse = testFactory.createHorse("SeaBiscuit");
 
         assertEquals(3, opponentHorse.getStats().getSpeed());
         assertEquals(3, opponentHorse.getStats().getStamina());

@@ -14,32 +14,21 @@ import java.util.Random;
  *   where difficultyTier: EASY=0, MEDIUM=1, HARD=2
  *       trackDistance:    ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
  */
-public class AbstractHorseFactory implements HorseFactory {
-    private static final int MAX_STAT = 25;
-    private static final int MIN_STAT = 1;
+public class AbstractOpponentHorseFactory implements HorseFactory {
     private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 24;
     private static final int BASE_TRACK_STAT_MULTIPLIER = 8;
     private Difficulty difficulty;
     private TrackType trackType;
     private Random random;
 
-    public AbstractHorseFactory(Difficulty difficulty, TrackType trackType, Random random) {
+    public AbstractOpponentHorseFactory(Difficulty difficulty, TrackType trackType, Random random) {
         this.difficulty = difficulty;
         this.trackType = trackType;
         this.random = random;
     }
 
-    public AbstractHorseFactory() {
-    }
-
     @Override
-    public Horse createPlayerHorse(String name) {
-        Stats basicStats = new Stats(MIN_STAT, MIN_STAT, MIN_STAT);
-        return new Horse(name, basicStats);
-    }
-
-    @Override
-    public Horse createOpponentHorse(String name) {
+    public Horse createHorse(String name) {
         Stats opponentStats = generateRandomStats();
         return new Horse(name, opponentStats);
     }
