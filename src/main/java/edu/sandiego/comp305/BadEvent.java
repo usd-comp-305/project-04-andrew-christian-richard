@@ -5,8 +5,4 @@ public class BadEvent extends QuickTimeEvent {
         super(description, triggerDistance, staminaCost);
     }
 
-    @Override
-    public RaceEffect applyEffect(Horse horse) {
-        return null;
-    }
 }
