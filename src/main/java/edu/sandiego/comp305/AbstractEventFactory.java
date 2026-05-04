@@ -5,6 +5,7 @@ import java.util.Random;
 public class AbstractEventFactory implements EventFactory{
     private static final int NEUTRAL_EVENT_THRESHOLD = 65;
     private static final int GOOD_EVENT_THRESHOLD = 85;
+    private static final int FULL_PERCENTAGE = 100;
 
     public Event createRandomEvent(Random random) {
         int roll = RandomRoll(random);
@@ -19,6 +20,6 @@ public class AbstractEventFactory implements EventFactory{
     }
 
     private int RandomRoll(Random random){
-        return random.nextInt(100);
+        return random.nextInt(FULL_PERCENTAGE);
     }
 }

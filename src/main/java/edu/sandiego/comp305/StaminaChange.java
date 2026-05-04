@@ -11,4 +11,8 @@ public enum StaminaChange {
     StaminaChange(int change) {
         this.change = change;
     }
+
+    public int getChange(){
+        return change;
+    }
 }
