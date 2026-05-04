@@ -4,9 +4,11 @@ import java.util.List;
 
 public abstract class Event {
     private final String description;
+    public Horse horse;
 
-    protected Event(String description){
+    protected Event(String description, Horse horse){
         this.description = description;
+        this.horse = horse;
     }
 
     public String getDescription(){
