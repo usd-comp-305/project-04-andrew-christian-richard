@@ -16,7 +16,7 @@ public class GoodEvent extends Event {
                         getGreatEffect(), StaminaChange.LOSS),
                 new EventChoice("Speed up!",
                         getGoodEffect(), StaminaChange.FREE),
-                new EventChoice("Hold pace and remain steady",
+                new EventChoice("Hold pace and remain steady...",
                         NEUTRAL_OUTCOME, StaminaChange.GAIN)
         );
     }
