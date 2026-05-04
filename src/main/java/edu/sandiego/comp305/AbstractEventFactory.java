@@ -43,6 +43,6 @@ public class AbstractEventFactory implements EventFactory{
 
     private String getRandomDescription(List<String> descriptionList, Random random){
         int randomIndex = random.nextInt(descriptionList.size());
-        return descriptionList.get(randomIndex);
+        return descriptionList.get(randomIndex); //comment
     }
 }
