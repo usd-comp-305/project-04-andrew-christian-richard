@@ -36,4 +36,9 @@ public class AbstractEventFactory implements EventFactory{
     private int RandomRoll(Random random){
         return random.nextInt(FULL_PERCENTAGE);
     }
+
+    private String getRandomDescription(List<String> descriptionList, Random random){
+        int randomIndex = random.nextInt(descriptionList.size());
+        return descriptionList.get(randomIndex);
+    }
 }
