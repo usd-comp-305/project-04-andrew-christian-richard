@@ -8,7 +8,6 @@ import java.util.Random;
  *   EASY                |   8  |  16  |  24
  *   MEDIUM              |  32  |  40  |  48
  *   HARD                |  56  |  64  |  72
- *
  * Overall Stats increase by 8 for each track tier and by 24 for each difficulty tier,
  *   Overall Stats = (difficultyTier * 24) + (trackDistance * 8)
  *   where difficultyTier: EASY=0, MEDIUM=1, HARD=2
@@ -79,5 +78,4 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER) +
                 (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
     }
-
 }
