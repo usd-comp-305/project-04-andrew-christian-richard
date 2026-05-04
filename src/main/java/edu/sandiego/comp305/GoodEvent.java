@@ -13,9 +13,9 @@ public class GoodEvent extends Event {
         super(description, horse);
         this.choices = List.of(
                 new EventChoice("Use the momentum, and CHARGE!",
-                        getGreatOutcome(), StaminaChange.LOSS),
+                        getGreatEffect(), StaminaChange.LOSS),
                 new EventChoice("Speed up!",
-                        getGoodOutcome(), StaminaChange.FREE),
+                        getGoodEffect(), StaminaChange.FREE),
                 new EventChoice("Hold pace and remain steady",
                         NEUTRAL_OUTCOME, StaminaChange.GAIN)
         );
@@ -26,13 +26,13 @@ public class GoodEvent extends Event {
         return choices;
     }
 
-    private RaceEffect getGreatOutcome(){
+    private RaceEffect getGreatEffect(){
         int bonusSpeedStat = (int) (horse.getStats().getSpeed() * SPEED_GREAT_MULTIPLIER);
         int bonusPowerStat = (int) (horse.getStats().getPower() * POWER_GREAT_MULTIPLIER);
         return new RaceEffect(bonusSpeedStat, bonusPowerStat);
     }
 
-    private RaceEffect getGoodOutcome(){
+    private RaceEffect getGoodEffect(){
         int bonusSpeedStat = (int) (horse.getStats().getSpeed() * SPEED_GOOD_MULTIPLIER);
         int bonusPowerStat = (int) (horse.getStats().getPower() * POWER_GOOD_MULTIPLIER);
         return new RaceEffect(bonusSpeedStat, bonusPowerStat);

@@ -4,7 +4,7 @@ public class RaceEffect {
     private final int speedChange;
     private final int powerChange;
 
-    public RaceEffect(int speedChange, int powerChange, String description) {
+    public RaceEffect(int speedChange, int powerChange) {
         this.speedChange = speedChange;
         this.powerChange = powerChange;
     }

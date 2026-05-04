@@ -11,25 +11,29 @@ public class AbstractEventFactory implements EventFactory{
     private final List<String> goodDescriptions;
     private final List<String> neutralDescriptions;
     private final List<String> badDescriptions;
+    public Horse horse;
 
     public AbstractEventFactory(
             List<String> goodDescriptions,
             List<String> neutralDescriptions,
-            List<String> badDescriptions) {
+            List<String> badDescriptions,
+            Horse horse) {
         this.goodDescriptions = goodDescriptions;
         this.neutralDescriptions = neutralDescriptions;
         this.badDescriptions = badDescriptions;
+        this.horse = horse;
+
     }
 
     public Event createRandomEvent(Random random) {
         int roll = RandomRoll(random);
 
         if (roll < NEUTRAL_EVENT_THRESHOLD){
-            return new NeutralEvent();
+            return new NeutralEvent(getRandomDescription(neutralDescriptions, random), horse);
         } else if (roll < GOOD_EVENT_THRESHOLD){
-            return new GoodEvent(getRandomDescription(goodDescriptions, random));
+            return new GoodEvent(getRandomDescription(goodDescriptions, random), horse);
         } else {
-            return new BadEvent();
+            return new BadEvent(getRandomDescription(badDescriptions, random), horse);
         }
     }
 
