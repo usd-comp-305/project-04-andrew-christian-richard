@@ -25,6 +25,6 @@ public class EventChoice {
 
     @Override
     public String toString() {
-        return "outcomeText";
+        return label + " | Effect: " + effect + " | Stamina: " + change;
     }
 }
