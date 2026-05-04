@@ -14,17 +14,23 @@ import static org.mockito.Mockito.when;
 public class AbstractEventFactoryTests{
     private List<String> mockDescriptions;
     private Random random;
+    private Horse horse;
+    private AbstractEventFactory testFactory;
 
     @BeforeEach
     void init(){
-        List<String> mockDescriptions = List.of("Mock event description");
-        Random random = mock(Random.class);
+        mockDescriptions = List.of("Mock event description");
+        random = mock(Random.class);
+        Stats stat = new Stats(1, 1, 1);
+        horse = new Horse("SeaBiscuit", stat);
+        testFactory = new AbstractEventFactory(mockDescriptions, mockDescriptions,
+                mockDescriptions, horse);
     }
+
     @Test
     void createRandomEvent_returnsNeutralEvent(){
-        when(random.nextInt(anyInt())).thenReturn(1);
+        when(random.nextInt(anyInt())).thenReturn(1).thenReturn(0);
 
-        AbstractEventFactory testFactory = new AbstractEventFactory(mockDescriptions, mockDescriptions, mockDescriptions);
         Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(NeutralEvent.class, testEvent);
@@ -32,9 +38,8 @@ public class AbstractEventFactoryTests{
 
     @Test
     void createRandomEvent_returnsGoodEvent(){
-        when(random.nextInt(anyInt())).thenReturn(70);
+        when(random.nextInt(anyInt())).thenReturn(70).thenReturn(0);
 
-        AbstractEventFactory testFactory = new AbstractEventFactory(mockDescriptions, mockDescriptions, mockDescriptions);
         Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(GoodEvent.class, testEvent);
@@ -42,9 +47,8 @@ public class AbstractEventFactoryTests{
 
     @Test
     void createRandomEvent_returnsBadEvent(){
-        when(random.nextInt(anyInt())).thenReturn(90);
+        when(random.nextInt(anyInt())).thenReturn(90).thenReturn(0);
 
-        AbstractEventFactory testFactory = new AbstractEventFactory(mockDescriptions, mockDescriptions, mockDescriptions);
         Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(BadEvent.class, testEvent);

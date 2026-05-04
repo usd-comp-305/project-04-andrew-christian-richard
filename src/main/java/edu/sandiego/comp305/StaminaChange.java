@@ -1,9 +1,9 @@
 package edu.sandiego.comp305;
 
 public enum StaminaChange {
-    COSTLY_LOST(-3),
-    LOSS(-1),
-    GAIN(1),
+    COSTLY_LOST(-4),
+    LOSS(-2),
+    GAIN(2),
     FREE(0);
 
     private final int change;

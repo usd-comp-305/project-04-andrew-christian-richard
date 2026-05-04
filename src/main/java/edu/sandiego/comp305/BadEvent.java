@@ -38,6 +38,4 @@ public class BadEvent extends Event {
         int reductionPowerStat = (int) (horse.getStats().getPower() * BAD_POWER_MULTIPLIER);
         return new RaceEffect(reductionSpeedStat, reductionPowerStat);
     }
-
-
 }
