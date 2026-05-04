@@ -27,7 +27,7 @@ public class AbstractEventFactory implements EventFactory{
         if (roll < NEUTRAL_EVENT_THRESHOLD){
             return new NeutralEvent();
         } else if (roll < GOOD_EVENT_THRESHOLD){
-            return new GoodEvent();
+            return new GoodEvent(getRandomDescription(goodDescriptions, random));
         } else {
             return new BadEvent();
         }
