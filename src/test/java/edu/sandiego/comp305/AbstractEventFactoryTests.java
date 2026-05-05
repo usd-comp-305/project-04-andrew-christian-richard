@@ -18,11 +18,11 @@ public class AbstractEventFactoryTests {
     void init() {
         random = mock(Random.class);
 
-        Stats stats = new Stats(1, 1, 1);
-        Horse horse = new Horse("SeaBiscuit", stats);
+        Stats testStats = new Stats(1, 1, 1);
+        Horse testHorse = new Horse("SeaBiscuit", testStats);
 
         EventDescriptionProvider descriptionProvider = new EventDescriptionProvider();
-        testFactory = new AbstractEventFactory(horse, descriptionProvider);
+        testFactory = new AbstractEventFactory(testHorse, descriptionProvider);
     }
 
     @Test

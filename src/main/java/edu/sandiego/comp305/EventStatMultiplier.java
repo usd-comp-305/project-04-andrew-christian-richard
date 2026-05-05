@@ -1,7 +1,7 @@
 package edu.sandiego.comp305;
 
 public enum EventStatMultiplier {
-    POOR(-0.5, -0.2),
+    VERYBAD(-0.5, -0.2),
     BAD(-0.3, -0.1),
     OKAY(-0.1, -0.05),
     FAIR(0.1, 0.05),

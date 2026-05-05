@@ -5,7 +5,7 @@ import java.util.Random;
 public class AbstractEventFactory implements EventFactory {
     private static final int NEUTRAL_EVENT_THRESHOLD = 65;
     private static final int GOOD_EVENT_THRESHOLD = 85;
-    private static final int FULL_PERCENTAGE = 100;
+    private static final int EVENT_ROLL_BOUND = 100;
 
     private final Horse horse;
     private final EventDescriptionProvider descriptionProvider;
@@ -29,6 +29,6 @@ public class AbstractEventFactory implements EventFactory {
     }
 
     private int getRandomRoll(Random random) {
-        return random.nextInt(FULL_PERCENTAGE);
+        return random.nextInt(EVENT_ROLL_BOUND);
     }
 }

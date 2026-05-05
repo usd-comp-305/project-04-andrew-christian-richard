@@ -2,11 +2,11 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class GoodEvent extends Event {
-    private final List<EventChoice> choices;
+    private final List<EventChoice> eventChoices;
 
     public GoodEvent(String description, Horse horse){
         super(description, horse);
-        this.choices = List.of(
+        this.eventChoices = List.of(
                 new EventChoice("Use the momentum, and CHARGE!",
                         getGreatEffect(), StaminaChange.LOSS),
                 new EventChoice("Speed up!",
@@ -17,8 +17,8 @@ public class GoodEvent extends Event {
     }
 
     @Override
-    public List<EventChoice> getChoices(){
-        return choices;
+    public List<EventChoice> getEventChoices(){
+        return eventChoices;
     }
 
     private RaceEffect getGreatEffect(){

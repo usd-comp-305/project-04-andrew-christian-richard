@@ -3,11 +3,11 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class NeutralEvent extends Event {
-    private final List<EventChoice> choices;
+    private final List<EventChoice> eventChoices;
 
     public NeutralEvent(String description, Horse horse) {
         super(description, horse);
-        this.choices = List.of(
+        this.eventChoices = List.of(
                 new EventChoice("Try to gain a lead",
                         getFairEffect(), StaminaChange.LOSS),
                 new EventChoice("Do nothing",
@@ -18,23 +18,23 @@ public class NeutralEvent extends Event {
     }
 
     @Override
-    public List<EventChoice> getChoices() {
-        return choices;
+    public List<EventChoice> getEventChoices() {
+        return eventChoices;
     }
 
     private RaceEffect getFairEffect() {
-        int reductionSpeedStat = (int) (horse.getStats().getSpeed() *
+        int bonusSpeed = (int) (horse.getStats().getSpeed() *
                 EventStatMultiplier.FAIR.getSpeedMultiplier());
-        int reductionPowerStat = (int) (horse.getStats().getPower() *
+        int bonusPower = (int) (horse.getStats().getPower() *
                 EventStatMultiplier.FAIR.getPowerMultiplier());
-        return new RaceEffect(reductionSpeedStat, reductionPowerStat);
+        return new RaceEffect(bonusSpeed, bonusPower);
     }
 
     private RaceEffect getOkayEffect() {
-        int reductionSpeedStat = (int) (horse.getStats().getSpeed() *
+        int reductionSpeed = (int) (horse.getStats().getSpeed() *
                 EventStatMultiplier.OKAY.getSpeedMultiplier());
-        int reductionPowerStat = (int) (horse.getStats().getPower() *
+        int reductionPower = (int) (horse.getStats().getPower() *
                 EventStatMultiplier.OKAY.getPowerMultiplier());
-        return new RaceEffect(reductionSpeedStat, reductionPowerStat);
+        return new RaceEffect(reductionSpeed, reductionPower);
     }
 }
