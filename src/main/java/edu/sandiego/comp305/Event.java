@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public abstract class Event {
+    static final RaceEffect NEUTRAL_OUTCOME = new RaceEffect(0, 0);
     private final String description;
     public Horse horse;
 
@@ -15,5 +16,5 @@ public abstract class Event {
         return description;
     }
 
-    public abstract List<EventChoice> getChoices();
+    public abstract List<EventChoice> getEventChoices();
 }

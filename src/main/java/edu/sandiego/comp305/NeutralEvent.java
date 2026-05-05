@@ -3,16 +3,11 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class NeutralEvent extends Event {
-    private static final double FAIR_SPEED_MULTIPLIER = .1;
-    private static final double FAIR_POWER_MULTIPLIER = .05;
-    private static final double OKAY_SPEED_MULTIPLIER = -.1;
-    private static final double OKAY_POWER_MULTIPLIER = -.05;
-    private static final RaceEffect NEUTRAL_OUTCOME = new RaceEffect(0, 0);
-    private final List<EventChoice> choices;
+    private final List<EventChoice> eventChoices;
 
     public NeutralEvent(String description, Horse horse) {
         super(description, horse);
-        this.choices = List.of(
+        this.eventChoices = List.of(
                 new EventChoice("Try to gain a lead",
                         getFairEffect(), StaminaChange.LOSS),
                 new EventChoice("Do nothing",
@@ -23,19 +18,23 @@ public class NeutralEvent extends Event {
     }
 
     @Override
-    public List<EventChoice> getChoices() {
-        return choices;
+    public List<EventChoice> getEventChoices() {
+        return eventChoices;
     }
 
     private RaceEffect getFairEffect() {
-        int reductionSpeedStat = (int) (horse.getStats().getSpeed() * FAIR_SPEED_MULTIPLIER);
-        int reductionPowerStat = (int) (horse.getStats().getPower() * FAIR_POWER_MULTIPLIER);
-        return new RaceEffect(reductionSpeedStat, reductionPowerStat);
+        int bonusSpeed = (int) (horse.getStats().getSpeed() *
+                EventStatMultiplier.FAIR.getSpeedMultiplier());
+        int bonusPower = (int) (horse.getStats().getPower() *
+                EventStatMultiplier.FAIR.getPowerMultiplier());
+        return new RaceEffect(bonusSpeed, bonusPower);
     }
 
     private RaceEffect getOkayEffect() {
-        int reductionSpeedStat = (int) (horse.getStats().getSpeed() * OKAY_SPEED_MULTIPLIER);
-        int reductionPowerStat = (int) (horse.getStats().getPower() * OKAY_POWER_MULTIPLIER);
-        return new RaceEffect(reductionSpeedStat, reductionPowerStat);
+        int reductionSpeed = (int) (horse.getStats().getSpeed() *
+                EventStatMultiplier.OKAY.getSpeedMultiplier());
+        int reductionPower = (int) (horse.getStats().getPower() *
+                EventStatMultiplier.OKAY.getPowerMultiplier());
+        return new RaceEffect(reductionSpeed, reductionPower);
     }
 }
