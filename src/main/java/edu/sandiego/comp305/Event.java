@@ -16,5 +16,5 @@ public abstract class Event {
         return description;
     }
 
-    public abstract List<EventChoice> getChoices();
+    public abstract List<EventChoice> getEventChoices();
 }
