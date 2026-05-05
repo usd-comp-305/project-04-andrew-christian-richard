@@ -16,9 +16,9 @@ import java.util.Random;
 public class AbstractOpponentHorseFactory implements HorseFactory {
     private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 24;
     private static final int BASE_TRACK_STAT_MULTIPLIER = 8;
-    private Difficulty difficulty;
-    private TrackType trackType;
-    private Random random;
+    private final Difficulty difficulty;
+    private final TrackType trackType;
+    private final Random random;
 
     public AbstractOpponentHorseFactory(Difficulty difficulty, TrackType trackType, Random random) {
         this.difficulty = difficulty;
