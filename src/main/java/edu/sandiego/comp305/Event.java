@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public abstract class Event {
+    static final RaceEffect NEUTRAL_OUTCOME = new RaceEffect(0, 0);
     private final String description;
     public Horse horse;
 
