@@ -1,25 +1,47 @@
 package edu.sandiego.comp305;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Track {
-    private final TrackType trackType;
-    private final int lengthInMeters;
+    private static final int PLACEMENT_CHECKPOINT_INTERVAL = 20;
+    private static final int EVENT_CHECKPOINT_INTERVAL = 10;
 
-    public Track(TrackType trackType, int lengthInMeters) {
+    private final TrackType trackType;
+
+    public Track(TrackType trackType) {
         this.trackType = trackType;
-        this.lengthInMeters = lengthInMeters;
+    }
+
+    public TrackType getTrackType() {
+        return trackType;
     }
 
     public int getLengthInMeters() {
-        return lengthInMeters;
+        return trackType.getLength();
     }
 
     public List<Integer> getPlacementCheckpoints() {
-        return null;
+        List<Integer> checkpoints = new ArrayList<>();
+
+        for (int checkpoint = PLACEMENT_CHECKPOINT_INTERVAL;
+             checkpoint < getLengthInMeters();
+             checkpoint += PLACEMENT_CHECKPOINT_INTERVAL) {
+            checkpoints.add(checkpoint);
+        }
+
+        return checkpoints;
     }
 
     public List<Integer> getEventCheckpoints() {
-        return null;
+        List<Integer> checkpoints = new ArrayList<>();
+
+        for (int checkpoint = EVENT_CHECKPOINT_INTERVAL;
+             checkpoint < getLengthInMeters();
+             checkpoint += EVENT_CHECKPOINT_INTERVAL) {
+            checkpoints.add(checkpoint);
+        }
+
+        return checkpoints;
     }
 }
