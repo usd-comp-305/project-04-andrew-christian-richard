@@ -32,14 +32,14 @@ public class Stats {
     }
 
     public void increaseSpeed(int amount) {
-
+        speed += amount;
     }
 
     public void increaseStamina(int amount) {
-
+        stamina += amount;
     }
 
     public void increasePower(int amount) {
-
+        power += amount;
     }
 }

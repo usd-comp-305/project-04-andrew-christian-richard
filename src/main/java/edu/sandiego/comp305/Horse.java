@@ -51,7 +51,10 @@ public class Horse implements RaceParticipant {
 
     @Override
     public int move() {
-        return 0;
+        final int spacesMoved = stats.generateMovement();
+        currentDistance += spacesMoved;
+
+        return spacesMoved;
     }
 
     @Override
