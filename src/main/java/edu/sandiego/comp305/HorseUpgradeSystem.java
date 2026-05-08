@@ -13,6 +13,6 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
     @Override
     public void awardTrophies(Horse horse, Placement placement) {
-        return 0;
+
     }
 }

@@ -6,5 +6,5 @@ public interface RaceParticipant {
     int move();
     int getCurrentDistance();
     boolean hasFinished(int trackLength);
-    void applyRaceEffect(RaceEffect effect);
+    abstract void applyRaceEffect(final RaceEffect effect);
 }

@@ -7,7 +7,7 @@ public class Race {
     private final Difficulty difficulty;
     private final Track track;
     private final List<RaceParticipant> participants;
-    private final List<QuickTimeEvent> events;
+    private final List<Event> events;
     private RaceState state;
 
     public Race(String raceName, Difficulty difficulty, Track track, List<RaceParticipant> participants) {

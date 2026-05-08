@@ -17,6 +17,11 @@ public class RaceEffect {
         return speedChange;
     }
 
+    public void apply(final Horse horse) {
+        horse.getStats().increaseSpeed(speedChange);
+        horse.getStats().increasePower(powerChange);
+    }
+
     @Override
     public String toString() {
         return "Your speed and power has temporarily changed by " + speedChange +

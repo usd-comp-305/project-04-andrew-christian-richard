@@ -3,9 +3,17 @@ package edu.sandiego.comp305;
 public class HorseRacingGame {
     private final Horse playerHorse;
     private final RaceManager raceManager;
-    private final ProgressionSystem progressionSystem;
+    private final UpgradeSystem progressionSystem;
     private final EventFactory eventFactory;
     private final HorseFactory horseFactory;
+
+    public HorseRacingGame(final Horse playerHorse, final RaceManager raceManager, final UpgradeSystem progressionSystem, final EventFactory eventFactory, final HorseFactory horseFactory) {
+        this.playerHorse = playerHorse;
+        this.raceManager = raceManager;
+        this.progressionSystem = progressionSystem;
+        this.eventFactory = eventFactory;
+        this.horseFactory = horseFactory;
+    }
 
     public void startGame() {
 
