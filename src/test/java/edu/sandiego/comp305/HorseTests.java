@@ -74,19 +74,20 @@ public class HorseTests {
 
     @Test
     void reset_resetsDistance_keepsTrophies() {
-        final int EXPECTED_TROPHY_COUNT = 0;
+        final int EXPECTED_TROPHY_COUNT = 10;
+        final int EXPECTED_DISTANCE = 0;
 
         final Stats testStats = mock(Stats.class);
         when(testStats.generateMovement()).thenReturn(MOVE_DISTANCE);
 
         final Horse testHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        testHorse.addTrophies(5);
-
         testHorse.addTrophies(TROPHIES_TO_ADD);
+        testHorse.addTrophies(TROPHIES_TO_ADD);
+
         testHorse.move();
         testHorse.resetForCurrentRace();
 
-        assertEquals(0, testHorse.getCurrentDistanceRan());
+        assertEquals(EXPECTED_DISTANCE, testHorse.getCurrentDistanceRan());
         assertEquals(EXPECTED_TROPHY_COUNT, testHorse.getTrophyCount());
     }
 
