@@ -35,12 +35,7 @@ public class Stats {
             return 0;
         }
 
-        if (power < speed) {
-            minMovementDistance = power;
-        }
-        else {
-            minMovementDistance = speed;
-        }
+        minMovementDistance = Math.min(power, speed);
 
         final int movementRange = speed - minMovementDistance + 1;
         final int movementDistance = minMovementDistance + random.nextInt(movementRange);
