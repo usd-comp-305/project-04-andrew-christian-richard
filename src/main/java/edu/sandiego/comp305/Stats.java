@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Stats {
     private static final int STAMINA_DEPLETION_RATE_PER_ROUND = 1;
-    private static final Random random = new Random();
+    private final Random random = new Random();
 
     private int speed;
     private int stamina;
