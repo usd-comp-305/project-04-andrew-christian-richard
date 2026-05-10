@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.*;
-
 public class StatsTests {
     private static final int TEST_SPEED = 6;
     private static final int TEST_POWER = 10;
