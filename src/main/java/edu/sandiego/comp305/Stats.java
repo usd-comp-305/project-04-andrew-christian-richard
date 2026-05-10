@@ -1,6 +1,11 @@
 package edu.sandiego.comp305;
 
+import java.util.*;
+
 public class Stats {
+    private static final int STAMINA_DEPLETION_RATE_PER_ROUND = 1;
+    private static final Random random = new Random();
+
     private int speed;
     private int stamina;
     private int power;
@@ -24,11 +29,34 @@ public class Stats {
     }
 
     public int generateMovement() {
-        return 0;
+        final int minMovementDistance;
+
+        if (stamina == 0 || speed == 0) {
+            return 0;
+        }
+
+        if (power < speed) {
+            minMovementDistance = power;
+        }
+        else {
+            minMovementDistance = speed;
+        }
+
+        final int movementRange = speed - minMovementDistance + 1;
+        final int movementDistance = minMovementDistance + random.nextInt(movementRange);
+
+        consumeStamina(STAMINA_DEPLETION_RATE_PER_ROUND);
+
+        return movementDistance;
     }
 
     public void consumeStamina(int amount) {
-
+        if (stamina < amount) {
+            stamina = 0;
+        }
+        else {
+            stamina -= amount;
+        }
     }
 
     public void increaseSpeed(int amount) {
