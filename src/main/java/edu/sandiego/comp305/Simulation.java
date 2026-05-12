@@ -10,6 +10,7 @@ public class Simulation {
     private final HorseFactory horseFactory;
     private Horse playerHorse;
     private final static int NUM_CHOICES = 3;
+    private int round;
 
     public Simulation(Scanner scanner, RaceManager raceManager, HorseUpgradeSystem upgradeSystem,
                      HorseFactory horseFactory) {
@@ -17,6 +18,7 @@ public class Simulation {
         this.raceManager   = raceManager;
         this.upgradeSystem = upgradeSystem;
         this.horseFactory  = horseFactory;
+        this.round = 0;
     }
 
     private void printEvent(Race race){
@@ -45,6 +47,15 @@ public class Simulation {
         int trackDistance = race.getTrack().getLengthInMeters();
         Horse player = race.getPlayerHorse();
         Stats playerStats = player.getStats();
+        List<RaceParticipant> standings = race.getCurrentStandings();
+
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf( "%s - %s Round:%s\n", race.getDifficulty(), trackDistance, round);
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf( "║  %-4s %-12s  %-8s  %-10s  %-8s║%n",
+                "POS", "HORSE", "DIST", "PROGRESS", "TO FINISH");
+        System.out.println("══════════════════════════════════════════════════════");
+
     }
 
 
