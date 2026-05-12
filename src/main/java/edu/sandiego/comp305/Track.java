@@ -16,17 +16,10 @@ public class Track {
     }
 
     public List<Integer> getPlacementCheckpoints() {
-        List<Integer> checkpoints = new ArrayList<>();
-        checkpoints.add(20);
-        checkpoints.add(lengthInMeters / 2);
-        checkpoints.add(lengthInMeters);
-        return checkpoints;
+        return null;
     }
 
     public List<Integer> getEventCheckpoints() {
-        List<Integer> checkpoints = new ArrayList<>();
-        checkpoints.add(lengthInMeters / 4);
-        checkpoints.add(lengthInMeters / 2);
-        return checkpoints;
+        return null;
     }
 }
