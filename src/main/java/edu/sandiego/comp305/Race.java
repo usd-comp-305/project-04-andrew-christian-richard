@@ -1,19 +1,14 @@
 package edu.sandiego.comp305;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Race {
-    private static final int PLACEMENT_DISPLAY_CHECKPOINT = 20;
-
     private final String raceName;
     private final Difficulty difficulty;
     private final Track track;
     private final List<RaceParticipant> participants;
-    private final List<QuickTimeEvent> events;
+    private final List<Event> events;
     private RaceState state;
-    private boolean hasShownPlacementAt20m;
 
     public Race(String raceName, Difficulty difficulty, Track track, List<RaceParticipant> participants) {
         this.raceName = raceName;
@@ -22,21 +17,11 @@ public class Race {
         this.participants = new ArrayList<>(participants);
         this.events = new ArrayList<>();
         this.state = RaceState.NOT_STARTED;
-        this.hasShownPlacementAt20m = false;
     }
 
     public void startRace() {
-        if (state != RaceState.NOT_STARTED) {
-            return;
-        }
-
-        for (RaceParticipant participant : participants) {
-            if (participant instanceof Horse horse) {
-                horse.resetForCurrentRace();
-            }
-        }
-
         state = RaceState.IN_PROGRESS;
+        System.out.println("Race started: " + raceName);
     }
 
     public void advanceRound() {
@@ -46,200 +31,78 @@ public class Race {
 
         for (RaceParticipant participant : participants) {
             if (!participant.hasFinished(track.getLengthInMeters())) {
-                participant.move();
+                int delta = participant.move();
+                System.out.println(participant.getName() + " moved " + delta + "m. Total: " + participant.getCurrentDistance() + "m");
             }
         }
 
         triggerCheckpointEvents();
 
-        if (allParticipantsFinished()) {
+        boolean allFinished = true;
+        for (RaceParticipant participant : participants) {
+            if (!participant.hasFinished(track.getLengthInMeters())) {
+                allFinished = false;
+                break;
+            }
+        }
+
+        if (allFinished) {
             state = RaceState.FINISHED;
+            System.out.println("Race finished: " + raceName);
         }
     }
 
     public void triggerCheckpointEvents() {
-        if (!hasShownPlacementAt20m) {
-            for (RaceParticipant participant : participants) {
-                if (participant.getCurrentDistance() >= PLACEMENT_DISPLAY_CHECKPOINT) {
-                    showPlacementAt20m();
-                    hasShownPlacementAt20m = true;
-                    break;
+        List<Integer> eventCheckpoints = track.getEventCheckpoints();
+        if (eventCheckpoints == null) {
+            return;
+        }
+
+        for (RaceParticipant participant : participants) {
+            for (int checkpoint : eventCheckpoints) {
+                if (participant.getCurrentDistance() >= checkpoint) {
+                    System.out.println("Checkpoint event triggered at " + checkpoint + "m for " + participant.getName());
                 }
             }
         }
     }
 
     public void showPlacementAt20m() {
+        System.out.println("Standings at 20m:");
         List<RaceParticipant> standings = getCurrentStandings();
-
-        System.out.println("Standings at 20m:");package edu.sandiego.comp305;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-        public class Race {
-            private static final int PLACEMENT_DISPLAY_CHECKPOINT = 20;
-
-            private final String raceName;
-            private final Difficulty difficulty;
-            private final Track track;
-            private final List<RaceParticipant> participants;
-            private final List<QuickTimeEvent> events;
-            private RaceState state;
-            private boolean hasShownPlacementAt20m;
-
-            public Race(String raceName, Difficulty difficulty, Track track, List<RaceParticipant> participants) {
-                this.raceName = raceName;
-                this.difficulty = difficulty;
-                this.track = track;
-                this.participants = new ArrayList<>(participants);
-                this.events = new ArrayList<>();
-                this.state = RaceState.NOT_STARTED;
-                this.hasShownPlacementAt20m = false;
-            }
-
-            public void startRace() {
-                if (state != RaceState.NOT_STARTED) {
-                    return;
-                }
-
-                for (RaceParticipant participant : participants) {
-                    if (participant instanceof Horse horse) {
-                        horse.resetForCurrentRace();
-                    }
-                }
-
-                state = RaceState.IN_PROGRESS;
-            }
-
-            public void advanceRound() {
-                if (state != RaceState.IN_PROGRESS) {
-                    return;
-                }
-
-                for (RaceParticipant participant : participants) {
-                    if (!participant.hasFinished(track.getLengthInMeters())) {
-                        participant.move();
-                    }
-                }
-
-                triggerCheckpointEvents();
-
-                if (allParticipantsFinished()) {
-                    state = RaceState.FINISHED;
-                }
-            }
-
-            public void triggerCheckpointEvents() {
-                if (!hasShownPlacementAt20m) {
-                    for (RaceParticipant participant : participants) {
-                        if (participant.getCurrentDistance() >= PLACEMENT_DISPLAY_CHECKPOINT) {
-                            showPlacementAt20m();
-                            hasShownPlacementAt20m = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            public void showPlacementAt20m() {
-                List<RaceParticipant> standings = getCurrentStandings();
-
-                System.out.println("Standings at 20m:");
-
-                for (int i = 0; i < standings.size(); i++) {
-                    RaceParticipant participant = standings.get(i);
-
-                    System.out.println(
-                            (i + 1) + ". " +
-                                    participant.getName() +
-                                    " - " +
-                                    participant.getCurrentDistance() +
-                                    "m"
-                    );
-                }
-            }
-
-            public List<RaceParticipant> getCurrentStandings() {
-                List<RaceParticipant> standings = new ArrayList<>(participants);
-
-                standings.sort(
-                        Comparator.comparingInt(RaceParticipant::getCurrentDistance).reversed()
-                );
-
-                return standings;
-            }
-
-            public Placement getPlacement(Horse horse) {
-                List<RaceParticipant> standings = getCurrentStandings();
-
-                for (int i = 0; i < standings.size(); i++) {
-                    RaceParticipant participant = standings.get(i);
-
-                    if (participant == horse) {
-                        return Placement.values()[i];
-                    }
-                }
-
-                return Placement.SIXTH;
-            }
-
-            private boolean allParticipantsFinished() {
-                for (RaceParticipant participant : participants) {
-                    if (!participant.hasFinished(track.getLengthInMeters())) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        }
-
         for (int i = 0; i < standings.size(); i++) {
-            RaceParticipant participant = standings.get(i);
-
-            System.out.println(
-                    (i + 1) + ". " +
-                            participant.getName() +
-                            " - " +
-                            participant.getCurrentDistance() +
-                            "m"
-            );
+            System.out.println((i + 1) + ". " + standings.get(i).getName() + " - " + standings.get(i).getCurrentDistance() + "m");
         }
     }
 
     public List<RaceParticipant> getCurrentStandings() {
-        List<RaceParticipant> standings = new ArrayList<>(participants);
+        List<RaceParticipant> sorted = new ArrayList<>(participants);
 
-        standings.sort(
-                Comparator.comparingInt(RaceParticipant::getCurrentDistance).reversed()
-        );
+        for (int i = 0; i < sorted.size() - 1; i++) {
+            for (int j = 0; j < sorted.size() - 1 - i; j++) {
+                if (sorted.get(j).getCurrentDistance() < sorted.get(j + 1).getCurrentDistance()) {
+                    RaceParticipant temp = sorted.get(j);
+                    sorted.set(j, sorted.get(j + 1));
+                    sorted.set(j + 1, temp);
+                }
+            }
+        }
 
-        return standings;
+        return sorted;
     }
 
     public Placement getPlacement(Horse horse) {
         List<RaceParticipant> standings = getCurrentStandings();
+        Placement[] placements = Placement.values();
 
         for (int i = 0; i < standings.size(); i++) {
-            RaceParticipant participant = standings.get(i);
-
-            if (participant == horse) {
-                return Placement.values()[i];
+            if (standings.get(i).getName().equals(horse.getName())) {
+                if (i < placements.length) {
+                    return placements[i];
+                }
             }
         }
 
-        return Placement.SIXTH;
-    }
-
-    private boolean allParticipantsFinished() {
-        for (RaceParticipant participant : participants) {
-            if (!participant.hasFinished(track.getLengthInMeters())) {
-                return false;
-            }
-        }
-
-        return true;
+        return null;
     }
 }
