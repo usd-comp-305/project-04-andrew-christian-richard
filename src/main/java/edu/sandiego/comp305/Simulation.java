@@ -23,5 +23,10 @@ public class Simulation {
         Horse player = race.getPlayerHorse();
         List<EventChoice> choices = event.getEventChoices();
 
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("%-52s %n", event.getDescription());
+        System.out.println("══════════════════════════════════════════════════════");
+
+        for (int i )
     }
 }
