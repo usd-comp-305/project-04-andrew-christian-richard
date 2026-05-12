@@ -41,5 +41,11 @@ public class Simulation {
         System.out.print("Choose (1-3): ");
     }
 
+    private void printRound(Race race){
+        int trackDistance = race.getTrack().getLengthInMeters();
+        Horse player = race.getPlayerHorse();
+        Stats playerStats = player.getStats();
+    }
+
 
 }
