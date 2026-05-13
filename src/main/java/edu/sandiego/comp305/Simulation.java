@@ -9,15 +9,20 @@ public class Simulation {
     private final HorseUpgradeSystem upgradeSystem;
     private final HorseFactory horseFactory;
     private Horse playerHorse;
-    private final static int NUM_CHOICES = 3;
     private int round;
+
+    private static final int NUM_CHOICES = 3;
+    private static final int FIRST_CHOICE = 1;
+    private static final int SPEED_UPGRADE_CHOICE = 1;
+    private static final int POWER_UPGRADE_CHOICE = 2;
+    private static final int STAMINA_UPGRADE_CHOICE = 3;
 
     public Simulation(Scanner scanner, RaceManager raceManager, HorseUpgradeSystem upgradeSystem,
                      HorseFactory horseFactory) {
-        this.scanner       = scanner;
-        this.raceManager   = raceManager;
+        this.scanner = scanner;
+        this.raceManager = raceManager;
         this.upgradeSystem = upgradeSystem;
-        this.horseFactory  = horseFactory;
+        this.horseFactory = horseFactory;
         this.round = 0;
     }
 
@@ -71,8 +76,11 @@ public class Simulation {
         System.out.printf( "YOUR HORSE  SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
                 player.getStats().getSpeed(), player.getStats().getPower(), player.getStats().getStamina(), "");
         System.out.println("══════════════════════════════════════════════════════");
-
     }
 
+    private void printUpgradeSystem(){
+        System.out.println("══════════════════════════════════════════════════════");
+
+    }
 
 }
