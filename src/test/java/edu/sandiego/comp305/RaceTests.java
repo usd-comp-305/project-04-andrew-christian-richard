@@ -11,11 +11,18 @@ import static org.mockito.Mockito.*;
 public class RaceTests {
 
     private Race race;
+
     private Horse mockHorse;
+
     private RaceParticipant mockNPC;
+
     private EventChoice mockChoice;
+
     private RaceEffect mockEffect;
+
     private Stats mockStats;
+
+    private Event mockEvent;
 
     @BeforeEach
     public void setUp() {
@@ -26,6 +33,7 @@ public class RaceTests {
         mockChoice = mock(EventChoice.class);
         mockEffect = mock(RaceEffect.class);
         mockStats  = mock(Stats.class);
+        mockEvent  = mock(Event.class);
 
         when(mockHorse.getStats()).thenReturn(mockStats);
     }
@@ -54,7 +62,7 @@ public class RaceTests {
 
     @Test
     public void testLengthInMetersStoredCorrectly() {
-        Race shortRace = new Race(Difficulty.EASY, 500);
+        final Race shortRace = new Race(Difficulty.EASY, 500);
         assertEquals(500, shortRace.getLengthInMeters());
     }
 
@@ -76,7 +84,7 @@ public class RaceTests {
         race.addParticipant(mockHorse);
         race.addParticipant(mockNPC);
 
-        List<RaceParticipant> standings = race.getCurrentStandings();
+        final List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertTrue(standings.contains(mockHorse));
         assertTrue(standings.contains(mockNPC));
@@ -123,7 +131,10 @@ public class RaceTests {
 
     @Test
     public void testPrepareRoundClearsExistingEvent() {
-        race.prepareRound();
+        race.setEvent(mockEvent);
+
+        assertTrue(race.hasEvent());
+
         race.prepareRound();
         assertFalse(race.hasEvent());
     }
@@ -243,7 +254,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundDoesNotMoveParticipantsThatHaveAlreadyFinished() {
+    public void testExecuteRoundSkipsFinishedParticipants() {
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
         when(mockNPC.getCurrentDistance()).thenReturn(500);
 
@@ -279,7 +290,7 @@ public class RaceTests {
     @Test
     public void testCurrentStandingsIsUnmodifiable() {
         race.addParticipant(mockHorse);
-        List<RaceParticipant> standings = race.getCurrentStandings();
+        final List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             standings.add(mockNPC);
@@ -288,7 +299,7 @@ public class RaceTests {
 
     @Test
     public void testFinishOrderIsUnmodifiable() {
-        List<RaceParticipant> finishOrder = race.getFinishOrder();
+        final List<RaceParticipant> finishOrder = race.getFinishOrder();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             finishOrder.add(mockHorse);
