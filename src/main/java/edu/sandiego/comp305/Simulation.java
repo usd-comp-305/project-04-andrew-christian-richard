@@ -80,7 +80,12 @@ public class Simulation {
 
     private void printUpgradeSystem(){
         System.out.println("══════════════════════════════════════════════════════");
-
+        System.out.println("It is time to upgrade your horse before the next race!");
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.println("Enter upgrades as three numbers:");
+        System.out.println("<Speed> <Power> <Stamina>");
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.print("Enter upgrades: ");
     }
 
 }
