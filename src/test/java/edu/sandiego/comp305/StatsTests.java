@@ -5,83 +5,123 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StatsTests {
-    private static final int TEST_SPEED = 6;
-    private static final int TEST_POWER = 10;
-    private static final int TEST_STAMINA = 3;
-
-    private static final int TEST_NO_STAMINA = 0;
-    private static final int TEST_DEPLETED_STAMINA = 2;
-
-    private static final int TEST_MODIFY_STATS_AMOUNT = 2;
-
     @Test
     void generateMovement_returnedDistanceBetweenPowerAndSpeed() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
         final int distanceRan = testStats.generateMovement();
 
-        assertTrue(distanceRan >= TEST_STAMINA);
-        assertTrue(distanceRan <= TEST_SPEED);
+        assertTrue(distanceRan >= testPower);
+        assertTrue(distanceRan <= testSpeed);
     }
 
     @Test
-    void generateMovement_returnsZero_NoStamina() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_NO_STAMINA, TEST_POWER);
+    void generateMovement_returnsZero_whenNoStamina() {
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testNoStamina = 0;
+
+        final Stats testStats =
+                new Stats(testSpeed, testNoStamina, testPower);
 
         final int distanceRan = testStats.generateMovement();
 
-        assertEquals(TEST_NO_STAMINA, distanceRan);
+        assertEquals(testNoStamina, distanceRan);
     }
 
     @Test
-    void generateMovement_depletesStamina() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+    void generateMovement_keepsStaminaUnchanged() {
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
         testStats.generateMovement();
 
-        assertEquals(TEST_DEPLETED_STAMINA, testStats.getStamina());
+        assertEquals(testStamina, testStats.getStamina());
     }
 
     @Test
     void consumeStamina_depletesStaminaToZero() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+        final int testNoStamina = 0;
 
-        testStats.consumeStamina(TEST_STAMINA);
-        testStats.consumeStamina(TEST_STAMINA);
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
-        assertEquals(TEST_NO_STAMINA, testStats.getStamina());
+        testStats.consumeStamina(testStamina);
+        testStats.consumeStamina(testStamina);
+
+        assertEquals(testNoStamina, testStats.getStamina());
     }
 
     @Test
     void increaseSpeed_increasesSpeed() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+        final int testModifyStatsAmount = 2;
 
-        testStats.increaseSpeed(TEST_MODIFY_STATS_AMOUNT);
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
-        assertEquals(TEST_SPEED + TEST_MODIFY_STATS_AMOUNT, testStats.getSpeed());
-        assertEquals(TEST_STAMINA, testStats.getStamina());
-        assertEquals(TEST_POWER, testStats.getPower());
+        testStats.increaseSpeed(testModifyStatsAmount);
+
+        assertEquals(
+                testSpeed + testModifyStatsAmount,
+                testStats.getSpeed());
+
+        assertEquals(testStamina, testStats.getStamina());
+        assertEquals(testPower, testStats.getPower());
     }
 
     @Test
     void increasePower_increasesPower() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+        final int testModifyStatsAmount = 2;
 
-        testStats.increasePower(TEST_MODIFY_STATS_AMOUNT);
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
-        assertEquals(TEST_SPEED, testStats.getSpeed());
-        assertEquals(TEST_STAMINA, testStats.getStamina());
-        assertEquals(TEST_POWER + TEST_MODIFY_STATS_AMOUNT, testStats.getPower());
+        testStats.increasePower(testModifyStatsAmount);
+
+        assertEquals(testSpeed, testStats.getSpeed());
+        assertEquals(testStamina, testStats.getStamina());
+
+        assertEquals(
+                testPower + testModifyStatsAmount,
+                testStats.getPower());
     }
 
     @Test
     void increaseStamina_increasesStamina() {
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+        final int testSpeed = 6;
+        final int testPower = 3;
+        final int testStamina = 3;
+        final int testModifyStatsAmount = 2;
 
-        testStats.increaseStamina(TEST_MODIFY_STATS_AMOUNT);
+        final Stats testStats =
+                new Stats(testSpeed, testStamina, testPower);
 
-        assertEquals(TEST_SPEED, testStats.getSpeed());
-        assertEquals(TEST_STAMINA + TEST_MODIFY_STATS_AMOUNT, testStats.getStamina());
-        assertEquals(TEST_POWER, testStats.getPower());
+        testStats.increaseStamina(testModifyStatsAmount);
+
+        assertEquals(testSpeed, testStats.getSpeed());
+
+        assertEquals(
+                testStamina + testModifyStatsAmount,
+                testStats.getStamina());
+
+        assertEquals(testPower, testStats.getPower());
     }
 }

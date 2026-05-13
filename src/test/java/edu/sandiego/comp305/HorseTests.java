@@ -1,15 +1,15 @@
 package edu.sandiego.comp305;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.*;
 
 public class HorseTests {
-    private static final int TEST_SPEED = 1;
-    private static final int TEST_POWER = 1;
-    private static final int TEST_STAMINA = 1;
+    private static final int TEST_SPEED = 5;
+    private static final int TEST_POWER = 5;
+    private static final int TEST_STAMINA = 2;
 
     private static final int MOVE_DISTANCE = 5;
 
@@ -17,34 +17,40 @@ public class HorseTests {
 
     private static final int TEST_TRACK_LENGTH = 10;
 
+    private Horse testHorse;
+
+    @BeforeEach
+    void init() {
+        final Stats testStats =
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
+
+        testHorse = new Horse("Nunu", testStats);
+    }
+
     @Test
     void constructor_setsNameStatsDistanceTrophies() {
-        final int EXPECTED_DISTANCE_AND_TROPHY_COUNT = 0;
-
-        final Stats testStats = new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER);
-        final Horse testHorse = new Horse("Nunu", testStats);
+        final int expectedDistanceAndTrophyCount = 0;
 
         assertEquals("Nunu", testHorse.getName());
-        assertEquals(testStats, testHorse.getStats());
-        assertEquals(EXPECTED_DISTANCE_AND_TROPHY_COUNT, testHorse.getCurrentDistanceRan());
-        assertEquals(EXPECTED_DISTANCE_AND_TROPHY_COUNT, testHorse.getTrophyCount());
+
+        assertEquals(
+                expectedDistanceAndTrophyCount,
+                testHorse.getCurrentDistanceRan());
+
+        assertEquals(
+                expectedDistanceAndTrophyCount,
+                testHorse.getTrophyCount());
     }
 
     @Test
     void addTrophies_increasesTrophyCount() {
-        final Horse testHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
         testHorse.addTrophies(TROPHIES_TO_ADD);
 
         assertEquals(TROPHIES_TO_ADD, testHorse.getTrophyCount());
     }
 
     @Test
-    void move_increasesDistanceRan_byMoveDistance() {
-        final Stats testStats = mock(Stats.class);
-        when(testStats.generateMovement()).thenReturn(MOVE_DISTANCE);
-
-        final Horse testHorse = new Horse("Nunu", testStats);
-
+    void move_increasesDistanceByMoveDistance() {
         final int distanceRan = testHorse.move();
 
         assertEquals(MOVE_DISTANCE, distanceRan);
@@ -53,18 +59,11 @@ public class HorseTests {
 
     @Test
     void hasFinished_returnsFalse_DistanceLessThanTrackLength() {
-        final Horse testHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-
         assertFalse(testHorse.hasFinished(TEST_TRACK_LENGTH));
     }
 
     @Test
     void hasFinished_returnsTrue_DistanceEqualsTrackLength() {
-        final Stats testStats = mock(Stats.class);
-        when(testStats.generateMovement()).thenReturn(MOVE_DISTANCE, MOVE_DISTANCE);
-
-        final Horse testHorse = new Horse("Nunu", testStats);
-
         testHorse.move();
         testHorse.move();
 
@@ -74,33 +73,41 @@ public class HorseTests {
 
     @Test
     void reset_resetsDistance_keepsTrophies() {
-        final int EXPECTED_TROPHY_COUNT = 10;
-        final int EXPECTED_DISTANCE = 0;
+        final int expectedTrophyCount = 10;
+        final int expectedDistance = 0;
 
-        final Stats testStats = mock(Stats.class);
-        when(testStats.generateMovement()).thenReturn(MOVE_DISTANCE);
-
-        final Horse testHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
         testHorse.addTrophies(TROPHIES_TO_ADD);
         testHorse.addTrophies(TROPHIES_TO_ADD);
 
         testHorse.move();
         testHorse.resetForCurrentRace();
 
-        assertEquals(EXPECTED_DISTANCE, testHorse.getCurrentDistanceRan());
-        assertEquals(EXPECTED_TROPHY_COUNT, testHorse.getTrophyCount());
+        assertEquals(expectedDistance, testHorse.getCurrentDistanceRan());
+        assertEquals(expectedTrophyCount, testHorse.getTrophyCount());
+    }
+
+    @Test
+    void move_consumesStaminaEveryTwoRounds() {
+        testHorse.move();
+
+        assertEquals(TEST_STAMINA, testHorse.getStats().getStamina());
+
+        testHorse.move();
+
+        assertEquals(TEST_STAMINA - 1, testHorse.getStats().getStamina());
     }
 
     @Test
     void applyRaceEffect_appliesEffect() {
-        final int SPEED_CHANGE = 1;
-        final int POWER_CHANGE = 1;
+        final int speedChange = 1;
+        final int powerChange = 1;
 
-        final Horse testHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        testHorse.applyRaceEffect(new RaceEffect(speedChange, powerChange));
 
-        testHorse.applyRaceEffect(new RaceEffect(SPEED_CHANGE, POWER_CHANGE));
+        final int distanceRan = testHorse.move();
 
-        assertEquals(TEST_SPEED + SPEED_CHANGE, testHorse.getStats().getSpeed());
-        assertEquals(TEST_POWER + POWER_CHANGE, testHorse.getStats().getPower());
+        assertEquals(TEST_SPEED + speedChange, distanceRan);
+        assertEquals(TEST_SPEED, testHorse.getStats().getSpeed());
+        assertEquals(TEST_POWER, testHorse.getStats().getPower());
     }
 }

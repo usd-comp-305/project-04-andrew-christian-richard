@@ -3,43 +3,59 @@ package edu.sandiego.comp305;
 public class HorseUpgradeSystem implements UpgradeSystem {
     private static final int LEVEL_UP_AMOUNT = 1;
 
+    private static final int SPEED_UPGRADE_INDEX = 0;
+
+    private static final int STAMINA_UPGRADE_INDEX = 1;
+
+    private static final int POWER_UPGRADE_INDEX = 2;
+
+    private static final int UPGRADE_COUNT = 3;
+
+    private static final String UPGRADE_SEPARATOR = "\\s+";
+
     @Override
-    public void levelUpHorse(Horse horse) {
+    public void levelUpHorse(final Horse horse) {
         horse.getStats().increaseSpeed(LEVEL_UP_AMOUNT);
         horse.getStats().increaseStamina(LEVEL_UP_AMOUNT);
         horse.getStats().increasePower(LEVEL_UP_AMOUNT);
     }
 
     @Override
-    public void applyUpgrade(Horse horse, String statType, int amount) {
-        switch (statType.toLowerCase()) {
-            case "speed":
-                horse.getStats().increaseSpeed(amount);
-                break;
-            case "stamina":
-                horse.getStats().increaseStamina(amount);
-                break;
-            case "power":
-                horse.getStats().increasePower(amount);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid stat type: " + statType);
-        }
+    public void applyUpgrade(final Horse horse, final String upgradeInput) {
+        final String[] upgradeAmounts =
+                upgradeInput.trim().split(UPGRADE_SEPARATOR);
+
+        validateUpgradeInput(upgradeAmounts);
+
+        horse.getStats().increaseSpeed(
+                parseUpgradeAmount(upgradeAmounts[SPEED_UPGRADE_INDEX]));
+
+        horse.getStats().increaseStamina(
+                parseUpgradeAmount(upgradeAmounts[STAMINA_UPGRADE_INDEX]));
+
+        horse.getStats().increasePower(
+                parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]));
     }
 
     @Override
-    public void awardTrophies(Horse horse, Placement placement) {
-        horse.addTrophies(getTrophyValuesByPlacement(placement));
+    public void awardTrophies(final Horse horse, final Placement placement) {
+        horse.addTrophies(placement.getTrophyValue());
     }
 
-    private int getTrophyValuesByPlacement(Placement placement) {
-        return switch (placement) {
-            case FIRST -> 5;
-            case SECOND -> 4;
-            case THIRD -> 3;
-            case FOURTH -> 2;
-            case FIFTH -> 1;
-            default -> 0;
-        };
+    private void validateUpgradeInput(final String[] upgradeAmounts) {
+        if (upgradeAmounts.length != UPGRADE_COUNT) {
+            throw new IllegalArgumentException(
+                    "Upgrade input must include speed, stamina, and power.");
+        }
+    }
+
+    private int parseUpgradeAmount(final String upgradeAmount) {
+        try {
+            return Integer.parseInt(upgradeAmount);
+        } catch (final NumberFormatException exception) {
+            throw new IllegalArgumentException(
+                    "Upgrade amounts must be whole numbers.",
+                    exception);
+        }
     }
 }

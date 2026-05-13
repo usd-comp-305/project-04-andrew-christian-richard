@@ -2,12 +2,21 @@ package edu.sandiego.comp305;
 
 public class HorseRacingGame {
     private final Horse playerHorse;
+
     private final RaceManager raceManager;
+
     private final UpgradeSystem progressionSystem;
+
     private final EventFactory eventFactory;
+
     private final HorseFactory horseFactory;
 
-    public HorseRacingGame(final Horse playerHorse, final RaceManager raceManager, final UpgradeSystem progressionSystem, final EventFactory eventFactory, final HorseFactory horseFactory) {
+    public HorseRacingGame(
+            final Horse playerHorse,
+            final RaceManager raceManager,
+            final UpgradeSystem progressionSystem,
+            final EventFactory eventFactory,
+            final HorseFactory horseFactory) {
         this.playerHorse = playerHorse;
         this.raceManager = raceManager;
         this.progressionSystem = progressionSystem;
@@ -19,7 +28,7 @@ public class HorseRacingGame {
 
     }
 
-    public void runRace(Race race) {
+    public void runRace(final Race race) {
 
     }
 

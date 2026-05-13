@@ -1,19 +1,34 @@
 package edu.sandiego.comp305;
 
 public class Horse implements RaceParticipant {
+    private static final int STAMINA_DEPLETION_INTERVAL = 2;
+
+    private static final int STAMINA_DEPLETION_RATE = 1;
+
     private final String name;
+
     private final Stats stats;
+
     private int currentDistance;
+
     private int trophyCount;
 
-    public Horse(final String name, final Stats stats) {
+    private int roundsMoved;
+
+    private RaceEffect raceEffect;
+
+    public Horse(
+            final String name,
+            final Stats stats) {
         this.name = name;
         this.stats = stats;
         this.currentDistance = 0;
         this.trophyCount = 0;
+        this.roundsMoved = 0;
+        this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
-    public void addTrophies(int amount) {
+    public void addTrophies(final int amount) {
         trophyCount += amount;
     }
 
@@ -21,8 +36,14 @@ public class Horse implements RaceParticipant {
         return trophyCount;
     }
 
-    public void resetForCurrentRace() {
+    public void resetCurrentDistance() {
         currentDistance = 0;
+        roundsMoved = 0;
+        raceEffect = RaceEffect.NO_EFFECT;
+    }
+
+    public void resetForCurrentRace() {
+        resetCurrentDistance();
     }
 
     public int getCurrentDistanceRan() {
@@ -40,21 +61,32 @@ public class Horse implements RaceParticipant {
     }
 
     @Override
-    public boolean hasFinished(int trackLength) {
+    public boolean hasFinished(final int trackLength) {
         return currentDistance >= trackLength;
     }
 
     @Override
     public void applyRaceEffect(final RaceEffect effect) {
-        effect.apply(this);
+        raceEffect = effect;
     }
 
     @Override
     public int move() {
-        final int spacesMoved = stats.generateMovement();
+        final int spacesMoved = stats.generateMovement(raceEffect);
         currentDistance += spacesMoved;
 
+        if (spacesMoved > 0) {
+            roundsMoved++;
+            decreaseStaminaEvery2Rounds();
+        }
+
         return spacesMoved;
+    }
+
+    private void decreaseStaminaEvery2Rounds() {
+        if (roundsMoved % STAMINA_DEPLETION_INTERVAL == 0) {
+            stats.consumeStamina(STAMINA_DEPLETION_RATE);
+        }
     }
 
     @Override

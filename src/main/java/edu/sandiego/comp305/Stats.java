@@ -3,14 +3,18 @@ package edu.sandiego.comp305;
 import java.util.*;
 
 public class Stats {
-    private static final int STAMINA_DEPLETION_RATE_PER_ROUND = 1;
     private final Random random = new Random();
 
     private int speed;
+
     private int stamina;
+
     private int power;
 
-    public Stats(int speed, int stamina, int power) {
+    public Stats(
+            int speed,
+            int stamina,
+            int power) {
         this.speed = speed;
         this.stamina = stamina;
         this.power = power;
@@ -29,40 +33,44 @@ public class Stats {
     }
 
     public int generateMovement() {
-        final int minMovementDistance;
+        return generateMovement(RaceEffect.NO_EFFECT);
+    }
 
-        if (stamina == 0 || speed == 0) {
+    public int generateMovement(final RaceEffect effect) {
+        final int minMovementDistance =
+                power + effect.getPowerChange();
+
+        final int maxMovementDistance =
+                speed + effect.getSpeedChange();
+
+        if (stamina == 0
+                || minMovementDistance <= 0
+                || maxMovementDistance <= 0) {
             return 0;
         }
 
-        minMovementDistance = Math.min(power, speed);
+        final int movementRange = maxMovementDistance - minMovementDistance + 1;
 
-        final int movementRange = speed - minMovementDistance + 1;
-        final int movementDistance = minMovementDistance + random.nextInt(movementRange);
-
-        consumeStamina(STAMINA_DEPLETION_RATE_PER_ROUND);
-
-        return movementDistance;
+        return minMovementDistance + random.nextInt(movementRange);
     }
 
-    public void consumeStamina(int amount) {
+    public void consumeStamina(final int amount) {
         if (stamina < amount) {
             stamina = 0;
-        }
-        else {
+        } else {
             stamina -= amount;
         }
     }
 
-    public void increaseSpeed(int amount) {
+    public void increaseSpeed(final int amount) {
         speed += amount;
     }
 
-    public void increaseStamina(int amount) {
+    public void increaseStamina(final int amount) {
         stamina += amount;
     }
 
-    public void increasePower(int amount) {
+    public void increasePower(final int amount) {
         power += amount;
     }
 }
