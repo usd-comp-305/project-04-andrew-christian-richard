@@ -31,7 +31,7 @@ public class Display {
     }
 
     public void printRound(Race race){
-        int trackDistance = race.getTrack().getLengthInMeters();
+        int trackDistance = race.getLengthInMeters();
         Horse player = race.getPlayerHorse();
         Stats playerStats = player.getStats();
         List<RaceParticipant> standings = race.getCurrentStandings();
@@ -74,7 +74,7 @@ public class Display {
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("The race has ended! Here are the results are in!");
         System.out.println("══════════════════════════════════════════════════════");
-        List<Horse> finishOrder = race.getFinishOrder();
+        List<RaceParticipant> finishOrder = race.getFinishOrder();
         for (int i = 0; i < finishOrder.size(); i++) {
             RaceParticipant participant = finishOrder.get(i);
             System.out.printf("%d. %s%n", i + 1, participant.getName());
