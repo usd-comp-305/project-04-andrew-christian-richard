@@ -39,10 +39,6 @@ public class Race {
         return null;
     }
 
-    public Horse getPlayerHorse() {
-        return null;
-    }
-
     public Track getTrack() {
         return null;
     }
@@ -86,14 +82,6 @@ public class Race {
 
     public int getRound() {
         return round;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public List<Horse> getFinishOrder() {
-        return Collections.unmodifiableList(finishOrder);
     }
       
     public RaceState getState() {
