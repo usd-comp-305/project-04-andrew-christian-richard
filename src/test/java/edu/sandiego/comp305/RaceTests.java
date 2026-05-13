@@ -11,18 +11,10 @@ import static org.mockito.Mockito.*;
 public class RaceTests {
 
     private Race race;
-
     private Horse mockHorse;
-
     private RaceParticipant mockNPC;
-
     private EventChoice mockChoice;
-
     private RaceEffect mockEffect;
-
-    private Stats mockStats;
-
-    private Event mockEvent;
 
     @BeforeEach
     public void setUp() {
@@ -32,46 +24,38 @@ public class RaceTests {
         mockNPC    = mock(RaceParticipant.class);
         mockChoice = mock(EventChoice.class);
         mockEffect = mock(RaceEffect.class);
-        mockStats  = mock(Stats.class);
-        mockEvent  = mock(Event.class);
-
-        when(mockHorse.getStats()).thenReturn(mockStats);
     }
 
-    // constructor tests
-
     @Test
-    public void testInitialStateIsNotStarted() {
+    public void initialStateIsNotStarted() {
         assertEquals(RaceState.NOT_STARTED, race.getState());
     }
 
     @Test
-    public void testInitialRoundIsZero() {
+    public void initialRoundIsZero() {
         assertEquals(0, race.getRound());
     }
 
     @Test
-    public void testInitialParticipantListIsEmpty() {
+    public void initialParticipantListIsEmpty() {
         assertTrue(race.getCurrentStandings().isEmpty());
     }
 
     @Test
-    public void testInitialFinishOrderIsEmpty() {
+    public void initialFinishOrderIsEmpty() {
         assertTrue(race.getFinishOrder().isEmpty());
     }
 
     @Test
-    public void testLengthInMetersStoredCorrectly() {
-        final Race shortRace = new Race(Difficulty.EASY, 500);
+    public void lengthInMeters_isStoredCorrectly() {
+        Race shortRace = new Race(Difficulty.EASY, 500);
         assertEquals(500, shortRace.getLengthInMeters());
     }
 
     @Test
-    public void testDifficultyStoredCorrectly() {
+    public void difficulty_StoredCorrectly() {
         assertEquals(Difficulty.MEDIUM, race.getDifficulty());
     }
-
-    // addParticipant() tests
 
     @Test
     public void testAddParticipantIncreasesStandingsSize() {
@@ -84,13 +68,11 @@ public class RaceTests {
         race.addParticipant(mockHorse);
         race.addParticipant(mockNPC);
 
-        final List<RaceParticipant> standings = race.getCurrentStandings();
+        List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertTrue(standings.contains(mockHorse));
         assertTrue(standings.contains(mockNPC));
     }
-
-    // start() tests
 
     @Test
     public void testStartSetsStateToInProgress() {
@@ -104,8 +86,6 @@ public class RaceTests {
         assertEquals(1, race.getRound());
     }
 
-    // isFinished() tests
-
     @Test
     public void testIsFinishedReturnsFalseBeforeStart() {
         assertFalse(race.isFinished());
@@ -117,8 +97,6 @@ public class RaceTests {
         assertFalse(race.isFinished());
     }
 
-    // prepareRound() / hasEvent() / getEvent() tests
-
     @Test
     public void testHasEventReturnsFalseInitially() {
         assertFalse(race.hasEvent());
@@ -129,20 +107,9 @@ public class RaceTests {
         assertNull(race.getEvent());
     }
 
-    @Test
-    public void testPrepareRoundClearsExistingEvent() {
-        race.setEvent(mockEvent);
-
-        assertTrue(race.hasEvent());
-
-        race.prepareRound();
-        assertFalse(race.hasEvent());
-    }
-
-    // resolveEvent() tests
 
     @Test
-    public void testResolveEventThrowsWhenChoiceIsNull() {
+    public void resolveEvent_ThrowsWhenChoiceIsNull() {
         race.addParticipant(mockHorse);
 
         assertThrows(IllegalArgumentException.class, () -> {
@@ -151,7 +118,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testResolveEventThrowsWhenNoPlayerHorse() {
+    public void resolveEvent_ThrowsWhenNoPlayerHorse() {
         // no Horse in the race, only an NPC
         race.addParticipant(mockNPC);
 
@@ -161,45 +128,27 @@ public class RaceTests {
     }
 
     @Test
-    public void testResolveEventAppliesSpeedChange() {
+    public void resolveEvent_AppliesEffect() {
         race.addParticipant(mockHorse);
         when(mockChoice.getEffect()).thenReturn(mockEffect);
-        when(mockEffect.getSpeedChange()).thenReturn(5);
-        when(mockEffect.getPowerChange()).thenReturn(0);
 
         race.resolveEvent(mockChoice);
 
-        verify(mockStats).increaseSpeed(5);
+        verify(mockHorse).applyRaceEffect(mockEffect);
     }
 
     @Test
-    public void testResolveEventAppliesPowerChange() {
+    public void resolveEvent_ClearsTheEvent() {
         race.addParticipant(mockHorse);
         when(mockChoice.getEffect()).thenReturn(mockEffect);
-        when(mockEffect.getSpeedChange()).thenReturn(0);
-        when(mockEffect.getPowerChange()).thenReturn(3);
-
-        race.resolveEvent(mockChoice);
-
-        verify(mockStats).increasePower(3);
-    }
-
-    @Test
-    public void testResolveEventClearsTheEvent() {
-        race.addParticipant(mockHorse);
-        when(mockChoice.getEffect()).thenReturn(mockEffect);
-        when(mockEffect.getSpeedChange()).thenReturn(0);
-        when(mockEffect.getPowerChange()).thenReturn(0);
 
         race.resolveEvent(mockChoice);
 
         assertFalse(race.hasEvent());
     }
 
-    // executeRound() tests
-
     @Test
-    public void testExecuteRoundDoesNothingIfNotStarted() {
+    public void executeRound_DoesNothingIfNotStarted() {
         race.addParticipant(mockHorse);
         race.executeRound();
 
@@ -207,7 +156,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundCallsMoveOnParticipants() {
+    public void executeRound_CallsMoveOnParticipants() {
         when(mockHorse.getCurrentDistance()).thenReturn(0);
 
         race.addParticipant(mockHorse);
@@ -218,7 +167,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundIncrementsRound() {
+    public void executeRound_IncrementsRound() {
         when(mockHorse.getCurrentDistance()).thenReturn(0);
 
         race.addParticipant(mockHorse);
@@ -230,7 +179,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundSetsFinishedWhenAllParticipantsCrossLine() {
+    public void executeRound_SetsFinishedWhenAllParticipantsCrossLine() {
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
 
         race.addParticipant(mockHorse);
@@ -241,7 +190,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundDoesNotFinishIfSomeParticipantsStillRunning() {
+    public void executeRound_DoesNotFinishIfSomeParticipantsStillRunning() {
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
         when(mockNPC.getCurrentDistance()).thenReturn(500);
 
@@ -254,7 +203,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testExecuteRoundSkipsFinishedParticipants() {
+    public void executeRound_DoesNotMoveParticipantsThatHaveAlreadyFinished() {
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
         when(mockNPC.getCurrentDistance()).thenReturn(500);
 
@@ -271,26 +220,22 @@ public class RaceTests {
         verify(mockHorse, never()).move();
     }
 
-    // getPlayerHorse() tests
-
     @Test
-    public void testGetPlayerHorseReturnsNullWhenNoHorseAdded() {
+    public void getPlayerHorse_ReturnsNullWhenNoHorseAdded() {
         race.addParticipant(mockNPC);
         assertNull(race.getPlayerHorse());
     }
 
     @Test
-    public void testGetPlayerHorseReturnsHorseWhenPresent() {
+    public void getPlayerHorse_ReturnsHorseWhenPresent() {
         race.addParticipant(mockHorse);
         assertEquals(mockHorse, race.getPlayerHorse());
     }
 
-    // getCurrentStandings() / getFinishOrder() immutability tests
-
     @Test
-    public void testCurrentStandingsIsUnmodifiable() {
+    public void currentStandingsIsUnmodifiable() {
         race.addParticipant(mockHorse);
-        final List<RaceParticipant> standings = race.getCurrentStandings();
+        List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             standings.add(mockNPC);
@@ -298,18 +243,16 @@ public class RaceTests {
     }
 
     @Test
-    public void testFinishOrderIsUnmodifiable() {
-        final List<RaceParticipant> finishOrder = race.getFinishOrder();
+    public void finishOrder_IsUnmodifiable() {
+        List<RaceParticipant> finishOrder = race.getFinishOrder();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             finishOrder.add(mockHorse);
         });
     }
 
-    // getPlacement() tests
-
     @Test
-    public void testGetPlacementThrowsForHorseThatHasNotFinished() {
+    public void getPlacement_ThrowsForHorseThatHasNotFinished() {
         race.addParticipant(mockHorse);
         when(mockHorse.getCurrentDistance()).thenReturn(0);
         race.start();
@@ -320,7 +263,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testGetPlacementReturnsFirstForWinner() {
+    public void getPlacement_ReturnsFirstForWinner() {
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
         race.addParticipant(mockHorse);
         race.start();
@@ -330,7 +273,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testGetPlacementReturnsSecondForRunnerUp() {
+    public void getPlacement_ReturnsSecondForRunnerUp() {
         when(mockNPC.getCurrentDistance()).thenReturn(1000);
         when(mockHorse.getCurrentDistance()).thenReturn(1000);
 

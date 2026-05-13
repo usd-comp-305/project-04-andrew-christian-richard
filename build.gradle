@@ -33,7 +33,7 @@ test {
 }
 
 application {
-    mainClass = 'edu.sandiego.comp305.<whatever your main class is>'
+    mainClass = 'edu.sandiego.comp305.HorseRace'
 }
 
 test.configure {

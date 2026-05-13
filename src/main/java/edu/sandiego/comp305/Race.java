@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Race {
+    private static final int EVENT_ROUND_INTERVAL = 3;
+
+    private static final int STAMINA_DEPLETION_INTERVAL = 5;
+
+    private static final int MAX_NUM_ROUNDS = 60;
+
     private final Difficulty difficulty;
 
     private final int lengthInMeters;
@@ -14,24 +21,57 @@ public class Race {
 
     private final List<RaceParticipant> finishOrder;
 
+    private AbstractEventFactory eventFactory;
+
+    private final EventDescriptionProvider descriptor;
+
     private RaceState state;
 
     private int round;
 
     private Event event;
 
+    private Horse playerHorse;
+
+    private int currentPlayerStamina;
+
+    private final Random random;
+
     public Race(
             final Difficulty difficulty,
             final int lengthInMeters) {
         this.difficulty = difficulty;
+        this.random = new Random();
         this.lengthInMeters = lengthInMeters;
         this.participants = new ArrayList<>();
         this.finishOrder = new ArrayList<>();
+        this.descriptor = new EventDescriptionProvider();
+        this.eventFactory = null;
         this.state = RaceState.NOT_STARTED;
         this.round = 0;
+        this.event = null;
+        this.playerHorse = null;
+        this.currentPlayerStamina = 0;
+    }
+
+    public void setPlayerHorse(final Horse playerHorse) {
+        if (playerHorse == null) {
+            throw new IllegalArgumentException("Player horse cannot be null.");
+        }
+
+        this.playerHorse = playerHorse;
+        this.currentPlayerStamina = playerHorse.getStats().getStamina();
+
+        if (!participants.contains(playerHorse)) {
+            participants.add(playerHorse);
+        }
     }
 
     public void addParticipant(final RaceParticipant participant) {
+        if (participant == null) {
+            throw new IllegalArgumentException("Participant cannot be null.");
+        }
+
         participants.add(participant);
     }
 
@@ -45,7 +85,22 @@ public class Race {
     }
 
     public void prepareRound() {
+        if (round > MAX_NUM_ROUNDS) {
+            state = RaceState.FINISHED;
+            return;
+        }
+
         event = null;
+
+        if (playerHorse == null) {
+            throw new IllegalStateException("Race does not have a player horse.");
+        }
+
+        eventFactory = new AbstractEventFactory(playerHorse, descriptor);
+
+        if (round % EVENT_ROUND_INTERVAL == 0) {
+            event = eventFactory.createRandomEvent(random);
+        }
     }
 
     public boolean hasEvent() {
@@ -56,27 +111,19 @@ public class Race {
         return event;
     }
 
-    void setEvent(final Event nextEvent) {
-        event = nextEvent;
-    }
-
     public void resolveEvent(final EventChoice selectedChoice) {
         if (selectedChoice == null) {
-            throw new IllegalArgumentException(
-                    "Selected choice cannot be null.");
+            throw new IllegalArgumentException("Selected choice cannot be null.");
         }
 
-        final Horse playerHorse = getPlayerHorse();
-
         if (playerHorse == null) {
-            throw new IllegalStateException(
-                    "Race does not have a player horse.");
+            throw new IllegalStateException("Race does not have a player horse.");
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
+        playerHorse.applyRaceEffect(effect);
 
-        playerHorse.getStats().increaseSpeed(effect.getSpeedChange());
-        playerHorse.getStats().increasePower(effect.getPowerChange());
+        applyStaminaChange(selectedChoice.getChange());
 
         event = null;
     }
@@ -89,11 +136,20 @@ public class Race {
         moveParticipants();
         updateFinishOrder();
         sortCurrentStandings();
+        decreaseStamina();
 
-        if (finishOrder.size() == participants.size()) {
+        if (finishOrder.contains(playerHorse) || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
         } else {
             round++;
+        }
+    }
+
+    private void applyStaminaChange(final StaminaChange staminaChange) {
+        currentPlayerStamina += staminaChange.getChange();
+
+        if (currentPlayerStamina < 0) {
+            currentPlayerStamina = 0;
         }
     }
 
@@ -125,13 +181,7 @@ public class Race {
     }
 
     public Horse getPlayerHorse() {
-        for (final RaceParticipant participant : participants) {
-            if (participant instanceof Horse) {
-                return (Horse) participant;
-            }
-        }
-
-        return null;
+        return playerHorse;
     }
 
     public List<RaceParticipant> getCurrentStandings() {
@@ -158,8 +208,7 @@ public class Race {
         final int index = finishOrder.indexOf(horse);
 
         if (index < 0) {
-            throw new IllegalArgumentException(
-                    "Horse has not finished the race.");
+            throw new IllegalArgumentException("Horse has not finished the race.");
         }
 
         return Placement.values()[index];
@@ -168,4 +217,15 @@ public class Race {
     public int getLengthInMeters() {
         return lengthInMeters;
     }
+
+    public int getCurrentPlayerStamina() {
+        return currentPlayerStamina;
+    }
+
+    private void decreaseStamina() {
+        if (round % STAMINA_DEPLETION_INTERVAL == 0) {
+            currentPlayerStamina--;
+        }
+    }
+
 }
