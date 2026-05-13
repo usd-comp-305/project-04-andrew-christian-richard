@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class HorseRacingGame {
     private final RaceManager raceManager;
-    private final UpgradeSystem progressionSystem;
+    private final UpgradeSystem upgradeSystem;
     private final Scanner scanner;
     private final Display display;
     private Horse playerHorse;
@@ -15,7 +15,7 @@ public class HorseRacingGame {
                            final UpgradeSystem progressionSystem, Scanner scanner, Display display){
         this.playerHorse = null;
         this.raceManager = raceManager;
-        this.progressionSystem = progressionSystem;
+        this.upgradeSystem = progressionSystem;
         this.scanner = scanner;
         this.display = display;
         this.totalTrophies = 0;
@@ -24,9 +24,9 @@ public class HorseRacingGame {
 
     public void startGame() {
         display.printWelcome();
-        display.printHorseCreation();
-        String horseName = scanner.nextLine();
-        this.playerHorse = playerHorseFactory.createHorse(horseName);
+        createPlayerHorse();
+
+
     }
 
     public void runRace(final Race race) {
@@ -34,7 +34,17 @@ public class HorseRacingGame {
     }
 
     public void handlePostRaceRewards(final Race race) {
-
     }
+
+    private void createPlayerHorse(){
+        display.printHorseCreation();
+        String horseName = scanner.nextLine();
+
+        while (horseName.isBlank()) {
+            horseName = scanner.nextLine();
+        }
+        this.playerHorse = playerHorseFactory.createHorse(horseName);
+    }
+
 
 }
