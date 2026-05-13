@@ -37,10 +37,10 @@ public class Display {
     }
 
     public void printRound(Race race){
-        final int trackDistance = race.getTrack().getLengthInMeters();
         final Horse player = race.getPlayerHorse();
         final Stats playerStats = player.getStats();
         final List<RaceParticipant> standings = race.getCurrentStandings();
+        final int trackDistance = race.getLengthInMeters();
 
         System.out.println("══════════════════════════════════════════════════════");
         System.out.printf(
@@ -81,9 +81,9 @@ public class Display {
         System.out.println("══════════════════════════════════════════════════════");
     }
 
-    public void printUpgradeSystem(){
+    public void printUpgradeSystem(final int upgradePoints){
         System.out.println("══════════════════════════════════════════════════════");
-        System.out.println("It is time to upgrade your horse before the next race!");
+        System.out.printf("It is time to upgrade your horse before the next race! You have %d%n", upgradePoints);
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("Enter upgrades as three numbers:");
         System.out.println("<Speed> <Power> <Stamina>");
@@ -98,7 +98,7 @@ public class Display {
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("The race has ended! Here are the results are in!");
         System.out.println("══════════════════════════════════════════════════════");
-        final List<Horse> finishOrder = race.getFinishOrder();
+        final List<RaceParticipant> finishOrder = race.getFinishOrder();
         for (int i = 0; i < finishOrder.size(); i++) {
             final RaceParticipant participant = finishOrder.get(i);
             System.out.printf("%d. %s%n", i + 1, participant.getName());

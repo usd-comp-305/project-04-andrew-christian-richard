@@ -5,6 +5,8 @@ public class Horse implements RaceParticipant {
 
     private static final int STAMINA_DEPLETION_RATE = 1;
 
+    private static final int INITIAL_UPGRADE_POINTS = 5;
+
     private final String name;
 
     private final Stats stats;
@@ -26,7 +28,7 @@ public class Horse implements RaceParticipant {
         this.stats = stats;
         this.currentDistance = 0;
         this.trophyCount = 0;
-        this.currentUpgradePoints = 0;
+        this.currentUpgradePoints = INITIAL_UPGRADE_POINTS;
         this.roundsMoved = 0;
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
