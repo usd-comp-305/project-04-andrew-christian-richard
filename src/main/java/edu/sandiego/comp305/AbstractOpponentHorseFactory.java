@@ -10,15 +10,17 @@ import java.util.function.IntUnaryOperator;
  *
  *   Difficulty \ Track  | 100m | 200m | 400m
  *   --------------------+------+------+------
- *   EASY                |   8  |  32  |  56
- *   MEDIUM              |  16  |  40  |  64
- *   HARD                |  24  |  48  |  72
+ *   EASY                |  10  |  34  |  58
+ *   MEDIUM              |  18  |  42  |  66
+ *   HARD                |  26  |  50  |  74
 
  */
 public class AbstractOpponentHorseFactory implements HorseFactory {
-    private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 8;
+    private static final int BASE_STAT_POINTS = 10;
 
-    private static final int BASE_TRACK_STAT_MULTIPLIER = 24;
+    private static final int DIFFICULTY_STAT_INCREMENT = 8;
+
+    private static final int TRACK_STAT_INCREMENT = 24;
 
     private final Difficulty difficulty;
 
@@ -114,10 +116,8 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
     }
 
     private int getOverallStatPoints() {
-        final int difficultyStatPoints = (getDifficultyMultiplier() + 1)
-                * BASE_DIFFICULTY_STAT_MULTIPLIER;
-
-        return difficultyStatPoints
-                + (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
+        return BASE_STAT_POINTS
+                + (getDifficultyMultiplier() * DIFFICULTY_STAT_INCREMENT)
+                + (getTrackTypeMultiplier() * TRACK_STAT_INCREMENT);
     }
 }

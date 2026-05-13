@@ -1,7 +1,7 @@
 package edu.sandiego.comp305;
 
 public class Horse implements RaceParticipant {
-    private static final int STAMINA_DEPLETION_INTERVAL = 2;
+    private static final int STAMINA_DEPLETION_INTERVAL = 5;
 
     private static final int STAMINA_DEPLETION_RATE = 1;
 
@@ -21,6 +21,7 @@ public class Horse implements RaceParticipant {
 
     private RaceEffect raceEffect;
 
+
     public Horse(
             final String name,
             final Stats stats) {
@@ -31,16 +32,6 @@ public class Horse implements RaceParticipant {
         this.currentUpgradePoints = INITIAL_UPGRADE_POINTS;
         this.roundsMoved = 0;
         this.raceEffect = RaceEffect.NO_EFFECT;
-    }
-
-    public Horse(final Horse horse) {
-        this.name = horse.name;
-        this.stats = new Stats(horse.stats);
-        this.currentDistance = horse.currentDistance;
-        this.trophyCount = horse.trophyCount;
-        this.currentUpgradePoints = horse.currentUpgradePoints;
-        this.roundsMoved = horse.roundsMoved;
-        this.raceEffect = horse.raceEffect;
     }
 
     public void addTrophies(final int amount) {
@@ -105,13 +96,13 @@ public class Horse implements RaceParticipant {
 
         if (spacesMoved > 0) {
             roundsMoved++;
-            decreaseStaminaEvery2Rounds();
+            decreaseStamina();
         }
 
         return spacesMoved;
     }
 
-    private void decreaseStaminaEvery2Rounds() {
+    private void decreaseStamina() {
         if (roundsMoved % STAMINA_DEPLETION_INTERVAL == 0) {
             stats.consumeStamina(STAMINA_DEPLETION_RATE);
         }

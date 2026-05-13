@@ -1,13 +1,12 @@
 package edu.sandiego.comp305;
 
-import java.util.Random;
 import java.util.Scanner;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class HorseRacingGame {
 
-    private static final int EXTRA_UPGRADE_POINTS = 3;
+    private static final int EXTRA_UPGRADE_POINTS = 4;
 
     private static final int FIRST_TOTAL_UPGRADE_POINTS = 12;
 
@@ -36,7 +35,7 @@ public class HorseRacingGame {
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
             final Display display) {
-            this.playerHorse = null;
+            this.playerHorse = playerHorse;
             this.raceManager = raceManager;
             this.upgradeSystem = progressionSystem;
             this.scanner = scanner::nextLine;

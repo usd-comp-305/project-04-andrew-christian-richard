@@ -18,13 +18,11 @@ public class Display {
 
         for (int i = 0; i < NUM_CHOICES; i++){
             final EventChoice choice = choices.get(i);
-            final RaceEffect effect = choice.getEffect();
 
             System.out.printf(
                     "[%d] %-30s %n",
                     i + 1,
                     choice.getLabel());
-            System.out.printf("%-48s %n", choice.getLabel());
         }
 
         System.out.println(
@@ -39,7 +37,6 @@ public class Display {
 
     public void printRound(final Race race){
         final Horse player = race.getPlayerHorse();
-//        final Stats playerStats = player.getStats();
         final List<RaceParticipant> standings = race.getCurrentStandings();
         final int trackDistance = race.getLengthInMeters();
 
@@ -61,24 +58,24 @@ public class Display {
                 "══════════════════════════════════════════════════════");
         for (int i = 0; i < standings.size(); i++) {
             final RaceParticipant horse = standings.get(i);
-            final boolean isPlayer = horse == player;
-            final boolean finished  = race.getFinishOrder().contains(horse);
+            final boolean isPlayer = horse.getName().equals(player.getName());
+            final boolean finished = race.getFinishOrder().contains(horse);
 
             final int dist = horse.getCurrentDistance();
             final int distanceToFinish = Math.max(0, trackDistance - dist);
-            String name = horse.getName() + " ";
-            if (isPlayer) {
-                name = horse.getName() + "◄";
-            }
 
             String pos = (i + 1) + ".";
             if (finished) {
                 pos = "FIN";
             }
 
+            final String playerArrow = isPlayer ? "◄" : "";
+            final String name = horse.getName();
+
             System.out.printf(
-                    "%-4s %-12s %4dm left %n",
+                    "%-4s %-3s %-12s %4dm left %n",
                     pos,
+                    playerArrow,
                     name,
                     distanceToFinish);
         }
@@ -88,7 +85,7 @@ public class Display {
                 "YOUR HORSE  SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
                 player.getStats().getSpeed(),
                 player.getStats().getPower(),
-                player.getStats().getStamina(),
+                race.getCurrentPlayerStamina(),
                 "");
         System.out.println(
                 "══════════════════════════════════════════════════════");

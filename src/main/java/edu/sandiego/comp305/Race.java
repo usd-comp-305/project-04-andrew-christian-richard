@@ -1,9 +1,15 @@
 package edu.sandiego.comp305;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 public class Race {
     private static final int EVENT_ROUND_INTERVAL = 3;
+
+    private static final int MAX_NUM_ROUNDS = 60;
 
     private final Difficulty difficulty;
 
@@ -20,7 +26,13 @@ public class Race {
     private RaceState state;
 
     private int round;
+
     private Event event;
+
+    private Horse playerHorse;
+
+    private int currentPlayerStamina;
+
     private final Random random;
 
     public Race(
@@ -36,9 +48,28 @@ public class Race {
         this.state = RaceState.NOT_STARTED;
         this.round = 0;
         this.event = null;
+        this.playerHorse = null;
+        this.currentPlayerStamina = 0;
+    }
+
+    public void setPlayerHorse(final Horse playerHorse) {
+        if (playerHorse == null) {
+            throw new IllegalArgumentException("Player horse cannot be null.");
+        }
+
+        this.playerHorse = playerHorse;
+        this.currentPlayerStamina = playerHorse.getStats().getStamina();
+
+        if (!participants.contains(playerHorse)) {
+            participants.add(playerHorse);
+        }
     }
 
     public void addParticipant(final RaceParticipant participant) {
+        if (participant == null) {
+            throw new IllegalArgumentException("Participant cannot be null.");
+        }
+
         participants.add(participant);
     }
 
@@ -52,8 +83,18 @@ public class Race {
     }
 
     public void prepareRound() {
+        if (round > MAX_NUM_ROUNDS) {
+            state = RaceState.FINISHED;
+            return;
+        }
+
         event = null;
-        eventFactory = new AbstractEventFactory(getPlayerHorse(), descriptor);
+
+        if (playerHorse == null) {
+            throw new IllegalStateException("Race does not have a player horse.");
+        }
+
+        eventFactory = new AbstractEventFactory(playerHorse, descriptor);
 
         if (round % EVENT_ROUND_INTERVAL == 0) {
             event = eventFactory.createRandomEvent(random);
@@ -73,15 +114,14 @@ public class Race {
             throw new IllegalArgumentException("Selected choice cannot be null.");
         }
 
-        Horse playerHorse = getPlayerHorse();
-
         if (playerHorse == null) {
             throw new IllegalStateException("Race does not have a player horse.");
         }
 
-        RaceEffect effect = selectedChoice.getEffect();
-
+        final RaceEffect effect = selectedChoice.getEffect();
         playerHorse.applyRaceEffect(effect);
+
+        applyStaminaChange(selectedChoice.getChange());
 
         event = null;
     }
@@ -95,15 +135,23 @@ public class Race {
         updateFinishOrder();
         sortCurrentStandings();
 
-        if (finishOrder.size() == participants.size()) {
+        if (finishOrder.contains(playerHorse) || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
         } else {
             round++;
         }
     }
 
+    private void applyStaminaChange(final StaminaChange staminaChange) {
+        currentPlayerStamina += staminaChange.getChange();
+
+        if (currentPlayerStamina < 0) {
+            currentPlayerStamina = 0;
+        }
+    }
+
     private void moveParticipants() {
-        for (RaceParticipant participant : participants) {
+        for (final RaceParticipant participant : participants) {
             if (!finishOrder.contains(participant)) {
                 participant.move();
             }
@@ -111,9 +159,10 @@ public class Race {
     }
 
     private void updateFinishOrder() {
-        for (RaceParticipant participant : participants) {
-            boolean hasFinished = participant.getCurrentDistance() >= lengthInMeters;
-            boolean alreadyRecorded = finishOrder.contains(participant);
+        for (final RaceParticipant participant : participants) {
+            final boolean hasFinished =
+                    participant.getCurrentDistance() >= lengthInMeters;
+            final boolean alreadyRecorded = finishOrder.contains(participant);
 
             if (hasFinished && !alreadyRecorded) {
                 finishOrder.add(participant);
@@ -123,18 +172,13 @@ public class Race {
 
     private void sortCurrentStandings() {
         participants.sort(
-                Comparator.comparingInt(RaceParticipant::getCurrentDistance).reversed()
+                Comparator.comparingInt(
+                        RaceParticipant::getCurrentDistance).reversed()
         );
     }
 
     public Horse getPlayerHorse() {
-        for (final RaceParticipant participant : participants) {
-            if (participant instanceof Horse) {
-                return (Horse) participant;
-            }
-        }
-
-        return null;
+        return playerHorse;
     }
 
     public List<RaceParticipant> getCurrentStandings() {
@@ -158,7 +202,7 @@ public class Race {
     }
 
     public Placement getPlacement(final Horse horse) {
-        int index = finishOrder.indexOf(horse);
+        final int index = finishOrder.indexOf(horse);
 
         if (index < 0) {
             throw new IllegalArgumentException("Horse has not finished the race.");
@@ -170,4 +214,9 @@ public class Race {
     public int getLengthInMeters() {
         return lengthInMeters;
     }
+
+    public int getCurrentPlayerStamina() {
+        return currentPlayerStamina;
+    }
+
 }
