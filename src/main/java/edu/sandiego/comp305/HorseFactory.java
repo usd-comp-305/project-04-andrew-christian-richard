@@ -1,6 +1,9 @@
 package edu.sandiego.comp305;
 
 public interface HorseFactory {
-    Horse createPlayerHorse(String name);
-    Horse createOpponentHorse(String name);
+    public static final int MIN_STAT = 1;
+
+    public static final int MAX_STAT = 100;
+
+    public abstract Horse createHorse(final String name);
 }

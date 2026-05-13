@@ -1,10 +1,15 @@
 package edu.sandiego.comp305;
 
 public interface RaceParticipant {
-    String getName();
-    Stats getStats();
-    int move();
-    int getCurrentDistance();
-    boolean hasFinished(int trackLength);
-    void applyRaceEffect(RaceEffect effect);
+    public abstract String getName();
+
+    public abstract Stats getStats();
+
+    public abstract int move();
+    
+    public abstract int getCurrentDistance();
+
+    public abstract boolean hasFinished(final int trackLength);
+
+    public abstract void applyRaceEffect(final RaceEffect effect);
 }
