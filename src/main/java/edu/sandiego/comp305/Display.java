@@ -20,6 +20,7 @@ public class Display {
             System.out.printf("[%d] %-30s %s %n", i + 1, choice.getLabel(), statChanges);
             System.out.printf("%-48s %n", choice.getLabel());
         }
+
         System.out.println("══════════════════════════════════════════════════════");
         System.out.printf( "Your stamina: %-38d %n", player.getStats().getStamina());
         System.out.println("══════════════════════════════════════════════════════");
