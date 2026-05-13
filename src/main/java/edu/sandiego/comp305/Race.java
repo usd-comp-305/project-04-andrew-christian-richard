@@ -2,6 +2,7 @@ package edu.sandiego.comp305;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Race {
@@ -26,6 +27,10 @@ public class Race {
         this.event = null;
     }
 
+    public void addParticipant(final RaceParticipant participant) {
+        participants.add(participant);
+    }
+
     public void start() {
         state = RaceState.IN_PROGRESS;
         round = 1;
@@ -35,26 +40,76 @@ public class Race {
         return state == RaceState.FINISHED;
     }
 
-    public Event getEvent() {
-        return null;
-    }
-
-    public Track getTrack() {
-        return null;
-    }
-  
     public void prepareRound() {
+        event = null;
     }
 
     public boolean hasEvent() {
         return event != null;
     }
 
+    public Event getEvent() {
+        return event;
+    }
+
     public void resolveEvent(final EventChoice selectedChoice) {
+        if (selectedChoice == null) {
+            throw new IllegalArgumentException("Selected choice cannot be null.");
+        }
+
+        Horse playerHorse = getPlayerHorse();
+
+        if (playerHorse == null) {
+            throw new IllegalStateException("Race does not have a player horse.");
+        }
+
+        RaceEffect effect = selectedChoice.getEffect();
+
+        playerHorse.getStats().increaseSpeed(effect.getSpeedChange());
+        playerHorse.getStats().increasePower(effect.getPowerChange());
+
+        event = null;
     }
 
     public void executeRound() {
-        round++;
+        if (state != RaceState.IN_PROGRESS) {
+            return;
+        }
+
+        moveParticipants();
+        updateFinishOrder();
+        sortCurrentStandings();
+
+        if (finishOrder.size() == participants.size()) {
+            state = RaceState.FINISHED;
+        } else {
+            round++;
+        }
+    }
+
+    private void moveParticipants() {
+        for (RaceParticipant participant : participants) {
+            if (!finishOrder.contains(participant)) {
+                participant.move();
+            }
+        }
+    }
+
+    private void updateFinishOrder() {
+        for (RaceParticipant participant : participants) {
+            boolean hasFinished = participant.getCurrentDistance() >= lengthInMeters;
+            boolean alreadyRecorded = finishOrder.contains(participant);
+
+            if (hasFinished && !alreadyRecorded) {
+                finishOrder.add(participant);
+            }
+        }
+    }
+
+    private void sortCurrentStandings() {
+        participants.sort(
+                Comparator.comparingInt(RaceParticipant::getCurrentDistance).reversed()
+        );
     }
 
     public Horse getPlayerHorse() {
@@ -66,7 +121,6 @@ public class Race {
 
         return null;
     }
-
 
     public List<RaceParticipant> getCurrentStandings() {
         return Collections.unmodifiableList(participants);
@@ -83,16 +137,22 @@ public class Race {
     public int getRound() {
         return round;
     }
-      
+
     public RaceState getState() {
         return state;
     }
 
     public Placement getPlacement(final Horse horse) {
-        return null;
+        int index = finishOrder.indexOf(horse);
+
+        if (index < 0) {
+            throw new IllegalArgumentException("Horse has not finished the race.");
+        }
+
+        return Placement.values()[index];
     }
 
-    public int getLengthInMeters(){
+    public int getLengthInMeters() {
         return lengthInMeters;
     }
 }
