@@ -1,31 +1,32 @@
 package edu.sandiego.comp305;
 
+import java.util.Scanner;
+
 public class HorseRacingGame {
-    private final Horse playerHorse;
-
     private final RaceManager raceManager;
-
     private final UpgradeSystem progressionSystem;
+    private final Scanner scanner;
+    private final Display display;
+    private Horse playerHorse;
+    private final HorseFactory playerHorseFactory;
+    private int totalTrophies;
 
-    private final EventFactory eventFactory;
-
-    private final HorseFactory horseFactory;
-
-    public HorseRacingGame(
-            final Horse playerHorse,
-            final RaceManager raceManager,
-            final UpgradeSystem progressionSystem,
-            final EventFactory eventFactory,
-            final HorseFactory horseFactory) {
-        this.playerHorse = new Horse(playerHorse);
+    public HorseRacingGame(final Horse playerHorse, final RaceManager raceManager, final HorseFactory playerHorseFactory,
+                           final UpgradeSystem progressionSystem, Scanner scanner, Display display){
+        this.playerHorse = null;
         this.raceManager = raceManager;
         this.progressionSystem = progressionSystem;
-        this.eventFactory = eventFactory;
-        this.horseFactory = horseFactory;
+        this.scanner = scanner;
+        this.display = display;
+        this.totalTrophies = 0;
+        this.playerHorseFactory = playerHorseFactory;
     }
 
     public void startGame() {
-
+        display.printWelcome();
+        display.printHorseCreation();
+        String horseName = scanner.nextLine();
+        this.playerHorse = playerHorseFactory.createHorse(horseName);
     }
 
     public void runRace(final Race race) {
@@ -35,4 +36,5 @@ public class HorseRacingGame {
     public void handlePostRaceRewards(final Race race) {
 
     }
+
 }
