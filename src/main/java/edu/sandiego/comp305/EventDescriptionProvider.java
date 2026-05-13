@@ -34,11 +34,12 @@ public class EventDescriptionProvider {
         );
     }
 
-    public String getRandomDescription(EventType type, Random random) {
-        List<String> descriptions = descriptionsByType.get(type);
+    public String getRandomDescription(
+            final EventType type,
+            final Random random) {
+        final List<String> descriptions = descriptionsByType.get(type);
 
-        int randomIndex = random.nextInt(descriptions.size());
+        final int randomIndex = random.nextInt(descriptions.size());
         return descriptions.get(randomIndex);
     }
-
 }

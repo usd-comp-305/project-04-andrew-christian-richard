@@ -4,7 +4,7 @@ import java.util.List;
 public class GoodEvent extends Event {
     private final List<EventChoice> eventChoices;
 
-    public GoodEvent(String description, Horse horse){
+    public GoodEvent(final String description, final Horse horse){
         super(description, horse);
         this.eventChoices = List.of(
                 new EventChoice("Use the momentum, and CHARGE!",
@@ -17,23 +17,25 @@ public class GoodEvent extends Event {
     }
 
     @Override
-    public List<EventChoice> getEventChoices(){
+    public List<EventChoice> getEventChoices() {
         return eventChoices;
     }
 
-    private RaceEffect getGreatEffect(){
-        int bonusSpeedStat = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.GREAT.getSpeedMultiplier());
-        int bonusPowerStat = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.GREAT.getPowerMultiplier());
+    private RaceEffect getGreatEffect() {
+        final Stats stats = getHorseStats();
+        final int bonusSpeedStat = (int) (stats.getSpeed()
+                * EventStatMultiplier.GREAT.getSpeedMultiplier());
+        final int bonusPowerStat = (int) (stats.getPower()
+                * EventStatMultiplier.GREAT.getPowerMultiplier());
         return new RaceEffect(bonusSpeedStat, bonusPowerStat);
     }
 
-    private RaceEffect getGoodEffect(){
-        int bonusSpeedStat = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.GOOD.getSpeedMultiplier());
-        int bonusPowerStat = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.GOOD.getPowerMultiplier());
+    private RaceEffect getGoodEffect() {
+        final Stats stats = getHorseStats();
+        final int bonusSpeedStat = (int) (stats.getSpeed()
+                * EventStatMultiplier.GOOD.getSpeedMultiplier());
+        final int bonusPowerStat = (int) (stats.getPower()
+                * EventStatMultiplier.GOOD.getPowerMultiplier());
         return new RaceEffect(bonusSpeedStat, bonusPowerStat);
     }
 }

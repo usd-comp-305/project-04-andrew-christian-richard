@@ -4,6 +4,7 @@ import java.util.*;
 
 public class RaceManager {
     private final List<Race> races;
+
     private int currentRaceIndex;
 
     public RaceManager() {
@@ -15,7 +16,7 @@ public class RaceManager {
         return null;
     }
 
-    public List<Race> generateRaces(Horse playerHorse) {
+    public List<Race> generateRaces(final Horse playerHorse) {
         return null;
     }
 }

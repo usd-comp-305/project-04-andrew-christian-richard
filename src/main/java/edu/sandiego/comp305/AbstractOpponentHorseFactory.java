@@ -12,20 +12,27 @@ import java.util.Random;
  */
 public class AbstractOpponentHorseFactory implements HorseFactory {
     private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 8;
+
     private static final int BASE_TRACK_STAT_MULTIPLIER = 24;
+
     private final Difficulty difficulty;
+
     private final TrackType trackType;
+
     private final Random random;
 
-    public AbstractOpponentHorseFactory(Difficulty difficulty, TrackType trackType, Random random) {
+    public AbstractOpponentHorseFactory(
+            final Difficulty difficulty,
+            final TrackType trackType,
+            final Random random) {
         this.difficulty = difficulty;
         this.trackType = trackType;
         this.random = random;
     }
 
     @Override
-    public Horse createHorse(String name) {
-        Stats opponentStats = generateRandomStats();
+    public Horse createHorse(final String name) {
+        final Stats opponentStats = generateRandomStats();
         return new Horse(name, opponentStats);
     }
 
@@ -39,15 +46,19 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         overallStats -= (3 * MIN_STAT);
 
         while (overallStats > 0) {
-            int chosenStat = random.nextInt(3);
+            final int chosenStat = random.nextInt(3);
 
             if (chosenStat == 0 && speed < MAX_STAT) {
                 speed++;
                 overallStats--;
-            } if (chosenStat == 1 && stamina < MAX_STAT) {
+            }
+
+            if (chosenStat == 1 && stamina < MAX_STAT) {
                 stamina++;
                 overallStats--;
-            } if (chosenStat == 2 && power < MAX_STAT && power < speed) {
+            }
+
+            if (chosenStat == 2 && power < MAX_STAT && power < speed) {
                 power++;
                 overallStats--;
             }
@@ -71,8 +82,8 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         };
     }
 
-    private int getOverallStatPoints(){
-        return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER) +
-                (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
+    private int getOverallStatPoints() {
+        return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER)
+                + (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
     }
 }

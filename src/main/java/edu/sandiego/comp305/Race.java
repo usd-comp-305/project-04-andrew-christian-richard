@@ -32,15 +32,15 @@ public class Race {
 
     }
 
-    public Event getEvent(){
+    public Event getEvent() {
         return null;
     }
 
-    public Horse getPlayerHorse(){
+    public Horse getPlayerHorse() {
         return null;
     }
 
-    public Track getTrack(){
+    public Track getTrack() {
         return null;
     }
 
@@ -68,12 +68,13 @@ public class Race {
         return null;
     }
 
-    public Difficulty getDifficulty(){
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public List<Horse> getFinishOrder()
-    { return Collections.unmodifiableList(finishOrder);  }
+    public List<Horse> getFinishOrder() {
+        return Collections.unmodifiableList(finishOrder);
+    }
 
     public int getRound() {
         return 0;

@@ -5,7 +5,7 @@ import java.util.List;
 public class NeutralEvent extends Event {
     private final List<EventChoice> eventChoices;
 
-    public NeutralEvent(String description, Horse horse) {
+    public NeutralEvent(final String description, final Horse horse) {
         super(description, horse);
         this.eventChoices = List.of(
                 new EventChoice("Try to gain a lead",
@@ -23,18 +23,20 @@ public class NeutralEvent extends Event {
     }
 
     private RaceEffect getFairEffect() {
-        int bonusSpeed = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.FAIR.getSpeedMultiplier());
-        int bonusPower = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.FAIR.getPowerMultiplier());
+        final Stats stats = getHorseStats();
+        final int bonusSpeed = (int) (stats.getSpeed()
+                * EventStatMultiplier.FAIR.getSpeedMultiplier());
+        final int bonusPower = (int) (stats.getPower()
+                * EventStatMultiplier.FAIR.getPowerMultiplier());
         return new RaceEffect(bonusSpeed, bonusPower);
     }
 
     private RaceEffect getOkayEffect() {
-        int reductionSpeed = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.OKAY.getSpeedMultiplier());
-        int reductionPower = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.OKAY.getPowerMultiplier());
+        final Stats stats = getHorseStats();
+        final int reductionSpeed = (int) (stats.getSpeed()
+                * EventStatMultiplier.OKAY.getSpeedMultiplier());
+        final int reductionPower = (int) (stats.getPower()
+                * EventStatMultiplier.OKAY.getPowerMultiplier());
         return new RaceEffect(reductionSpeed, reductionPower);
     }
 }
