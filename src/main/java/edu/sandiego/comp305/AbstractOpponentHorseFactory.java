@@ -5,17 +5,14 @@ import java.util.Random;
  *
  *   Difficulty \ Track  | 100m | 200m | 400m
  *   --------------------+------+------+------
- *   EASY                |   8  |  16  |  24
- *   MEDIUM              |  32  |  40  |  48
- *   HARD                |  56  |  64  |  72
- * Overall Stats increase by 8 for each track tier and by 24 for each difficulty tier,
- *   Overall Stats = (difficultyTier * 24) + (trackDistance * 8)
- *   where difficultyTier: EASY=0, MEDIUM=1, HARD=2
- *       trackDistance:    ONE_HUNDRED_METER = 1, TWO_HUNDRED_METER = 2, FOUR_HUNDRED_METER = 3
+ *   EASY                |   8  |  32  |  56
+ *   MEDIUM              |  16  |  40  |  64
+ *   HARD                |  24  |  48  |  72
+
  */
 public class AbstractOpponentHorseFactory implements HorseFactory {
-    private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 24;
-    private static final int BASE_TRACK_STAT_MULTIPLIER = 8;
+    private static final int BASE_DIFFICULTY_STAT_MULTIPLIER = 8;
+    private static final int BASE_TRACK_STAT_MULTIPLIER = 24;
     private final Difficulty difficulty;
     private final TrackType trackType;
     private final Random random;
@@ -47,10 +44,10 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
             if (chosenStat == 0 && speed < MAX_STAT) {
                 speed++;
                 overallStats--;
-            } else if (chosenStat == 1 && stamina < MAX_STAT) {
+            } if (chosenStat == 1 && stamina < MAX_STAT) {
                 stamina++;
                 overallStats--;
-            } else if (chosenStat == 2 && power < MAX_STAT && power < speed) {
+            } if (chosenStat == 2 && power < MAX_STAT && power < speed) {
                 power++;
                 overallStats--;
             }
@@ -68,9 +65,9 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
 
     private int getTrackTypeMultiplier() {
         return switch (trackType) {
-            case ONE_HUNDRED_METER -> 1;
-            case TWO_HUNDRED_METER -> 2;
-            case FOUR_HUNDRED_METER -> 3;
+            case ONE_HUNDRED_METER -> 0;
+            case TWO_HUNDRED_METER -> 1;
+            case FOUR_HUNDRED_METER -> 2;
         };
     }
 
