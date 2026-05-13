@@ -88,4 +88,8 @@ public class Simulation {
         System.out.print("Enter upgrades: ");
     }
 
+    private void printRaceResult(){
+
+    }
+
 }
