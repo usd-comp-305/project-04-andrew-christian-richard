@@ -15,6 +15,10 @@ public class RaceManager {
         return null;
     }
 
+    public boolean hasNoMoreRaces(){
+        return false;
+    }
+
     public List<Race> generateRaces(Horse playerHorse) {
         return null;
     }

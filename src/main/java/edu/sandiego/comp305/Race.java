@@ -16,7 +16,6 @@ public class Race {
 
 
     public Race(
-            final String raceName,
             final Difficulty difficulty,
             final Track track,
             final List<RaceParticipant> participants) {

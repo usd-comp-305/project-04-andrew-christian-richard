@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import java.util.Scanner;
 
 public class HorseRacingGame {
+    private static final int TOTAL_UPGRADE_POINTS = 5;
     private final RaceManager raceManager;
     private final UpgradeSystem upgradeSystem;
     private final Scanner scanner;
@@ -22,15 +23,21 @@ public class HorseRacingGame {
         this.playerHorseFactory = playerHorseFactory;
     }
 
-    public void startGame() {
+    public void runGame() {
         display.printWelcome();
         createPlayerHorse();
+        upgradeHorse(TOTAL_UPGRADE_POINTS);
+
+        while(raceManager.hasNoMoreRaces()){
+            Race race = raceManager.getNextRace();
+            runRace(race);
+        }
 
 
     }
 
-    public void runRace(final Race race) {
-
+    private void runRace(final Race race) {
+        race.startRace();
     }
 
     public void handlePostRaceRewards(final Race race) {
@@ -44,6 +51,24 @@ public class HorseRacingGame {
             horseName = scanner.nextLine();
         }
         this.playerHorse = playerHorseFactory.createHorse(horseName);
+    }
+
+    private void upgradeHorse(final int upgradePoints) {
+        display.printUpgradeSystem(upgradePoints);
+
+        boolean validUpgrade = false;
+
+        while (!validUpgrade) {
+            String upgradeInput = scanner.nextLine();
+
+            try {
+                upgradeSystem.applyUpgrade(playerHorse, upgradeInput);
+                validUpgrade = true;
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+                System.out.print("Enter upgrades: ");
+            }
+        }
     }
 
 
