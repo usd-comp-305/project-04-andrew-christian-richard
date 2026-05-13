@@ -11,8 +11,6 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
     private static final int UPGRADE_COUNT = 3;
 
-    private static final int TOTAL_UPGRADE_POINTS = 5;
-
     private static final String UPGRADE_SEPARATOR = "\\s+";
 
     @Override
@@ -39,6 +37,7 @@ public class HorseUpgradeSystem implements UpgradeSystem {
                 parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]);
 
         validateUpgradeTotal(
+                horse.getCurrentUpgradePoints(),
                 speedUpgrade,
                 staminaUpgrade,
                 powerUpgrade);
@@ -48,6 +47,8 @@ public class HorseUpgradeSystem implements UpgradeSystem {
         horse.getStats().increaseStamina(staminaUpgrade);
 
         horse.getStats().increasePower(powerUpgrade);
+
+        horse.useUpgradePoints();
     }
 
     @Override
@@ -73,13 +74,14 @@ public class HorseUpgradeSystem implements UpgradeSystem {
     }
 
     private void validateUpgradeTotal(
+            final int upgradePoints,
             final int speedUpgrade,
             final int staminaUpgrade,
             final int powerUpgrade) {
         final int totalUpgradePoints =
                 speedUpgrade + staminaUpgrade + powerUpgrade;
 
-        if (totalUpgradePoints != TOTAL_UPGRADE_POINTS) {
+        if (totalUpgradePoints != upgradePoints) {
             throw new IllegalArgumentException(
                     "Upgrade amounts must add up to 5.");
         }
