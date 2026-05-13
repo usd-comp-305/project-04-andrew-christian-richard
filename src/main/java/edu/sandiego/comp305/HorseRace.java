@@ -7,7 +7,7 @@ public final class HorseRace {
 
     }
 
-    public static void main(final String[] args) {
+    public static void main(String[] args) {
 
     }
 }

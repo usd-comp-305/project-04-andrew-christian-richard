@@ -3,7 +3,7 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public abstract class Event {
-    public static final RaceEffect NEUTRAL_OUTCOME = new RaceEffect(0, 0);
+    static final RaceEffect NEUTRAL_OUTCOME = new RaceEffect(0, 0);
 
     private final String description;
 
@@ -11,7 +11,7 @@ public abstract class Event {
 
     private final Stats stats;
 
-    protected Event(final String description, final Horse horse) {
+    protected Event(String description, Horse horse) {
         this.description = description;
         this.horse = horse;
         this.stats = new Stats(horse.getStats());
