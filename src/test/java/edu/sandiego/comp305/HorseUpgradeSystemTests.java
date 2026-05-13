@@ -41,11 +41,13 @@ public class HorseUpgradeSystemTests {
     @Test
     void applyUpgrade_increasesEachStatInputted() {
         final int speedUpgrade = 1;
-        final int staminaUpgrade = 1;
+        final int staminaUpgrade = 2;
         final int powerUpgrade = 2;
-        final String upgradeInput = "1 1 2";
+        final String upgradeInput = "1 2 2";
 
         final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
+
+        testUpgradeSystem.awardTrophies(testHorse, Placement.FIRST);
 
         testUpgradeSystem.applyUpgrade(testHorse, upgradeInput);
 
@@ -60,6 +62,8 @@ public class HorseUpgradeSystemTests {
         assertEquals(
                 TEST_POWER + powerUpgrade,
                 testHorse.getStats().getPower());
+
+        assertEquals(0, testHorse.getCurrentUpgradePoints());
     }
 
     @Test
@@ -78,6 +82,77 @@ public class HorseUpgradeSystemTests {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> testUpgradeSystem.applyUpgrade(testHorse, "1 bruh 2"));
+    }
+
+    @Test
+    void applyUpgrade_errorsUpgradePointsDoNotEqualAwardedTrophies() {
+        final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
+
+        testUpgradeSystem.awardTrophies(testHorse, Placement.FIRST);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> testUpgradeSystem.applyUpgrade(testHorse, "1 1 1"));
+    }
+
+    @Test
+    void applyUpgrade_UpgradePointsEqualsSecondPlaceTrophies() {
+        final int speedUpgrade = 1;
+        final int staminaUpgrade = 1;
+        final int powerUpgrade = 2;
+        final String upgradeInput = "1 1 2";
+
+        final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
+
+        testUpgradeSystem.awardTrophies(testHorse, Placement.SECOND);
+
+        testUpgradeSystem.applyUpgrade(testHorse, upgradeInput);
+
+        assertEquals(
+                TEST_SPEED + speedUpgrade,
+                testHorse.getStats().getSpeed());
+
+        assertEquals(
+                TEST_STAMINA + staminaUpgrade,
+                testHorse.getStats().getStamina());
+
+        assertEquals(
+                TEST_POWER + powerUpgrade,
+                testHorse.getStats().getPower());
+    }
+
+    @Test
+    void applyUpgrade_usesCurrentTrophies_NotTotalTrophies() {
+        final int speedUpgrade = 0;
+        final int staminaUpgrade = 1;
+        final int powerUpgrade = 0;
+        final String upgradeInput = "0 1 0";
+
+        final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
+
+        testUpgradeSystem.awardTrophies(testHorse, Placement.FIRST);
+        testUpgradeSystem.applyUpgrade(testHorse, "1 2 2");
+
+        testUpgradeSystem.awardTrophies(testHorse, Placement.FIFTH);
+
+        testUpgradeSystem.applyUpgrade(testHorse, upgradeInput);
+
+        assertEquals(
+                Placement.FIRST.getTrophyValue()
+                        + Placement.FIFTH.getTrophyValue(),
+                testHorse.getTrophyCount());
+
+        assertEquals(
+                TEST_SPEED + 1 + speedUpgrade,
+                testHorse.getStats().getSpeed());
+
+        assertEquals(
+                TEST_STAMINA + 2 + staminaUpgrade,
+                testHorse.getStats().getStamina());
+
+        assertEquals(
+                TEST_POWER + 2 + powerUpgrade,
+                testHorse.getStats().getPower());
     }
 
     @Test

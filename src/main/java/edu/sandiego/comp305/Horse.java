@@ -13,6 +13,8 @@ public class Horse implements RaceParticipant {
 
     private int trophyCount;
 
+    private int currentUpgradePoints;
+
     private int roundsMoved;
 
     private RaceEffect raceEffect;
@@ -24,6 +26,7 @@ public class Horse implements RaceParticipant {
         this.stats = stats;
         this.currentDistance = 0;
         this.trophyCount = 0;
+        this.currentUpgradePoints = 0;
         this.roundsMoved = 0;
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
@@ -33,16 +36,26 @@ public class Horse implements RaceParticipant {
         this.stats = new Stats(horse.stats);
         this.currentDistance = horse.currentDistance;
         this.trophyCount = horse.trophyCount;
+        this.currentUpgradePoints = horse.currentUpgradePoints;
         this.roundsMoved = horse.roundsMoved;
         this.raceEffect = horse.raceEffect;
     }
 
     public void addTrophies(final int amount) {
         trophyCount += amount;
+        currentUpgradePoints = amount;
     }
 
     public int getTrophyCount() {
         return trophyCount;
+    }
+
+    public int getCurrentUpgradePoints() {
+        return currentUpgradePoints;
+    }
+
+    public void useUpgradePoints() {
+        currentUpgradePoints = 0;
     }
 
     public void resetCurrentDistance() {
