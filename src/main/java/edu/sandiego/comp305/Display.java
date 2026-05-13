@@ -70,8 +70,15 @@ public class Display {
 
             final int dist = horse.getCurrentDistance();
             final int distanceToFinish = Math.max(0, trackDistance - dist);
-            final String name = horse.getName() + (isPlayer ? "◄" : " ");
-            final String pos    = finished ? "FIN" : (i + 1) + ".";
+            String name = horse.getName() + " ";
+            if (isPlayer) {
+                name = horse.getName() + "◄";
+            }
+
+            String pos = (i + 1) + ".";
+            if (finished) {
+                pos = "FIN";
+            }
 
             System.out.printf(
                     "%-4s %-12s %4dm left %n",

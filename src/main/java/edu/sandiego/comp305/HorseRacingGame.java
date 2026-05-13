@@ -2,6 +2,7 @@ package edu.sandiego.comp305;
 
 import java.util.Scanner;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class HorseRacingGame {
     private static final int TOTAL_UPGRADE_POINTS = 5;
@@ -16,7 +17,7 @@ public class HorseRacingGame {
 
     private final UpgradeSystem upgradeSystem;
 
-    private final Scanner scanner;
+    private final Supplier<String> scanner;
 
     private final Display display;
 
@@ -36,7 +37,7 @@ public class HorseRacingGame {
         this.playerHorse = null;
         this.raceManager = new RaceManager(raceManager);
         this.upgradeSystem = progressionSystem;
-        this.scanner = scanner;
+        this.scanner = scanner::nextLine;
         this.display = display;
         this.totalTrophies = 0;
         this.playerHorseFactory = playerHorseFactory;
@@ -83,10 +84,10 @@ public class HorseRacingGame {
 
     private void createPlayerHorse(){
         display.printHorseCreation();
-        String horseName = scanner.nextLine();
+        String horseName = scanner.get();
 
         while (horseName.isBlank()) {
-            horseName = scanner.nextLine();
+            horseName = scanner.get();
         }
         this.playerHorse = playerHorseFactory.createHorse(horseName);
     }
@@ -97,7 +98,7 @@ public class HorseRacingGame {
         boolean validUpgrade = false;
 
         while (!validUpgrade) {
-            final String upgradeInput = scanner.nextLine();
+            final String upgradeInput = scanner.get();
 
             try {
                 upgradeSystem.applyUpgrade(playerHorse, upgradeInput);
@@ -123,7 +124,7 @@ public class HorseRacingGame {
 
     private int readChoice() {
         while (true) {
-            final String input = scanner.nextLine();
+            final String input = scanner.get();
 
             try {
                 final int choice = Integer.parseInt(input);
@@ -140,6 +141,6 @@ public class HorseRacingGame {
 
     private void waitForEnter() {
         System.out.print("Press Enter to continue to the next round...");
-        scanner.nextLine();
+        scanner.get();
     }
 }
