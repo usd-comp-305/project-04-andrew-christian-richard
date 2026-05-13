@@ -4,6 +4,8 @@ import java.util.List;
 public class Display {
     private static final int NUM_CHOICES = 3;
 
+    private final String test = "test";
+
     public void printEvent(Race race){
         Event event = race.getEvent();
         Horse player = race.getPlayerHorse();
