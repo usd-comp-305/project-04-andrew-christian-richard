@@ -1,9 +1,6 @@
 package edu.sandiego.comp305;
 
 public class Horse implements RaceParticipant {
-    private static final int STAMINA_DEPLETION_INTERVAL = 5;
-
-    private static final int STAMINA_DEPLETION_RATE = 1;
 
     private static final int INITIAL_UPGRADE_POINTS = 12;
 
@@ -17,8 +14,6 @@ public class Horse implements RaceParticipant {
 
     private int currentUpgradePoints;
 
-    private int roundsMoved;
-
     private RaceEffect raceEffect;
 
 
@@ -30,7 +25,6 @@ public class Horse implements RaceParticipant {
         this.currentDistance = 0;
         this.trophyCount = 0;
         this.currentUpgradePoints = INITIAL_UPGRADE_POINTS;
-        this.roundsMoved = 0;
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
@@ -39,8 +33,8 @@ public class Horse implements RaceParticipant {
         currentUpgradePoints = amount;
     }
 
-    public void addUpgradePoints(final int amount) {
-        currentUpgradePoints += amount;
+    public void changeCurrentUpgradePoints(final int amount) {
+        currentUpgradePoints = amount;
     }
 
     public int getTrophyCount() {
@@ -51,13 +45,8 @@ public class Horse implements RaceParticipant {
         return currentUpgradePoints;
     }
 
-    public void useUpgradePoints() {
-        currentUpgradePoints = 0;
-    }
-
     public void resetCurrentDistance() {
         currentDistance = 0;
-        roundsMoved = 0;
         raceEffect = RaceEffect.NO_EFFECT;
     }
 
@@ -94,19 +83,9 @@ public class Horse implements RaceParticipant {
         final int spacesMoved = stats.generateMovement(raceEffect);
         currentDistance += spacesMoved;
 
-        if (spacesMoved > 0) {
-            roundsMoved++;
-            decreaseStamina();
-        }
-
         return spacesMoved;
     }
 
-    private void decreaseStamina() {
-        if (roundsMoved % STAMINA_DEPLETION_INTERVAL == 0) {
-            stats.consumeStamina(STAMINA_DEPLETION_RATE);
-        }
-    }
 
     @Override
     public int getCurrentDistance() {

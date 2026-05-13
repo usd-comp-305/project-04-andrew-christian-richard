@@ -9,6 +9,8 @@ import java.util.Random;
 public class Race {
     private static final int EVENT_ROUND_INTERVAL = 3;
 
+    private static final int STAMINA_DEPLETION_INTERVAL = 5;
+
     private static final int MAX_NUM_ROUNDS = 60;
 
     private final Difficulty difficulty;
@@ -134,6 +136,7 @@ public class Race {
         moveParticipants();
         updateFinishOrder();
         sortCurrentStandings();
+        decreaseStamina();
 
         if (finishOrder.contains(playerHorse) || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
@@ -217,6 +220,12 @@ public class Race {
 
     public int getCurrentPlayerStamina() {
         return currentPlayerStamina;
+    }
+
+    private void decreaseStamina() {
+        if (round % STAMINA_DEPLETION_INTERVAL == 0) {
+            currentPlayerStamina--;
+        }
     }
 
 }

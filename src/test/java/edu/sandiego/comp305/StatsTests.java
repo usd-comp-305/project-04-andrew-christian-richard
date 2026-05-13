@@ -10,11 +10,13 @@ public class StatsTests {
         final int testSpeed = 6;
         final int testPower = 3;
         final int testStamina = 3;
+        final RaceEffect NO_EFFECT = new RaceEffect(0, 0);
+
 
         final Stats testStats =
                 new Stats(testSpeed, testStamina, testPower);
 
-        final int distanceRan = testStats.generateMovement();
+        final int distanceRan = testStats.generateMovement(NO_EFFECT);
 
         assertTrue(distanceRan >= testPower);
         assertTrue(distanceRan <= testSpeed);
@@ -25,11 +27,12 @@ public class StatsTests {
         final int testSpeed = 6;
         final int testPower = 3;
         final int testNoStamina = 0;
+        final RaceEffect NO_EFFECT = new RaceEffect(0, 0);
 
         final Stats testStats =
                 new Stats(testSpeed, testNoStamina, testPower);
 
-        final int distanceRan = testStats.generateMovement();
+        final int distanceRan = testStats.generateMovement(NO_EFFECT);
 
         assertEquals(testNoStamina, distanceRan);
     }
@@ -39,11 +42,12 @@ public class StatsTests {
         final int testSpeed = 6;
         final int testPower = 3;
         final int testStamina = 3;
+        final RaceEffect NO_EFFECT = new RaceEffect(0, 0);
 
         final Stats testStats =
                 new Stats(testSpeed, testStamina, testPower);
 
-        testStats.generateMovement();
+        testStats.generateMovement(NO_EFFECT);
 
         assertEquals(testStamina, testStats.getStamina());
     }

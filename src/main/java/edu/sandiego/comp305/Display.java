@@ -7,7 +7,6 @@ public class Display {
 
     public void printEvent(final Race race){
         final Event event = race.getEvent();
-        final Horse player = race.getPlayerHorse();
         final List<EventChoice> choices = event.getEventChoices();
 
         System.out.println(
@@ -29,7 +28,7 @@ public class Display {
                 "══════════════════════════════════════════════════════");
         System.out.printf(
                 "Your stamina: %-38d %n",
-                player.getStats().getStamina());
+                race.getCurrentPlayerStamina());
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.print("Choose (1-3): ");
@@ -82,7 +81,7 @@ public class Display {
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.printf(
-                "YOUR HORSE  SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
+                "YOUR HORSE'S CURRENT STATS SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
                 player.getStats().getSpeed(),
                 player.getStats().getPower(),
                 race.getCurrentPlayerStamina(),
@@ -113,14 +112,21 @@ public class Display {
             final int totalTrophies) {
         System.out.println(
                 "══════════════════════════════════════════════════════");
-        System.out.println("The race has ended! Here are the results are in!");
+        System.out.println("The race has ended! Here are the current results!");
         System.out.println(
                 "══════════════════════════════════════════════════════");
-        final List<RaceParticipant> finishOrder = race.getFinishOrder();
-        for (int i = 0; i < finishOrder.size(); i++) {
-            final RaceParticipant participant = finishOrder.get(i);
-            System.out.printf("%d. %s%n", i + 1, participant.getName());
+
+        final List<RaceParticipant> standings = race.getCurrentStandings();
+
+        for (int i = 0; i < standings.size(); i++) {
+            final RaceParticipant participant = standings.get(i);
+
+            System.out.printf(
+                    "%d. %-12s %n",
+                    i + 1,
+                    participant.getName());
         }
+
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.printf("You earned %d%n", trophiesEarned);

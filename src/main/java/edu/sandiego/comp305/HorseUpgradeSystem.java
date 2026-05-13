@@ -48,7 +48,6 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
         horse.getStats().increasePower(powerUpgrade);
 
-        horse.useUpgradePoints();
     }
 
     @Override

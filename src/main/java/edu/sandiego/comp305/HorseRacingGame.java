@@ -95,6 +95,7 @@ public class HorseRacingGame {
 
     private void upgradeHorse(final int upgradePoints) {
         display.printUpgradeSystem(upgradePoints);
+        playerHorse.changeCurrentUpgradePoints(upgradePoints);
 
         boolean validUpgrade = false;
 
