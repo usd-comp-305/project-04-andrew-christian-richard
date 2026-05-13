@@ -1,28 +1,10 @@
 package edu.sandiego.comp305;
 
 import java.util.List;
-import java.util.Scanner;
-
 public class Display {
-    private final Scanner scanner;
-    private final RaceManager raceManager;
-    private final HorseUpgradeSystem upgradeSystem;
-    private final HorseFactory horseFactory;
-    private Horse playerHorse;
-    private int round;
-
     private static final int NUM_CHOICES = 3;
 
-    public Display(Scanner scanner, RaceManager raceManager, HorseUpgradeSystem upgradeSystem,
-                     HorseFactory horseFactory) {
-        this.scanner = scanner;
-        this.raceManager = raceManager;
-        this.upgradeSystem = upgradeSystem;
-        this.horseFactory = horseFactory;
-        this.round = 0;
-    }
-
-    private void printEvent(Race race){
+    public void printEvent(Race race){
         Event event = race.getEvent();
         Horse player = race.getPlayerHorse();
         List<EventChoice> choices = event.getEventChoices();
@@ -44,14 +26,14 @@ public class Display {
         System.out.print("Choose (1-3): ");
     }
 
-    private void printRound(Race race){
+    public void printRound(Race race){
         int trackDistance = race.getTrack().getLengthInMeters();
         Horse player = race.getPlayerHorse();
         Stats playerStats = player.getStats();
         List<RaceParticipant> standings = race.getCurrentStandings();
 
         System.out.println("══════════════════════════════════════════════════════");
-        System.out.printf( "%s - %s Round:%s %n", race.getDifficulty(), trackDistance, round);
+        System.out.printf( "%s - %s Round:%s %n", race.getDifficulty(), trackDistance, race.getRound());
         System.out.println("══════════════════════════════════════════════════════");
         System.out.printf( "%-4s %-12s  %-8s %n",
                 "POS", "HORSE", "DIST TO FINISH");
@@ -74,7 +56,7 @@ public class Display {
         System.out.println("══════════════════════════════════════════════════════");
     }
 
-    private void printUpgradeSystem(){
+    public void printUpgradeSystem(){
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("It is time to upgrade your horse before the next race!");
         System.out.println("══════════════════════════════════════════════════════");
@@ -84,7 +66,7 @@ public class Display {
         System.out.print("Enter upgrades: ");
     }
 
-    private void printRaceResult(Race race){
+    public void printRaceResult(Race race){
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("The race has ended! Here are the results are in!");
         System.out.println("══════════════════════════════════════════════════════");
@@ -94,7 +76,16 @@ public class Display {
             System.out.printf("%d. %s%n", i + 1, participant.getName());
         }
         System.out.println("══════════════════════════════════════════════════════");
+    }
 
+    public void printWelcome() {
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.println("Welcome to the Horse Racing! Let's start your career!");
+        System.out.println("══════════════════════════════════════════════════════");
+    }
+
+    public void printHorseCreation(){
+        System.out.println("Name your horse: ");
     }
 
 }
