@@ -19,11 +19,6 @@ public class Race {
         this.state = RaceState.NOT_STARTED;
     }
 
-    public void startRace() {
-        state = RaceState.IN_PROGRESS;
-        System.out.println("Race started: " + raceName);
-    }
-
     public void advanceRound() {
         if (state != RaceState.IN_PROGRESS) {
             return;
@@ -31,13 +26,15 @@ public class Race {
 
         for (RaceParticipant participant : participants) {
             if (!participant.hasFinished(track.getLengthInMeters())) {
-                int delta = participant.move();
-                System.out.println(participant.getName() + " moved " + delta + "m. Total: " + participant.getCurrentDistance() + "m");
+                int distanceMoved = participant.move();
             }
         }
 
         triggerCheckpointEvents();
+        checkAllFinished();
+    }
 
+    private void checkAllFinished() {
         boolean allFinished = true;
         for (RaceParticipant participant : participants) {
             if (!participant.hasFinished(track.getLengthInMeters())) {
@@ -48,7 +45,6 @@ public class Race {
 
         if (allFinished) {
             state = RaceState.FINISHED;
-            System.out.println("Race finished: " + raceName);
         }
     }
 
@@ -61,17 +57,8 @@ public class Race {
         for (RaceParticipant participant : participants) {
             for (int checkpoint : eventCheckpoints) {
                 if (participant.getCurrentDistance() >= checkpoint) {
-                    System.out.println("Checkpoint event triggered at " + checkpoint + "m for " + participant.getName());
                 }
             }
-        }
-    }
-
-    public void showPlacementAt20m() {
-        System.out.println("Standings at 20m:");
-        List<RaceParticipant> standings = getCurrentStandings();
-        for (int i = 0; i < standings.size(); i++) {
-            System.out.println((i + 1) + ". " + standings.get(i).getName() + " - " + standings.get(i).getCurrentDistance() + "m");
         }
     }
 

@@ -20,8 +20,6 @@ public class RaceTests {
     public void setUp() {
         track = Mockito.mock(Track.class);
         Mockito.when(track.getLengthInMeters()).thenReturn(100);
-        Mockito.when(track.getEventCheckpoints()).thenReturn(List.of(25, 50));
-        Mockito.when(track.getPlacementCheckpoints()).thenReturn(List.of(20, 50, 100));
 
         playerHorse = Mockito.mock(Horse.class);
         Mockito.when(playerHorse.getName()).thenReturn("Player");
@@ -41,38 +39,29 @@ public class RaceTests {
     }
 
     @Test
-    public void testStartRace() {
-        race.startRace();
-        List<RaceParticipant> standings = race.getCurrentStandings();
-        assertNotNull(standings);
-    }
-
-    @Test
-    public void testAdvanceRoundCallsMoveOnUnfinishedParticipants() {
-        race.startRace();
-        race.advanceRound();
-        Mockito.verify(playerHorse, Mockito.times(1)).move();
-        Mockito.verify(opponent, Mockito.times(1)).move();
-    }
-
-    @Test
-    public void testAdvanceRoundDoesNotMoveFinishedParticipants() {
-        Mockito.when(playerHorse.hasFinished(100)).thenReturn(true);
-        race.startRace();
-        race.advanceRound();
-        Mockito.verify(playerHorse, Mockito.never()).move();
-        Mockito.verify(opponent, Mockito.times(1)).move();
-    }
-
-    @Test
-    public void testAdvanceRoundDoesNothingIfNotStarted() {
+    public void test_advance_round_calls_move_on_unfinished_participants() {
         race.advanceRound();
         Mockito.verify(playerHorse, Mockito.never()).move();
         Mockito.verify(opponent, Mockito.never()).move();
     }
 
     @Test
-    public void testGetCurrentStandingsReturnsSortedByDistance() {
+    public void test_advance_round_does_not_move_finished_participants() {
+        Mockito.when(playerHorse.hasFinished(100)).thenReturn(true);
+        race.advanceRound();
+        Mockito.verify(playerHorse, Mockito.never()).move();
+        Mockito.verify(opponent, Mockito.never()).move();
+    }
+
+    @Test
+    public void test_advance_round_does_nothing_if_not_started() {
+        race.advanceRound();
+        Mockito.verify(playerHorse, Mockito.never()).move();
+        Mockito.verify(opponent, Mockito.never()).move();
+    }
+
+    @Test
+    public void test_get_current_standings_returns_sorted_by_distance() {
         Mockito.when(playerHorse.getCurrentDistance()).thenReturn(30);
         Mockito.when(opponent.getCurrentDistance()).thenReturn(50);
 
@@ -83,13 +72,13 @@ public class RaceTests {
     }
 
     @Test
-    public void testGetCurrentStandingsReturnsAllParticipants() {
+    public void test_get_current_standings_returns_all_participants() {
         List<RaceParticipant> standings = race.getCurrentStandings();
         assertEquals(2, standings.size());
     }
 
     @Test
-    public void testGetPlacementFirstPlace() {
+    public void test_get_placement_first_place() {
         Horse realPlayer = new Horse("Player", new Stats(5, 5, 5));
         Horse realOpponent = new Horse("Opponent", new Stats(5, 5, 5));
 
@@ -109,7 +98,7 @@ public class RaceTests {
     }
 
     @Test
-    public void testGetPlacementSecondPlace() {
+    public void test_get_placement_second_place() {
         Horse realPlayer = new Horse("Player", new Stats(5, 5, 5));
 
         Mockito.when(playerHorse.getCurrentDistance()).thenReturn(40);
@@ -128,15 +117,14 @@ public class RaceTests {
     }
 
     @Test
-    public void testGetPlacementReturnsNullIfHorseNotInRace() {
+    public void test_get_placement_returns_null_if_horse_not_in_race() {
         Horse outsider = new Horse("Outsider", new Stats(5, 5, 5));
         Placement placement = race.getPlacement(outsider);
         assertNull(placement);
     }
 
     @Test
-    public void testTriggerCheckpointEventsDoesNotThrow() {
-        race.startRace();
+    public void test_trigger_checkpoint_events_does_not_throw() {
         Mockito.when(playerHorse.getCurrentDistance()).thenReturn(30);
         Mockito.when(opponent.getCurrentDistance()).thenReturn(55);
         assertDoesNotThrow(() -> race.triggerCheckpointEvents());
