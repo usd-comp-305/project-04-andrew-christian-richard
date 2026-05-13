@@ -7,8 +7,10 @@ public class Race {
     private final Difficulty difficulty;
     private final Track track;
     private final List<RaceParticipant> participants;
-    private final List<QuickTimeEvent> events;
+    private final List<Event> events;
     private RaceState state;
+    private final List<Horse> finishOrder = new ArrayList<>();
+
 
     public Race(String raceName, Difficulty difficulty, Track track, List<RaceParticipant> participants) {
         this.raceName = raceName;
@@ -21,6 +23,18 @@ public class Race {
 
     public void startRace() {
 
+    }
+
+    public Event getEvent(){
+        return null;
+    }
+
+    public Horse getPlayerHorse(){
+        return null;
+    }
+
+    public Track getTrack(){
+        return null;
     }
 
     public void advanceRound() {
@@ -41,5 +55,16 @@ public class Race {
 
     public Placement getPlacement(Horse horse) {
         return null;
+    }
+
+    public Difficulty getDifficulty(){
+        return difficulty;
+    }
+
+    public List<Horse> getFinishOrder()
+    { return Collections.unmodifiableList(finishOrder);  }
+
+    public int getRound() {
+        return 0;
     }
 }
