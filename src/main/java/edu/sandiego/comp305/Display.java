@@ -66,7 +66,7 @@ public class Display {
         System.out.print("Enter upgrades: ");
     }
 
-    public void printRaceResult(Race race){
+    public void printRaceResult(Race race, int trophiesEarned, int totalTrophies){
         System.out.println("══════════════════════════════════════════════════════");
         System.out.println("The race has ended! Here are the results are in!");
         System.out.println("══════════════════════════════════════════════════════");
@@ -75,6 +75,9 @@ public class Display {
             RaceParticipant participant = finishOrder.get(i);
             System.out.printf("%d. %s%n", i + 1, participant.getName());
         }
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("You earned %d%n", trophiesEarned);
+        System.out.printf("Total trophies: %d%n", totalTrophies);
         System.out.println("══════════════════════════════════════════════════════");
     }
 
