@@ -1,9 +1,12 @@
 package edu.sandiego.comp305;
 
 import java.util.Scanner;
+import java.util.List;
 
 public class HorseRacingGame {
     private static final int TOTAL_UPGRADE_POINTS = 5;
+    private static final int FIRST_CHOICE = 1;
+    private static final int LAST_CHOICE = 3;
     private final RaceManager raceManager;
     private final UpgradeSystem upgradeSystem;
     private final Scanner scanner;
@@ -28,7 +31,7 @@ public class HorseRacingGame {
         createPlayerHorse();
         upgradeHorse(TOTAL_UPGRADE_POINTS);
 
-        while(raceManager.hasNoMoreRaces()){
+        while(raceManager.hasMoreRaces()){
             Race race = raceManager.getNextRace();
             runRace(race);
         }
@@ -37,7 +40,21 @@ public class HorseRacingGame {
     }
 
     private void runRace(final Race race) {
-        race.startRace();
+        race.start();
+
+        while (!race.isFinished()) {
+            display.printRound(race);
+
+            waitForEnter();
+
+            race.prepareRound();
+
+            if (race.hasEvent()) {
+                handleEvent(race);
+            }
+
+            race.executeRound();
+        }
     }
 
     public void handlePostRaceRewards(final Race race) {
@@ -69,6 +86,39 @@ public class HorseRacingGame {
                 System.out.print("Enter upgrades: ");
             }
         }
+    }
+
+    private void handleEvent(final Race race) {
+        display.printEvent(race);
+
+        Event event = race.getEvent();
+        List<EventChoice> choices = event.getEventChoices();
+
+        int choiceNumber = readChoice();
+        EventChoice selectedChoice = choices.get(choiceNumber - 1);
+
+        race.resolveEvent(selectedChoice);
+    }
+
+    private int readChoice() {
+        while (true) {
+            String input = scanner.nextLine();
+
+            try {
+                int choice = Integer.parseInt(input);
+
+                if (choice >= FIRST_CHOICE && choice <= LAST_CHOICE) {
+                    return choice;
+                }
+            } catch (NumberFormatException exception) {System.out.print("Try again!");}
+            System.out.print("Choose (1-3): ");
+        }
+    }
+
+
+    private void waitForEnter() {
+        System.out.print("Press Enter to continue to the next round...");
+        scanner.nextLine();
     }
 
 

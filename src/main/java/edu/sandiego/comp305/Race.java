@@ -36,7 +36,6 @@ public class Race {
     }
 
     public void prepareRound() {
-        // Stub for now.
     }
 
     public boolean hasEvent() {
