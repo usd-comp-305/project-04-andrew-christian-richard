@@ -1,6 +1,7 @@
 package edu.sandiego.comp305;
 
 import java.util.Random;
+import java.util.function.IntUnaryOperator;
 /**
  *
  *   Difficulty \ Track  | 100m | 200m | 400m
@@ -19,15 +20,22 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
 
     private final TrackType trackType;
 
-    private final Random random;
+    private final IntUnaryOperator randomIntGenerator;
 
     public AbstractOpponentHorseFactory(
             final Difficulty difficulty,
             final TrackType trackType,
             final Random random) {
+        this(difficulty, trackType, random::nextInt);
+    }
+
+    private AbstractOpponentHorseFactory(
+            final Difficulty difficulty,
+            final TrackType trackType,
+            final IntUnaryOperator randomIntGenerator) {
         this.difficulty = difficulty;
         this.trackType = trackType;
-        this.random = random;
+        this.randomIntGenerator = randomIntGenerator;
     }
 
     @Override
@@ -46,7 +54,7 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         overallStats -= (3 * MIN_STAT);
 
         while (overallStats > 0) {
-            final int chosenStat = random.nextInt(3);
+            final int chosenStat = randomIntGenerator.applyAsInt(3);
 
             if (chosenStat == 0 && speed < MAX_STAT) {
                 speed++;
@@ -83,7 +91,10 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
     }
 
     private int getOverallStatPoints() {
-        return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER)
+        final int difficultyStatPoints = (getDifficultyMultiplier() + 1)
+                * BASE_DIFFICULTY_STAT_MULTIPLIER;
+
+        return difficultyStatPoints
                 + (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
     }
 }

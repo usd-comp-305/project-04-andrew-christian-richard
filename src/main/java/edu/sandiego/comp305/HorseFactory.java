@@ -5,5 +5,5 @@ public interface HorseFactory {
 
     public static final int MAX_STAT = 25;
 
-    Horse createHorse(String name);
+    public abstract Horse createHorse(final String name);
 }

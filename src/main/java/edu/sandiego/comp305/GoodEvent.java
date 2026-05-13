@@ -1,10 +1,11 @@
 package edu.sandiego.comp305;
+
 import java.util.List;
 
 public class GoodEvent extends Event {
     private final List<EventChoice> eventChoices;
 
-    public GoodEvent(final String description, final Horse horse){
+    public GoodEvent(final String description, final Horse horse) {
         super(description, horse);
         this.eventChoices = List.of(
                 new EventChoice("Use the momentum, and CHARGE!",
