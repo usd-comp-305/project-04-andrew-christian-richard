@@ -11,6 +11,8 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
     private static final int UPGRADE_COUNT = 3;
 
+    private static final int TOTAL_UPGRADE_POINTS = 5;
+
     private static final String UPGRADE_SEPARATOR = "\\s+";
 
     @Override
@@ -27,14 +29,25 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
         validateUpgradeInput(upgradeAmounts);
 
-        horse.getStats().increaseSpeed(
-                parseUpgradeAmount(upgradeAmounts[SPEED_UPGRADE_INDEX]));
+        final int speedUpgrade =
+                parseUpgradeAmount(upgradeAmounts[SPEED_UPGRADE_INDEX]);
 
-        horse.getStats().increaseStamina(
-                parseUpgradeAmount(upgradeAmounts[STAMINA_UPGRADE_INDEX]));
+        final int staminaUpgrade =
+                parseUpgradeAmount(upgradeAmounts[STAMINA_UPGRADE_INDEX]);
 
-        horse.getStats().increasePower(
-                parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]));
+        final int powerUpgrade =
+                parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]);
+
+        validateUpgradeTotal(
+                speedUpgrade,
+                staminaUpgrade,
+                powerUpgrade);
+
+        horse.getStats().increaseSpeed(speedUpgrade);
+
+        horse.getStats().increaseStamina(staminaUpgrade);
+
+        horse.getStats().increasePower(powerUpgrade);
     }
 
     @Override
@@ -56,6 +69,19 @@ public class HorseUpgradeSystem implements UpgradeSystem {
             throw new IllegalArgumentException(
                     "Upgrade amounts must be whole numbers.",
                     exception);
+        }
+    }
+
+    private void validateUpgradeTotal(
+            final int speedUpgrade,
+            final int staminaUpgrade,
+            final int powerUpgrade) {
+        final int totalUpgradePoints =
+                speedUpgrade + staminaUpgrade + powerUpgrade;
+
+        if (totalUpgradePoints != TOTAL_UPGRADE_POINTS) {
+            throw new IllegalArgumentException(
+                    "Upgrade amounts must add up to 5.");
         }
     }
 }
