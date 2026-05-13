@@ -17,7 +17,7 @@ public class HorseRacingGame {
             final UpgradeSystem progressionSystem,
             final EventFactory eventFactory,
             final HorseFactory horseFactory) {
-        this.playerHorse = playerHorse;
+        this.playerHorse = new Horse(playerHorse);
         this.raceManager = raceManager;
         this.progressionSystem = progressionSystem;
         this.eventFactory = eventFactory;
@@ -32,7 +32,7 @@ public class HorseRacingGame {
 
     }
 
-    public void handlePostRaceRewards(Race race) {
+    public void handlePostRaceRewards(final Race race) {
 
     }
 }

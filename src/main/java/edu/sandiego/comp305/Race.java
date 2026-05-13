@@ -44,6 +44,10 @@ public class Race {
 
     }
 
+    public RaceState getState() {
+        return state;
+    }
+
     public List<RaceParticipant> getCurrentStandings() {
         return null;
     }

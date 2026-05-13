@@ -12,12 +12,19 @@ public class Stats {
     private int power;
 
     public Stats(
-            int speed,
-            int stamina,
-            int power) {
+            final int speed,
+            final int stamina,
+            final int power) {
         this.speed = speed;
         this.stamina = stamina;
         this.power = power;
+    }
+
+    public Stats(final Stats stats) {
+        this(
+                stats.speed,
+                stats.stamina,
+                stats.power);
     }
 
     public int getSpeed() {

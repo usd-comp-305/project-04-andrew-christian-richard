@@ -3,7 +3,8 @@ package edu.sandiego.comp305;
 public class RaceEffect {
     private static final int NO_CHANGE = 0;
 
-    public static final RaceEffect NO_EFFECT = new RaceEffect(NO_CHANGE, NO_CHANGE);
+    public static final RaceEffect NO_EFFECT =
+            new RaceEffect(NO_CHANGE, NO_CHANGE);
 
     private final int speedChange;
 

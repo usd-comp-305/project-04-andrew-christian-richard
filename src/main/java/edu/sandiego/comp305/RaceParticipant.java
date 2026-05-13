@@ -6,6 +6,7 @@ public interface RaceParticipant {
     public abstract Stats getStats();
 
     public abstract int move();
+    
     public abstract int getCurrentDistance();
 
     public abstract boolean hasFinished(final int trackLength);

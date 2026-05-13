@@ -84,12 +84,24 @@ public class HorseUpgradeSystemTests {
     void awardTrophies_awardsCorrectTrophyAmount_PlacementBased() {
         final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
 
-        final Horse firstPlaceHorse = new Horse("Nunu", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        final Horse secondPlaceHorse = new Horse("Christ", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        final Horse thirdPlaceHorse = new Horse("Ricardo", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        final Horse fourthPlaceHorse = new Horse("Brick", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        final Horse fifthPlaceHorse = new Horse("Dino", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
-        final Horse sixthPlaceHorse = new Horse("Bray", new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse firstPlaceHorse = new Horse(
+                "Nunu",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse secondPlaceHorse = new Horse(
+                "Christ",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse thirdPlaceHorse = new Horse(
+                "Ricardo",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse fourthPlaceHorse = new Horse(
+                "Brick",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse fifthPlaceHorse = new Horse(
+                "Dino",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
+        final Horse sixthPlaceHorse = new Horse(
+                "Bray",
+                new Stats(TEST_SPEED, TEST_STAMINA, TEST_POWER));
 
         testUpgradeSystem.awardTrophies(firstPlaceHorse, Placement.FIRST);
         testUpgradeSystem.awardTrophies(secondPlaceHorse, Placement.SECOND);

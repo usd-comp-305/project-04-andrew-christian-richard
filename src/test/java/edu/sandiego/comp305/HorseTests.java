@@ -8,7 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HorseTests {
     private static final int TEST_SPEED = 5;
+
     private static final int TEST_POWER = 5;
+    
     private static final int TEST_STAMINA = 2;
 
     private static final int MOVE_DISTANCE = 5;
