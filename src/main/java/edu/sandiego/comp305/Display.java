@@ -88,4 +88,18 @@ public class Display {
         System.out.println("Name your horse: ");
     }
 
+    public void printCompletion(Horse horse, int totalTrophies){
+        Stats stats = horse.getStats();
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.println("Good job! Your career is complete. Here are your stats");
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("HORSE: %s%n", horse.getName());
+        System.out.printf("SPD:%-3d  PWR:%-3d  STM:%-3d%n",
+                stats.getSpeed(),
+                stats.getPower(),
+                stats.getStamina());
+        System.out.printf("Total trophies awarded: %d%n", totalTrophies);
+        System.out.println("══════════════════════════════════════════════════════");
+    }
+
 }
