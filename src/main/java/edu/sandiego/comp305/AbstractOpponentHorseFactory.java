@@ -48,6 +48,12 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         this.randomIntGenerator = randomIntGenerator;
     }
 
+    @Override
+    public Horse createHorse(final String name) {
+        final Stats opponentStats = generateRandomStats();
+        return new Horse(name, opponentStats);
+    }
+
     public List<Horse> createOpponentHorses(final int numberOfOpponents) {
         final List<String> availableNames =
                 new ArrayList<>(List.of(horseNames));
@@ -61,12 +67,6 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         }
 
         return opponents;
-    }
-
-    @Override
-    public Horse createHorse(final String name) {
-        final Stats opponentStats = generateRandomStats();
-        return new Horse(name, opponentStats);
     }
 
     private Stats generateRandomStats() {
