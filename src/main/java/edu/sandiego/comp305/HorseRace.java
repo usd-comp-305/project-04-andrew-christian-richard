@@ -1,13 +1,27 @@
 package edu.sandiego.comp305;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public final class HorseRace {
-    private HorseRace() {
+import java.util.Scanner;
 
-    }
+public class HorseRace {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    public static void main(final String[] args) {
+        RaceManager raceManager = new RaceManager();
+        AbstractPlayerHorseFactory playerHorseFactory = new AbstractPlayerHorseFactory();
+        UpgradeSystem upgradeSystem = new HorseUpgradeSystem();
+        Display display = new Display();
 
+        HorseRacingGame game = new HorseRacingGame(
+                null,
+                raceManager,
+                playerHorseFactory,
+                upgradeSystem,
+                scanner,
+                display
+        );
+
+        game.runGame();
+
+        scanner.close();
     }
 }

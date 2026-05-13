@@ -5,7 +5,7 @@ public class Horse implements RaceParticipant {
 
     private static final int STAMINA_DEPLETION_RATE = 1;
 
-    private static final int INITIAL_UPGRADE_POINTS = 5;
+    private static final int INITIAL_UPGRADE_POINTS = 12;
 
     private final String name;
 
@@ -46,6 +46,10 @@ public class Horse implements RaceParticipant {
     public void addTrophies(final int amount) {
         trophyCount += amount;
         currentUpgradePoints = amount;
+    }
+
+    public void addUpgradePoints(final int amount) {
+        currentUpgradePoints += amount;
     }
 
     public int getTrophyCount() {

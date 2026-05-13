@@ -1,13 +1,15 @@
 package edu.sandiego.comp305;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class HorseRacingGame {
-    private static final int TOTAL_UPGRADE_POINTS = 5;
 
-    private static final int EXTRA_UPGRADE_POINTS = 2;
+    private static final int EXTRA_UPGRADE_POINTS = 3;
+
+    private static final int FIRST_TOTAL_UPGRADE_POINTS = 12;
 
     private static final int FIRST_CHOICE = 1;
 
@@ -33,23 +35,23 @@ public class HorseRacingGame {
             final HorseFactory playerHorseFactory,
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
-            final Display display){
-        this.playerHorse = null;
-        this.raceManager = new RaceManager(raceManager);
-        this.upgradeSystem = progressionSystem;
-        this.scanner = scanner::nextLine;
-        this.display = display;
-        this.totalTrophies = 0;
-        this.playerHorseFactory = playerHorseFactory;
-    }
+            final Display display) {
+            this.playerHorse = null;
+            this.raceManager = raceManager;
+            this.upgradeSystem = progressionSystem;
+            this.scanner = scanner::nextLine;
+            this.display = display;
+            this.totalTrophies = 0;
+            this.playerHorseFactory = playerHorseFactory;
+        }
 
     public void runGame() {
         display.printWelcome();
         createPlayerHorse();
-        upgradeHorse(TOTAL_UPGRADE_POINTS);
+        upgradeHorse(FIRST_TOTAL_UPGRADE_POINTS);
 
         while(raceManager.hasMoreRaces()){
-            final Race race = raceManager.getNextRace();
+            final Race race = raceManager.getNextRace(playerHorse);
             runRace(race);
             handlePostRaceRewards(race);
         }

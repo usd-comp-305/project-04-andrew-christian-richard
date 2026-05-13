@@ -1,11 +1,10 @@
 package edu.sandiego.comp305;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Race {
+    private static final int EVENT_ROUND_INTERVAL = 3;
+
     private final Difficulty difficulty;
 
     private final int lengthInMeters;
@@ -14,19 +13,29 @@ public class Race {
 
     private final List<RaceParticipant> finishOrder;
 
+    private AbstractEventFactory eventFactory;
+
+    private final EventDescriptionProvider descriptor;
+
     private RaceState state;
 
     private int round;
+    private Event event;
+    private final Random random;
 
     public Race(
             final Difficulty difficulty,
             final int lengthInMeters) {
         this.difficulty = difficulty;
+        this.random = new Random();
         this.lengthInMeters = lengthInMeters;
         this.participants = new ArrayList<>();
         this.finishOrder = new ArrayList<>();
+        this.descriptor = new EventDescriptionProvider();
+        this.eventFactory = null;
         this.state = RaceState.NOT_STARTED;
         this.round = 0;
+        this.event = null;
     }
 
     public void addParticipant(final RaceParticipant participant) {
@@ -44,10 +53,15 @@ public class Race {
 
     public void prepareRound() {
         event = null;
+        eventFactory = new AbstractEventFactory(getPlayerHorse(), descriptor);
+
+        if (round % EVENT_ROUND_INTERVAL == 0) {
+            event = eventFactory.createRandomEvent(random);
+        }
     }
 
     public boolean hasEvent() {
-        return false;
+        return event != null;
     }
 
     public Event getEvent() {
@@ -65,7 +79,9 @@ public class Race {
             throw new IllegalStateException("Race does not have a player horse.");
         }
 
-        playerHorse.applyRaceEffect(selectedChoice.getEffect());
+        RaceEffect effect = selectedChoice.getEffect();
+
+        playerHorse.applyRaceEffect(effect);
 
         event = null;
     }

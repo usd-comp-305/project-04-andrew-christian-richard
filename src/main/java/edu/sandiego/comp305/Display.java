@@ -19,15 +19,11 @@ public class Display {
         for (int i = 0; i < NUM_CHOICES; i++){
             final EventChoice choice = choices.get(i);
             final RaceEffect effect = choice.getEffect();
-            final String statChanges = String.format(
-                    "SPD%+d PWR%+d",
-                    effect.getSpeedChange(),
-                    effect.getPowerChange());
+
             System.out.printf(
-                    "[%d] %-30s %s %n",
+                    "[%d] %-30s %n",
                     i + 1,
-                    choice.getLabel(),
-                    statChanges);
+                    choice.getLabel());
             System.out.printf("%-48s %n", choice.getLabel());
         }
 
