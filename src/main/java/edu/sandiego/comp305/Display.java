@@ -104,5 +104,4 @@ public class Display {
         System.out.printf("Total trophies awarded: %d%n", totalTrophies);
         System.out.println("══════════════════════════════════════════════════════");
     }
-
 }
