@@ -65,10 +65,7 @@ public class Race {
             throw new IllegalStateException("Race does not have a player horse.");
         }
 
-        RaceEffect effect = selectedChoice.getEffect();
-
-        playerHorse.getStats().increaseSpeed(effect.getSpeedChange());
-        playerHorse.getStats().increasePower(effect.getPowerChange());
+        playerHorse.applyRaceEffect(selectedChoice.getEffect());
 
         event = null;
     }
