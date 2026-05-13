@@ -43,7 +43,7 @@ public class Display {
 
     public void printRound(final Race race){
         final Horse player = race.getPlayerHorse();
-        final Stats playerStats = player.getStats();
+//        final Stats playerStats = player.getStats();
         final List<RaceParticipant> standings = race.getCurrentStandings();
         final int trackDistance = race.getLengthInMeters();
 
@@ -95,7 +95,8 @@ public class Display {
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.printf(
-                "It is time to upgrade your horse before the next race! You have %d%n",
+                "It is time to upgrade your horse before the next race!"
+                + " You have %d%n",
                 upgradePoints);
         System.out.println(
                 "══════════════════════════════════════════════════════");

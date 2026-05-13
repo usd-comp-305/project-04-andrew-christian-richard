@@ -97,7 +97,7 @@ public class HorseRacingGame {
         boolean validUpgrade = false;
 
         while (!validUpgrade) {
-            String upgradeInput = scanner.nextLine();
+            final String upgradeInput = scanner.nextLine();
 
             try {
                 upgradeSystem.applyUpgrade(playerHorse, upgradeInput);
