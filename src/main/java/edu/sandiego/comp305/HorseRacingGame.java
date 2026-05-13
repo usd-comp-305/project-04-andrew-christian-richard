@@ -34,6 +34,7 @@ public class HorseRacingGame {
         while(raceManager.hasMoreRaces()){
             Race race = raceManager.getNextRace();
             runRace(race);
+            handlePostRaceRewards(race);
         }
 
 
@@ -57,7 +58,11 @@ public class HorseRacingGame {
         }
     }
 
-    public void handlePostRaceRewards(final Race race) {
+    private void handlePostRaceRewards(final Race race) {
+        Placement placement = race.getPlacement(playerHorse);
+        int trophiesEarned = placement.getTrophyValue();
+        totalTrophies += trophiesEarned;
+        display.printRaceResult(race, trophiesEarned, totalTrophies);
     }
 
     private void createPlayerHorse(){

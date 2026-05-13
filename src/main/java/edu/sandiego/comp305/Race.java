@@ -51,11 +51,6 @@ public class Race {
 
     public void executeRound() {
         round++;
-
-        // Temporary stub logic so race can eventually end.
-        if (round > 10) {
-            state = RaceState.FINISHED;
-        }
     }
 
     public Horse getPlayerHorse() {
