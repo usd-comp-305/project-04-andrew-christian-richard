@@ -3,7 +3,7 @@ package edu.sandiego.comp305;
 import java.util.List;
 import java.util.Scanner;
 
-public class Simulation {
+public class Display {
     private final Scanner scanner;
     private final RaceManager raceManager;
     private final HorseUpgradeSystem upgradeSystem;
@@ -12,12 +12,8 @@ public class Simulation {
     private int round;
 
     private static final int NUM_CHOICES = 3;
-    private static final int FIRST_CHOICE = 1;
-    private static final int SPEED_UPGRADE_CHOICE = 1;
-    private static final int POWER_UPGRADE_CHOICE = 2;
-    private static final int STAMINA_UPGRADE_CHOICE = 3;
 
-    public Simulation(Scanner scanner, RaceManager raceManager, HorseUpgradeSystem upgradeSystem,
+    public Display(Scanner scanner, RaceManager raceManager, HorseUpgradeSystem upgradeSystem,
                      HorseFactory horseFactory) {
         this.scanner = scanner;
         this.raceManager = raceManager;
@@ -88,7 +84,16 @@ public class Simulation {
         System.out.print("Enter upgrades: ");
     }
 
-    private void printRaceResult(){
+    private void printRaceResult(Race race){
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.println("The race has ended! Here are the results are in!");
+        System.out.println("══════════════════════════════════════════════════════");
+        List<Horse> finishOrder = race.getFinishOrder();
+        for (int i = 0; i < finishOrder.size(); i++) {
+            RaceParticipant participant = finishOrder.get(i);
+            System.out.printf("%d. %s%n", i + 1, participant.getName());
+        }
+        System.out.println("══════════════════════════════════════════════════════");
 
     }
 
