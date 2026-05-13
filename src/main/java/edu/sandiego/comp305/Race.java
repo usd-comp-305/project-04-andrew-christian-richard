@@ -75,6 +75,10 @@ public class Race {
         participants.add(participant);
     }
 
+    public void addParticipant(final RaceParticipant participant) {
+        participants.add(participant);
+    }
+
     public void start() {
         state = RaceState.IN_PROGRESS;
         round = 1;
