@@ -18,10 +18,11 @@ public class AbstractEventFactoryTests {
     void init() {
         random = mock(Random.class);
 
-        Stats testStats = new Stats(1, 1, 1);
-        Horse testHorse = new Horse("SeaBiscuit", testStats);
+        final Stats testStats = new Stats(1, 1, 1);
+        final Horse testHorse = new Horse("SeaBiscuit", testStats);
 
-        EventDescriptionProvider descriptionProvider = new EventDescriptionProvider();
+        final EventDescriptionProvider descriptionProvider =
+                new EventDescriptionProvider();
         testFactory = new AbstractEventFactory(testHorse, descriptionProvider);
     }
 
@@ -29,7 +30,7 @@ public class AbstractEventFactoryTests {
     void createRandomEvent_returnsNeutralEvent() {
         when(random.nextInt(anyInt())).thenReturn(1).thenReturn(0);
 
-        Event testEvent = testFactory.createRandomEvent(random);
+        final Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(NeutralEvent.class, testEvent);
     }
@@ -38,7 +39,7 @@ public class AbstractEventFactoryTests {
     void createRandomEvent_returnsGoodEvent() {
         when(random.nextInt(anyInt())).thenReturn(70).thenReturn(0);
 
-        Event testEvent = testFactory.createRandomEvent(random);
+        final Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(GoodEvent.class, testEvent);
     }
@@ -47,7 +48,7 @@ public class AbstractEventFactoryTests {
     void createRandomEvent_returnsBadEvent() {
         when(random.nextInt(anyInt())).thenReturn(90).thenReturn(0);
 
-        Event testEvent = testFactory.createRandomEvent(random);
+        final Event testEvent = testFactory.createRandomEvent(random);
 
         assertInstanceOf(BadEvent.class, testEvent);
     }

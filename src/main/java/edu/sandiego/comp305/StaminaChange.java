@@ -8,11 +8,11 @@ public enum StaminaChange {
 
     private final int change;
 
-    StaminaChange(int change) {
+    StaminaChange(final int change) {
         this.change = change;
     }
 
-    public int getChange(){
+    public int getChange() {
         return change;
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class BadEvent extends Event {
     private final List<EventChoice> eventChoices;
 
-    public BadEvent(String description, Horse horse){
+    public BadEvent(final String description, final Horse horse){
         super(description, horse);
         this.eventChoices = List.of(
                 new EventChoice("Shake it off and try to catch up",
@@ -18,23 +18,25 @@ public class BadEvent extends Event {
     }
 
     @Override
-    public List<EventChoice> getEventChoices(){
+    public List<EventChoice> getEventChoices() {
         return eventChoices;
     }
 
     private RaceEffect getVeryBadEffect(){
-        int reductionSpeed = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.VERYBAD.getSpeedMultiplier());
-        int reductionPower = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.VERYBAD.getPowerMultiplier());
+        final Stats stats = getHorseStats();
+        final int reductionSpeed = (int) (stats.getSpeed()
+                * EventStatMultiplier.VERYBAD.getSpeedMultiplier());
+        final int reductionPower = (int) (stats.getPower()
+                * EventStatMultiplier.VERYBAD.getPowerMultiplier());
         return new RaceEffect(reductionSpeed, reductionPower);
     }
 
     private RaceEffect getBadEffect(){
-        int reductionSpeed = (int) (horse.getStats().getSpeed() *
-                EventStatMultiplier.BAD.getSpeedMultiplier());
-        int reductionPower = (int) (horse.getStats().getPower() *
-                EventStatMultiplier.BAD.getPowerMultiplier());
+        final Stats stats = getHorseStats();
+        final int reductionSpeed = (int) (stats.getSpeed()
+                * EventStatMultiplier.BAD.getSpeedMultiplier());
+        final int reductionPower = (int) (stats.getPower()
+                * EventStatMultiplier.BAD.getPowerMultiplier());
         return new RaceEffect(reductionSpeed, reductionPower);
     }
 }

@@ -7,11 +7,11 @@ public enum TrackType {
 
     private final int length;
 
-    TrackType(int length) {
+    TrackType(final int length) {
         this.length = length;
     }
 
-    public int getLength(){
+    public int getLength() {
         return length;
     }
 }

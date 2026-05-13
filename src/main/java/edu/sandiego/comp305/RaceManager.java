@@ -9,6 +9,7 @@ public class RaceManager {
     private static final int FOUR_HUNDRED_METERS = 400;
 
     private final List<Race> races;
+
     private int currentRaceIndex;
 
     public RaceManager() {
@@ -51,6 +52,10 @@ public class RaceManager {
         return race;
     }
 
+    public List<Race> generateRaces(final Horse playerHorse) {
+        return null;
+    }
+  
     public void addRace(final Race race) {
         races.add(race);
     }

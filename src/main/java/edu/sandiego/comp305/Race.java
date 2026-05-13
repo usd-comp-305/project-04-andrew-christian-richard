@@ -35,15 +35,19 @@ public class Race {
         return state == RaceState.FINISHED;
     }
 
+    public Event getEvent() {
+        return null;
+    }
+
+    public Track getTrack() {
+        return null;
+    }
+  
     public void prepareRound() {
     }
 
     public boolean hasEvent() {
         return event != null;
-    }
-
-    public Event getEvent() {
-        return event;
     }
 
     public void resolveEvent(final EventChoice selectedChoice) {
@@ -79,7 +83,7 @@ public class Race {
     public int getRound() {
         return round;
     }
-
+      
     public RaceState getState() {
         return state;
     }

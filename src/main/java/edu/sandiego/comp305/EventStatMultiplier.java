@@ -9,9 +9,12 @@ public enum EventStatMultiplier {
     GREAT(0.25, 0.2);
 
     private final double speedMultiplier;
+
     private final double powerMultiplier;
 
-    EventStatMultiplier(double speedMultiplier, double powerMultiplier) {
+    EventStatMultiplier(
+            final double speedMultiplier,
+            final double powerMultiplier) {
         this.speedMultiplier = speedMultiplier;
         this.powerMultiplier = powerMultiplier;
     }

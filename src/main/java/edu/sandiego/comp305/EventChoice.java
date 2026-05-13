@@ -2,10 +2,15 @@ package edu.sandiego.comp305;
 
 public class EventChoice {
     private final String label;
+
     private final RaceEffect effect;
+
     private final StaminaChange change;
 
-    public EventChoice(String label, RaceEffect effect, StaminaChange change) {
+    public EventChoice(
+            final String label,
+            final RaceEffect effect,
+            final StaminaChange change) {
         this.label = label;
         this.effect = effect;
         this.change = change;
