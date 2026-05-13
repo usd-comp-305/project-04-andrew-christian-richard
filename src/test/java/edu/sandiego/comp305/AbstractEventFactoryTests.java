@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 public class AbstractEventFactoryTests {
     private Random random;
+
     private AbstractEventFactory testFactory;
 
     @BeforeEach

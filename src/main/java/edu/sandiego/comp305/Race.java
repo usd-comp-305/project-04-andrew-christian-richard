@@ -10,8 +10,11 @@ public class Race {
     private final Track track;
 
     private final List<RaceParticipant> participants;
+
     private final List<Event> events;
+
     private RaceState state;
+
     private final List<Horse> finishOrder = new ArrayList<>();
 
 
