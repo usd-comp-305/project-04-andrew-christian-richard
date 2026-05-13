@@ -1,6 +1,7 @@
 package edu.sandiego.comp305;
 
 import java.util.List;
+
 public class Display {
     private static final int NUM_CHOICES = 3;
 
@@ -40,7 +41,7 @@ public class Display {
         System.out.print("Choose (1-3): ");
     }
 
-    public void printRound(Race race){
+    public void printRound(final Race race){
         final Horse player = race.getPlayerHorse();
         final Stats playerStats = player.getStats();
         final List<RaceParticipant> standings = race.getCurrentStandings();
@@ -93,7 +94,9 @@ public class Display {
     public void printUpgradeSystem(final int upgradePoints){
         System.out.println(
                 "══════════════════════════════════════════════════════");
-        System.out.printf("It is time to upgrade your horse before the next race! You have %d%n", upgradePoints);
+        System.out.printf(
+                "It is time to upgrade your horse before the next race! You have %d%n",
+                upgradePoints);
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.println("Enter upgrades as three numbers:");
@@ -138,7 +141,7 @@ public class Display {
         System.out.println("Name your horse: ");
     }
 
-    public void printCompletion(Horse horse, int totalTrophies){
+    public void printCompletion(final Horse horse, final int totalTrophies){
         final Stats stats = horse.getStats();
         System.out.println(
                 "══════════════════════════════════════════════════════");

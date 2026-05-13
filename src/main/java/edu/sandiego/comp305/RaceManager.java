@@ -31,15 +31,15 @@ public class RaceManager {
 
     private void initializeRaces() {
         final int[] raceLengths = {
-                ONE_HUNDRED_METERS,
-                TWO_HUNDRED_METERS,
-                FOUR_HUNDRED_METERS
+            ONE_HUNDRED_METERS,
+            TWO_HUNDRED_METERS,
+            FOUR_HUNDRED_METERS
         };
 
         final Difficulty[] difficulties = {
-                Difficulty.EASY,
-                Difficulty.MEDIUM,
-                Difficulty.HARD
+            Difficulty.EASY,
+            Difficulty.MEDIUM,
+            Difficulty.HARD
         };
 
         for (final int length : raceLengths) {
