@@ -5,7 +5,9 @@ import java.util.List;
 
 public class RaceManager {
     private static final int ONE_HUNDRED_METERS = 100;
+
     private static final int TWO_HUNDRED_METERS = 200;
+
     private static final int FOUR_HUNDRED_METERS = 400;
 
     private final List<Race> races;
@@ -18,21 +20,30 @@ public class RaceManager {
         initializeRaces();
     }
 
+    public RaceManager(final RaceManager raceManager) {
+        this.races = new ArrayList<>();
+        this.currentRaceIndex = raceManager.currentRaceIndex;
+
+        for (final Race race : raceManager.races) {
+            races.add(new Race(race.getDifficulty(), race.getLengthInMeters()));
+        }
+    }
+
     private void initializeRaces() {
-        int[] raceLengths = {
+        final int[] raceLengths = {
                 ONE_HUNDRED_METERS,
                 TWO_HUNDRED_METERS,
                 FOUR_HUNDRED_METERS
         };
 
-        Difficulty[] difficulties = {
+        final Difficulty[] difficulties = {
                 Difficulty.EASY,
                 Difficulty.MEDIUM,
                 Difficulty.HARD
         };
 
-        for (int length : raceLengths) {
-            for (Difficulty difficulty : difficulties) {
+        for (final int length : raceLengths) {
+            for (final Difficulty difficulty : difficulties) {
                 races.add(new Race(difficulty, length));
             }
         }
@@ -47,7 +58,7 @@ public class RaceManager {
             return null;
         }
 
-        Race race = races.get(currentRaceIndex);
+        final Race race = races.get(currentRaceIndex);
         currentRaceIndex++;
         return race;
     }

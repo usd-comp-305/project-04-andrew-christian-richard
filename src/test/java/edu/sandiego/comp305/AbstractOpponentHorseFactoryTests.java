@@ -18,7 +18,7 @@ public class AbstractOpponentHorseFactoryTests {
                 .thenReturn(1).thenReturn(1)
                 .thenReturn(2);
 
-        HorseFactory testFactory =
+        final HorseFactory testFactory =
                 new AbstractOpponentHorseFactory(
                         Difficulty.EASY,
                         TrackType.ONE_HUNDRED_METER,

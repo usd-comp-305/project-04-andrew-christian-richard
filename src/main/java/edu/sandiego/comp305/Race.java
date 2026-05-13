@@ -6,13 +6,16 @@ import java.util.List;
 
 public class Race {
     private final Difficulty difficulty;
+
     private final int lengthInMeters;
+
     private final List<RaceParticipant> participants;
+
     private final List<RaceParticipant> finishOrder;
 
     private RaceState state;
+
     private int round;
-    private Event event;
 
     public Race(
             final Difficulty difficulty,
@@ -23,7 +26,6 @@ public class Race {
         this.finishOrder = new ArrayList<>();
         this.state = RaceState.NOT_STARTED;
         this.round = 0;
-        this.event = null;
     }
 
     public void start() {
@@ -47,7 +49,7 @@ public class Race {
     }
 
     public boolean hasEvent() {
-        return event != null;
+        return false;
     }
 
     public void resolveEvent(final EventChoice selectedChoice) {
@@ -58,7 +60,7 @@ public class Race {
     }
 
     public Horse getPlayerHorse() {
-        for (RaceParticipant participant : participants) {
+        for (final RaceParticipant participant : participants) {
             if (participant instanceof Horse) {
                 return (Horse) participant;
             }
@@ -92,7 +94,7 @@ public class Race {
         return null;
     }
 
-    public int getLengthInMeters(){
+    public int getLengthInMeters() {
         return lengthInMeters;
     }
 }

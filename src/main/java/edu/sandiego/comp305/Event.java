@@ -7,15 +7,12 @@ public abstract class Event {
 
     private final String description;
 
-    public final Horse horse;
-
     private final Stats stats;
 
     protected Event(
             final String description,
             final Horse horse) {
         this.description = description;
-        this.horse = horse;
         this.stats = new Stats(horse.getStats());
     }
 

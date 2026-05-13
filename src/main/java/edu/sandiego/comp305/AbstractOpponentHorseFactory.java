@@ -83,7 +83,10 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
     }
 
     private int getOverallStatPoints() {
-        return (getDifficultyMultiplier() * BASE_DIFFICULTY_STAT_MULTIPLIER)
+        final int difficultyStatPoints = (getDifficultyMultiplier() + 1)
+                * BASE_DIFFICULTY_STAT_MULTIPLIER;
+
+        return difficultyStatPoints
                 + (getTrackTypeMultiplier() * BASE_TRACK_STAT_MULTIPLIER);
     }
 }
