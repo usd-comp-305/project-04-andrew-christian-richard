@@ -5,6 +5,7 @@ import java.util.List;
 
 public class HorseRacingGame {
     private static final int TOTAL_UPGRADE_POINTS = 5;
+    private static final int EXTRA_UPGRADE_POINTS = 2;
     private static final int FIRST_CHOICE = 1;
     private static final int LAST_CHOICE = 3;
     private final RaceManager raceManager;
@@ -36,8 +37,7 @@ public class HorseRacingGame {
             runRace(race);
             handlePostRaceRewards(race);
         }
-
-
+        display.printCompletion(playerHorse, totalTrophies);
     }
 
     private void runRace(final Race race) {
@@ -63,6 +63,7 @@ public class HorseRacingGame {
         int trophiesEarned = placement.getTrophyValue();
         totalTrophies += trophiesEarned;
         display.printRaceResult(race, trophiesEarned, totalTrophies);
+        upgradeHorse(trophiesEarned + EXTRA_UPGRADE_POINTS);
     }
 
     private void createPlayerHorse(){
@@ -119,7 +120,6 @@ public class HorseRacingGame {
             System.out.print("Choose (1-3): ");
         }
     }
-
 
     private void waitForEnter() {
         System.out.print("Press Enter to continue to the next round...");
