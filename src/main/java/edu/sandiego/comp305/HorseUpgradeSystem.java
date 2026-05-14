@@ -5,9 +5,9 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
     private static final int SPEED_UPGRADE_INDEX = 0;
 
-    private static final int POWER_UPGRADE_INDEX = 1;
+    private static final int STAMINA_UPGRADE_INDEX = 1;
 
-    private static final int STAMINA_UPGRADE_INDEX = 2;
+    private static final int POWER_UPGRADE_INDEX = 2;
 
     private static final int UPGRADE_COUNT = 3;
 
@@ -30,11 +30,11 @@ public class HorseUpgradeSystem implements UpgradeSystem {
         final int speedUpgrade =
                 parseUpgradeAmount(upgradeAmounts[SPEED_UPGRADE_INDEX]);
 
-        final int powerUpgrade =
-                parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]);
-
         final int staminaUpgrade =
                 parseUpgradeAmount(upgradeAmounts[STAMINA_UPGRADE_INDEX]);
+
+        final int powerUpgrade =
+                parseUpgradeAmount(upgradeAmounts[POWER_UPGRADE_INDEX]);
 
         validateUpgradeTotal(
                 horse.getCurrentUpgradePoints(),
@@ -48,6 +48,7 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
         horse.getStats().increasePower(powerUpgrade);
 
+        horse.setCurrentUpgradePoints(0);
     }
 
     @Override
