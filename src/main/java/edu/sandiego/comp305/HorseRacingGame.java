@@ -74,7 +74,7 @@ public class HorseRacingGame {
     }
 
     private void handlePostRaceRewards(final Race race) {
-        final Placement placement = race.getPlacement(race.getPlayerHorse());
+        final Placement placement = race.getPlayerPlacement();
         final int trophiesEarned = placement.getTrophyValue();
         totalTrophies += trophiesEarned;
         display.printRaceResult(race, trophiesEarned, totalTrophies);

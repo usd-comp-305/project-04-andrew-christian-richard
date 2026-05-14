@@ -59,7 +59,7 @@ public class Race {
             throw new IllegalArgumentException("Player horse cannot be null.");
         }
 
-        this.playerHorse = playerHorse;
+        this.playerHorse = new Horse(playerHorse);
         this.currentPlayerStamina = this.playerHorse.getStats().getStamina();
 
         if (!participants.contains(this.playerHorse)) {
@@ -185,7 +185,11 @@ public class Race {
     }
 
     public Horse getPlayerHorse() {
-        return playerHorse;
+        if (playerHorse == null) {
+            return null;
+        }
+
+        return new Horse(playerHorse);
     }
 
     public List<RaceParticipant> getCurrentStandings() {
@@ -208,12 +212,16 @@ public class Race {
         return state;
     }
 
-    public Placement getPlacement(final Horse horse) {
-        final int index = finishOrder.indexOf(horse);
+    public Placement getPlayerPlacement() {
+        if (playerHorse == null) {
+            throw new IllegalStateException("Race does not have a player horse.");
+        }
+
+        final int index = finishOrder.indexOf(playerHorse);
 
         if (index < 0) {
             throw new IllegalArgumentException(
-                    "Horse has not finished the race."
+                    "Player horse has not finished the race."
             );
         }
 
