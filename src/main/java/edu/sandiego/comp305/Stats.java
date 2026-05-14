@@ -47,23 +47,23 @@ public class Stats {
             return 0;
         }
 
-        if (maxMovement <= minMovement) {
-            return minMovement;
+        if (maxMovementDistance <= minMovementDistance) {
+            return maxMovementDistance;
         }
 
         return random.nextInt(
-                minMovement,
-                maxMovement + 1
+                minMovementDistance,
+                maxMovementDistance + 1
         );
     }
 
-    public int getMinMovementDistance(final RaceEffect effect){
-       int minMovementDistance = power + effect.getPowerChange();
-       return Math.max(0, minMovementDistance);
+    public int getMinMovementDistance(final RaceEffect effect) {
+        final int minMovementDistance = power + effect.getPowerChange();
+        return Math.max(0, minMovementDistance);
     }
 
-    public int getMaxMovementDistance(final RaceEffect effect){
-        int maxMovementDistance = speed + effect.getSpeedChange();
+    public int getMaxMovementDistance(final RaceEffect effect) {
+        final int maxMovementDistance = speed + effect.getSpeedChange();
         return Math.max(0, maxMovementDistance);
     }
 

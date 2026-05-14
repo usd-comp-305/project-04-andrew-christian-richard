@@ -21,9 +21,11 @@ public class Race {
 
     private final List<RaceParticipant> finishOrder;
 
-    private AbstractEventFactory eventFactory;
-
     private final EventDescriptionProvider descriptor;
+
+    private final Random random;
+
+    private AbstractEventFactory eventFactory;
 
     private RaceState state;
 
@@ -34,8 +36,6 @@ public class Race {
     private Horse playerHorse;
 
     private int currentPlayerStamina;
-
-    private final Random random;
 
     public Race(
             final Difficulty difficulty,
@@ -60,10 +60,10 @@ public class Race {
         }
 
         this.playerHorse = new Horse(playerHorse);
-        this.currentPlayerStamina = playerHorse.getStats().getStamina();
+        this.currentPlayerStamina = this.playerHorse.getStats().getStamina();
 
-        if (!participants.contains(playerHorse)) {
-            participants.add(playerHorse);
+        if (!participants.contains(this.playerHorse)) {
+            participants.add(this.playerHorse);
         }
     }
 
@@ -100,8 +100,7 @@ public class Race {
 
         eventFactory = new AbstractEventFactory(playerHorse, descriptor);
 
-        if (round > 0
-                && round % EVENT_ROUND_INTERVAL == 0) {
+        if (round > 0 && round % EVENT_ROUND_INTERVAL == 0) {
             event = eventFactory.createRandomEvent(random);
         }
     }
@@ -121,16 +120,8 @@ public class Race {
             );
         }
 
-        final Horse racePlayerHorse = findPlayerHorse();
-
-        if (racePlayerHorse == null) {
-            throw new IllegalStateException(
-                    "Race does not have a player horse."
-            );
-        }
-
         final RaceEffect effect = selectedChoice.getEffect();
-        racePlayerHorse.applyRaceEffect(effect);
+        playerHorse.applyRaceEffect(effect);
         applyStaminaChange(selectedChoice.getChange());
         event = null;
     }
@@ -193,19 +184,11 @@ public class Race {
     }
 
     public Horse getPlayerHorse() {
-
-        if (playerHorse != null) {
-            return new Horse(this.playerHorse);
+        if (playerHorse == null) {
+            return null;
         }
 
-        for (RaceParticipant participant : participants) {
-
-            if (participant instanceof Horse) {
-                return (Horse) participant;
-            }
-        }
-
-        return null;
+        return new Horse(playerHorse);
     }
 
     public List<RaceParticipant> getCurrentStandings() {
@@ -249,20 +232,9 @@ public class Race {
     }
 
     private void decreaseStamina() {
-        if (round % STAMINA_DEPLETION_INTERVAL == 0) {
-            if (currentPlayerStamina > 0) {
-                currentPlayerStamina--;
-            }
+        if (round % STAMINA_DEPLETION_INTERVAL == 0
+                && currentPlayerStamina > 0) {
+            currentPlayerStamina--;
         }
-    }
-
-    private Horse findPlayerHorse() {
-        for (final RaceParticipant participant : participants) {
-            if (participant instanceof Horse) {
-                return (Horse) participant;
-            }
-        }
-
-        return playerHorse;
     }
 }

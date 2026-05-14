@@ -14,35 +14,32 @@ public class Horse implements RaceParticipant {
 
     private int currentUpgradePoints;
 
-    private int roundsMoved;
-
     private RaceEffect raceEffect;
 
-    public Horse(final String name, final Stats stats) {
+    public Horse(
+            final String name,
+            final Stats stats) {
         this.name = name;
         this.stats = stats;
         this.currentDistance = 0;
         this.trophyCount = 0;
         this.currentUpgradePoints = INITIAL_UPGRADE_POINTS;
-        this.roundsMoved = 0;
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
-    public Horse(final Horse other) {
-        this.name = other.name;
-        this.stats = other.stats;
-        this.currentDistance = other.currentDistance;
-        this.trophyCount = other.trophyCount;
-        this.currentUpgradePoints = other.currentUpgradePoints;
-        this.roundsMoved = other.roundsMoved;
-        this.raceEffect = other.raceEffect;
+    public Horse(final Horse horse) {
+        this(
+                horse.getName(),
+                new Stats(horse.getStats())
+        );
     }
 
     public void addTrophies(final int amount) {
         trophyCount += amount;
+        currentUpgradePoints = amount;
     }
 
-    public void setCurrentUpgradePoints(final int amount) {
+    public void changeCurrentUpgradePoints(final int amount) {
         currentUpgradePoints = amount;
     }
 
@@ -56,7 +53,6 @@ public class Horse implements RaceParticipant {
 
     public void resetCurrentDistance() {
         currentDistance = 0;
-        roundsMoved = 0;
         raceEffect = RaceEffect.NO_EFFECT;
     }
 
@@ -99,16 +95,7 @@ public class Horse implements RaceParticipant {
 
         currentDistance += spacesMoved;
 
-        roundsMoved++;
-        decreaseStamina();
-
         return spacesMoved;
-    }
-
-    private void decreaseStamina() {
-        if (roundsMoved % STAMINA_DEPLETION_INTERVAL == 0) {
-            stats.consumeStamina(STAMINA_DEPLETION_RATE);
-        }
     }
 
     @Override

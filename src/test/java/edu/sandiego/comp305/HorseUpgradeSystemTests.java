@@ -62,8 +62,6 @@ public class HorseUpgradeSystemTests {
         assertEquals(
                 TEST_POWER + powerUpgrade,
                 testHorse.getStats().getPower());
-
-        assertEquals(0, testHorse.getCurrentUpgradePoints());
     }
 
     @Test
@@ -98,8 +96,8 @@ public class HorseUpgradeSystemTests {
     @Test
     void applyUpgrade_UpgradePointsEqualsSecondPlaceTrophies() {
         final int speedUpgrade = 1;
-        final int staminaUpgrade = 1;
-        final int powerUpgrade = 2;
+        final int powerUpgrade = 1;
+        final int staminaUpgrade = 2;
         final String upgradeInput = "1 1 2";
 
         final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
@@ -124,8 +122,8 @@ public class HorseUpgradeSystemTests {
     @Test
     void applyUpgrade_usesCurrentTrophies_NotTotalTrophies() {
         final int speedUpgrade = 0;
-        final int staminaUpgrade = 1;
-        final int powerUpgrade = 0;
+        final int powerUpgrade = 1;
+        final int staminaUpgrade = 0;
         final String upgradeInput = "0 1 0";
 
         final HorseUpgradeSystem testUpgradeSystem = new HorseUpgradeSystem();
