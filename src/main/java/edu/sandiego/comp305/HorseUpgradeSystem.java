@@ -53,6 +53,7 @@ public class HorseUpgradeSystem implements UpgradeSystem {
     @Override
     public void awardTrophies(final Horse horse, final Placement placement) {
         horse.addTrophies(placement.getTrophyValue());
+        horse.setCurrentUpgradePoints(placement.getTrophyValue());
     }
 
     private void validateUpgradeInput(final String[] upgradeAmounts) {

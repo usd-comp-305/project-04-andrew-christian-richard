@@ -121,14 +121,16 @@ public class Race {
             );
         }
 
-        if (playerHorse == null) {
+        final Horse horse = getPlayerHorse();
+
+        if (horse == null) {
             throw new IllegalStateException(
                     "Race does not have a player horse."
             );
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
-        playerHorse.applyRaceEffect(effect);
+        horse.applyRaceEffect(effect);
 
         applyStaminaChange(selectedChoice.getChange());
 
