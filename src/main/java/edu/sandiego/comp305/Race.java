@@ -121,15 +121,6 @@ public class Race {
             );
         }
 
-        if (playerHorse == null && !participants.isEmpty()) {
-            final RaceParticipant first = participants.get(0);
-            final RaceEffect effect = selectedChoice.getEffect();
-            first.applyRaceEffect(effect);
-            applyStaminaChange(selectedChoice.getChange());
-            event = null;
-            return;
-        }
-
         if (playerHorse == null) {
             throw new IllegalStateException(
                     "Race does not have a player horse."
@@ -161,6 +152,10 @@ public class Race {
     }
 
     private void applyStaminaChange(final StaminaChange staminaChange) {
+        if (staminaChange == null) {
+            return;
+        }
+
         currentPlayerStamina += staminaChange.getChange();
 
         if (currentPlayerStamina < 0) {
