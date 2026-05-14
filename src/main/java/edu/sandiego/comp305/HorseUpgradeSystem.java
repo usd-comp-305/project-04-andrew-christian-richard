@@ -5,9 +5,9 @@ public class HorseUpgradeSystem implements UpgradeSystem {
 
     private static final int SPEED_UPGRADE_INDEX = 0;
 
-    private static final int STAMINA_UPGRADE_INDEX = 1;
+    private static final int POWER_UPGRADE_INDEX = 1;
 
-    private static final int POWER_UPGRADE_INDEX = 2;
+    private static final int STAMINA_UPGRADE_INDEX = 2;
 
     private static final int UPGRADE_COUNT = 3;
 
@@ -47,14 +47,12 @@ public class HorseUpgradeSystem implements UpgradeSystem {
         horse.getStats().increaseStamina(staminaUpgrade);
 
         horse.getStats().increasePower(powerUpgrade);
-
-        horse.setCurrentUpgradePoints(0);
     }
 
     @Override
     public void awardTrophies(final Horse horse, final Placement placement) {
         horse.addTrophies(placement.getTrophyValue());
-        horse.setCurrentUpgradePoints(placement.getTrophyValue());
+        horse.changeCurrentUpgradePoints(placement.getTrophyValue());
     }
 
     private void validateUpgradeInput(final String[] upgradeAmounts) {

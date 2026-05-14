@@ -47,13 +47,13 @@ public class Stats {
             return 0;
         }
 
-        if (maxMovement <= minMovement) {
-            return minMovement;
+        if (maxMovementDistance <= minMovementDistance) {
+            return maxMovementDistance;
         }
 
         return random.nextInt(
-                minMovement,
-                maxMovement + 1
+                minMovementDistance,
+                maxMovementDistance + 1
         );
     }
 
