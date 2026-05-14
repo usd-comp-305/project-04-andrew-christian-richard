@@ -8,7 +8,7 @@ public class HorseRacingGame {
 
     private static final int EXTRA_UPGRADE_POINTS = 4;
 
-    private static final int FIRST_TOTAL_UPGRADE_POINTS = 12;
+    private static final int FIRST_TOTAL_UPGRADE_POINTS = 9;
 
     private static final int FIRST_CHOICE = 1;
 

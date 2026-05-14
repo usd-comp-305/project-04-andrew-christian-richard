@@ -2,11 +2,7 @@ package edu.sandiego.comp305;
 
 public class Horse implements RaceParticipant {
 
-    private static final int INITIAL_UPGRADE_POINTS = 5;
-
-    private static final int STAMINA_DEPLETION_INTERVAL = 2;
-
-    private static final int STAMINA_DEPLETION_RATE = 1;
+    private static final int INITIAL_UPGRADE_POINTS = 9;
 
     private final String name;
 
@@ -62,6 +58,10 @@ public class Horse implements RaceParticipant {
         currentDistance = 0;
         roundsMoved = 0;
         raceEffect = RaceEffect.NO_EFFECT;
+    }
+
+    public RaceEffect getRaceEffect(){
+        return raceEffect;
     }
 
     public void resetForCurrentRace() {

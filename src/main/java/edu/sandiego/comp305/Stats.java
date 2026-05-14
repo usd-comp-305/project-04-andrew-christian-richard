@@ -40,18 +40,8 @@ public class Stats {
     }
 
     public int generateMovement(final RaceEffect effect) {
-
-        int minMovement = power + effect.getPowerChange();
-
-        int maxMovement = speed + effect.getSpeedChange();
-
-        if (minMovement < 0) {
-            minMovement = 0;
-        }
-
-        if (maxMovement < 0) {
-            maxMovement = 0;
-        }
+        final int minMovementDistance = getMinMovementDistance(effect);
+        final int maxMovementDistance = getMaxMovementDistance(effect);
 
         if (stamina == 0) {
             return 0;
@@ -65,6 +55,16 @@ public class Stats {
                 minMovement,
                 maxMovement + 1
         );
+    }
+
+    public int getMinMovementDistance(final RaceEffect effect){
+       int minMovementDistance = power + effect.getPowerChange();
+       return Math.max(0, minMovementDistance);
+    }
+
+    public int getMaxMovementDistance(final RaceEffect effect){
+        int maxMovementDistance = speed + effect.getSpeedChange();
+        return Math.max(0, maxMovementDistance);
     }
 
     public void consumeStamina(final int amount) {
