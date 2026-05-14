@@ -18,8 +18,6 @@ public class RaceTests {
 
     private EventChoice mockChoice;
 
-    private RaceEffect mockEffect;
-
     @BeforeEach
     public void setUp() {
         race = new Race(Difficulty.MEDIUM, 1000);
@@ -27,7 +25,6 @@ public class RaceTests {
         mockHorse  = mock(Horse.class);
         mockNPC    = mock(RaceParticipant.class);
         mockChoice = mock(EventChoice.class);
-        mockEffect = mock(RaceEffect.class);
     }
 
     @Test
