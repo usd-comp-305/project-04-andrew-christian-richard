@@ -11,9 +11,13 @@ import static org.mockito.Mockito.*;
 public class RaceTests {
 
     private Race race;
+
     private Horse mockHorse;
+
     private RaceParticipant mockNPC;
+
     private EventChoice mockChoice;
+
     private RaceEffect mockEffect;
 
     @BeforeEach
@@ -48,7 +52,7 @@ public class RaceTests {
 
     @Test
     public void lengthInMeters_isStoredCorrectly() {
-        Race shortRace = new Race(Difficulty.EASY, 500);
+        final Race shortRace = new Race(Difficulty.EASY, 500);
         assertEquals(500, shortRace.getLengthInMeters());
     }
 
@@ -68,7 +72,7 @@ public class RaceTests {
         race.addParticipant(mockHorse);
         race.addParticipant(mockNPC);
 
-        List<RaceParticipant> standings = race.getCurrentStandings();
+        final List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertTrue(standings.contains(mockHorse));
         assertTrue(standings.contains(mockNPC));
@@ -235,7 +239,7 @@ public class RaceTests {
     @Test
     public void currentStandingsIsUnmodifiable() {
         race.addParticipant(mockHorse);
-        List<RaceParticipant> standings = race.getCurrentStandings();
+        final List<RaceParticipant> standings = race.getCurrentStandings();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             standings.add(mockNPC);
@@ -244,7 +248,7 @@ public class RaceTests {
 
     @Test
     public void finishOrder_IsUnmodifiable() {
-        List<RaceParticipant> finishOrder = race.getFinishOrder();
+        final List<RaceParticipant> finishOrder = race.getFinishOrder();
 
         assertThrows(UnsupportedOperationException.class, () -> {
             finishOrder.add(mockHorse);

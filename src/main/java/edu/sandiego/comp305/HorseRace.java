@@ -1,24 +1,36 @@
 package edu.sandiego.comp305;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-public class HorseRace {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+public final class HorseRace {
 
-        RaceManager raceManager = new RaceManager();
-        AbstractPlayerHorseFactory playerHorseFactory = new AbstractPlayerHorseFactory();
-        UpgradeSystem upgradeSystem = new HorseUpgradeSystem();
-        Display display = new Display();
+    private HorseRace() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
-        HorseRacingGame game = new HorseRacingGame(
-                null,
-                raceManager,
-                playerHorseFactory,
-                upgradeSystem,
-                scanner,
-                display
-        );
+    public static void main(final String[] args) {
+
+        final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+
+        final RaceManager raceManager = new RaceManager();
+
+        final HorseFactory playerHorseFactory =
+                new AbstractPlayerHorseFactory();
+
+        final UpgradeSystem upgradeSystem =
+                new HorseUpgradeSystem();
+
+        final Display display = new Display();
+
+        final HorseRacingGame game =
+                new HorseRacingGame(
+                        raceManager,
+                        playerHorseFactory,
+                        upgradeSystem,
+                        scanner,
+                        display
+                );
 
         game.runGame();
 

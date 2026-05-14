@@ -29,20 +29,18 @@ public class HorseRacingGame {
     private int totalTrophies;
 
     public HorseRacingGame(
-            final Horse playerHorse,
             final RaceManager raceManager,
             final HorseFactory playerHorseFactory,
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
             final Display display) {
-            this.playerHorse = playerHorse;
-            this.raceManager = raceManager;
-            this.upgradeSystem = progressionSystem;
-            this.scanner = scanner::nextLine;
-            this.display = display;
-            this.totalTrophies = 0;
-            this.playerHorseFactory = playerHorseFactory;
-        }
+        this.raceManager = new RaceManager(raceManager);
+        this.upgradeSystem = progressionSystem;
+        this.scanner = scanner::nextLine;
+        this.display = display;
+        this.totalTrophies = 0;
+        this.playerHorseFactory = playerHorseFactory;
+    }
 
     public void runGame() {
         display.printWelcome();
@@ -95,7 +93,7 @@ public class HorseRacingGame {
 
     private void upgradeHorse(final int upgradePoints) {
         display.printUpgradeSystem(upgradePoints);
-        playerHorse.changeCurrentUpgradePoints(upgradePoints);
+        playerHorse.setCurrentUpgradePoints(upgradePoints);
 
         boolean validUpgrade = false;
 
