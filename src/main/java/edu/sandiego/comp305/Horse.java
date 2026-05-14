@@ -27,6 +27,13 @@ public class Horse implements RaceParticipant {
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
+    public Horse(final Horse horse) {
+        this(
+                horse.getName(),
+                new Stats(horse.getStats())
+        );
+    }
+
     public void addTrophies(final int amount) {
         trophyCount += amount;
         currentUpgradePoints = amount;
