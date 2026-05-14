@@ -121,14 +121,16 @@ public class Race {
             );
         }
 
-        if (playerHorse == null) {
+        final Horse racePlayerHorse = findPlayerHorse();
+
+        if (racePlayerHorse == null) {
             throw new IllegalStateException(
                     "Race does not have a player horse."
             );
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
-        playerHorse.applyRaceEffect(effect);
+        racePlayerHorse.applyRaceEffect(effect);
         applyStaminaChange(selectedChoice.getChange());
         event = null;
     }
@@ -254,4 +256,13 @@ public class Race {
         }
     }
 
+    private Horse findPlayerHorse() {
+        for (final RaceParticipant participant : participants) {
+            if (participant instanceof Horse) {
+                return (Horse) participant;
+            }
+        }
+
+        return playerHorse;
+    }
 }
