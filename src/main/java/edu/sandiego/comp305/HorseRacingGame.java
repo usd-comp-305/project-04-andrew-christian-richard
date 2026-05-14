@@ -35,14 +35,14 @@ public class HorseRacingGame {
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
             final Display display) {
-            this.playerHorse = playerHorse;
-            this.raceManager = raceManager;
-            this.upgradeSystem = progressionSystem;
-            this.scanner = scanner::nextLine;
-            this.display = display;
-            this.totalTrophies = 0;
-            this.playerHorseFactory = playerHorseFactory;
-        }
+        this.playerHorse = playerHorse;
+        this.raceManager = raceManager;
+        this.upgradeSystem = progressionSystem;
+        this.scanner = scanner::nextLine;
+        this.display = display;
+        this.totalTrophies = 0;
+        this.playerHorseFactory = playerHorseFactory;
+    }
 
     public void runGame() {
         display.printWelcome();

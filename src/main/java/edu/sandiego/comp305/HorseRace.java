@@ -4,21 +4,26 @@ import java.util.Scanner;
 
 public class HorseRace {
 
+    // Utility class: prevent instantiation
+    private HorseRace() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static void main(final String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
 
-        RaceManager raceManager = new RaceManager();
+        final RaceManager raceManager = new RaceManager();
 
-        HorseFactory playerHorseFactory =
+        final HorseFactory playerHorseFactory =
                 new AbstractPlayerHorseFactory();
 
-        UpgradeSystem upgradeSystem =
+        final UpgradeSystem upgradeSystem =
                 new HorseUpgradeSystem();
 
-        Display display = new Display();
+        final Display display = new Display();
 
-        HorseRacingGame game =
+        final HorseRacingGame game =
                 new HorseRacingGame(
                         null,
                         raceManager,

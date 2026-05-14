@@ -93,7 +93,9 @@ public class Race {
         event = null;
 
         if (playerHorse == null) {
-            throw new IllegalStateException("Race does not have a player horse.");
+            throw new IllegalStateException(
+                    "Race does not have a player horse."
+            );
         }
 
         eventFactory = new AbstractEventFactory(playerHorse, descriptor);
@@ -120,7 +122,9 @@ public class Race {
         }
 
         if (playerHorse == null) {
-            throw new IllegalStateException("Race does not have a player horse.");
+            throw new IllegalStateException(
+                    "Race does not have a player horse."
+            );
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
@@ -141,7 +145,8 @@ public class Race {
         sortCurrentStandings();
         decreaseStamina();
 
-        if (finishOrder.size() == participants.size() || round >= MAX_NUM_ROUNDS) {
+        if (finishOrder.size() == participants.size()
+                || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
         } else {
             round++;
@@ -223,7 +228,9 @@ public class Race {
         final int index = finishOrder.indexOf(horse);
 
         if (index < 0) {
-            throw new IllegalArgumentException("Horse has not finished the race.");
+            throw new IllegalArgumentException(
+                    "Horse has not finished the race."
+            );
         }
 
         return Placement.values()[index];

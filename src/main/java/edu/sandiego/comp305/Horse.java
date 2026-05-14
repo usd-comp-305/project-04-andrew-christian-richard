@@ -3,15 +3,21 @@ package edu.sandiego.comp305;
 public class Horse implements RaceParticipant {
 
     private static final int INITIAL_UPGRADE_POINTS = 5;
+
     private static final int STAMINA_DEPLETION_INTERVAL = 2;
+
     private static final int STAMINA_DEPLETION_RATE = 1;
 
     private final String name;
+
     private final Stats stats;
 
     private int currentDistance;
+
     private int trophyCount;
+
     private int currentUpgradePoints;
+
     private int roundsMoved;
 
     private RaceEffect raceEffect;

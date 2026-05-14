@@ -68,7 +68,13 @@ public class Display {
                 pos = "FIN";
             }
 
-            final String playerArrow = isPlayer ? "◄" : "";
+            final String playerArrow;
+            if (isPlayer) {
+                playerArrow = "◄";
+            } else {
+                playerArrow = "";
+            }
+
             final String name = horse.getName();
 
             System.out.printf(
@@ -81,7 +87,8 @@ public class Display {
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.printf(
-                "YOUR HORSE'S CURRENT STATS SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
+                "YOUR HORSE'S CURRENT STATS "
+                + "SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
                 player.getStats().getSpeed(),
                 player.getStats().getPower(),
                 race.getCurrentPlayerStamina(),
