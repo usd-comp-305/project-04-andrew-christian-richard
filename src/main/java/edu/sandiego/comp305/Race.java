@@ -121,19 +121,24 @@ public class Race {
             );
         }
 
-        final Horse horse = getPlayerHorse();
+        if (playerHorse == null && !participants.isEmpty()) {
+            final RaceParticipant first = participants.get(0);
+            final RaceEffect effect = selectedChoice.getEffect();
+            first.applyRaceEffect(effect);
+            applyStaminaChange(selectedChoice.getChange());
+            event = null;
+            return;
+        }
 
-        if (horse == null) {
+        if (playerHorse == null) {
             throw new IllegalStateException(
                     "Race does not have a player horse."
             );
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
-        horse.applyRaceEffect(effect);
-
+        playerHorse.applyRaceEffect(effect);
         applyStaminaChange(selectedChoice.getChange());
-
         event = null;
     }
 

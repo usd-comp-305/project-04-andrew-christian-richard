@@ -44,7 +44,6 @@ public class Horse implements RaceParticipant {
 
     public void addTrophies(final int amount) {
         trophyCount += amount;
-        currentUpgradePoints += amount;
     }
 
     public void setCurrentUpgradePoints(final int amount) {
