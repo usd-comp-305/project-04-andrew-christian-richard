@@ -47,11 +47,14 @@ public class Stats {
             return 0;
         }
 
-        if (maxMovementDistance <= minMovementDistance) {
-            return minMovementDistance;
+        if (maxMovement <= minMovement) {
+            return minMovement;
         }
 
-        return random.nextInt(minMovementDistance, maxMovementDistance + 1);
+        return random.nextInt(
+                minMovement,
+                maxMovement + 1
+        );
     }
 
     public int getMinMovementDistance(final RaceEffect effect){

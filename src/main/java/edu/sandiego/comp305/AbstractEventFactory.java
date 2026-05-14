@@ -16,7 +16,7 @@ public class AbstractEventFactory implements EventFactory {
     public AbstractEventFactory(
             final Horse horse,
             final EventDescriptionProvider descriptionProvider) {
-        this.horse = horse;
+        this.horse = new Horse(horse);
         this.descriptionProvider = descriptionProvider;
     }
 

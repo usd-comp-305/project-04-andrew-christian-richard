@@ -27,11 +27,11 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
     private final TrackType trackType;
 
     private final String[] horseNames = {
-            "Nugget", "Warrior", "Sunny", "Clipper", "Lake", "Blazer",
-            "Thunder", "Magic", "Celtic", "Maverick", "Spur", "Jazz",
-            "Cavalier", "Hawk", "Raptor", "Sixer", "Net", "Bully",
-            "Bucky", "Pacer", "Piston", "Wizard", "Timber", "King",
-            "Rocket", "Heat", "Hornet", "Grizzly", "Pelican"
+        "Nugget", "Warrior", "Sunny", "Clipper", "Lake", "Blazer",
+        "Thunder", "Magic", "Celtic", "Maverick", "Spur", "Jazz",
+        "Cavalier", "Hawk", "Raptor", "Sixer", "Net", "Bully",
+        "Bucky", "Pacer", "Piston", "Wizard", "Timber", "King",
+        "Rocket", "Heat", "Hornet", "Grizzly", "Pelican"
     };
 
     private final Random random;
@@ -48,6 +48,12 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         this.randomIntGenerator = randomIntGenerator;
     }
 
+    @Override
+    public Horse createHorse(final String name) {
+        final Stats opponentStats = generateRandomStats();
+        return new Horse(name, opponentStats);
+    }
+
     public List<Horse> createOpponentHorses(final int numberOfOpponents) {
         final List<String> availableNames =
                 new ArrayList<>(List.of(horseNames));
@@ -61,12 +67,6 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
         }
 
         return opponents;
-    }
-
-    @Override
-    public Horse createHorse(final String name) {
-        final Stats opponentStats = generateRandomStats();
-        return new Horse(name, opponentStats);
     }
 
     private Stats generateRandomStats() {

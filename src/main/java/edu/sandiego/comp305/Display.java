@@ -69,7 +69,13 @@ public class Display {
                 pos = "FIN";
             }
 
-            final String playerArrow = isPlayer ? "◄" : "";
+            final String playerArrow;
+            if (isPlayer) {
+                playerArrow = "◄";
+            } else {
+                playerArrow = "";
+            }
+
             final String name = horse.getName();
             System.out.printf(
                     "%-4s %-3s %-12s %4dm left %n",

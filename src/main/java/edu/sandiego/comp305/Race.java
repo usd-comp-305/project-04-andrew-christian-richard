@@ -59,7 +59,7 @@ public class Race {
             throw new IllegalArgumentException("Player horse cannot be null.");
         }
 
-        this.playerHorse = playerHorse;
+        this.playerHorse = new Horse(playerHorse);
         this.currentPlayerStamina = playerHorse.getStats().getStamina();
 
         if (!participants.contains(playerHorse)) {
@@ -93,12 +93,15 @@ public class Race {
         event = null;
 
         if (playerHorse == null) {
-            throw new IllegalStateException("Race does not have a player horse.");
+            throw new IllegalStateException(
+                    "Race does not have a player horse."
+            );
         }
 
         eventFactory = new AbstractEventFactory(playerHorse, descriptor);
 
-        if (round % EVENT_ROUND_INTERVAL == 0) {
+        if (round > 0
+                && round % EVENT_ROUND_INTERVAL == 0) {
             event = eventFactory.createRandomEvent(random);
         }
     }
@@ -113,18 +116,22 @@ public class Race {
 
     public void resolveEvent(final EventChoice selectedChoice) {
         if (selectedChoice == null) {
-            throw new IllegalArgumentException("Selected choice cannot be null.");
+            throw new IllegalArgumentException(
+                    "Selected choice cannot be null."
+            );
         }
 
-        if (playerHorse == null) {
-            throw new IllegalStateException("Race does not have a player horse.");
+        final Horse racePlayerHorse = findPlayerHorse();
+
+        if (racePlayerHorse == null) {
+            throw new IllegalStateException(
+                    "Race does not have a player horse."
+            );
         }
 
         final RaceEffect effect = selectedChoice.getEffect();
-        playerHorse.applyRaceEffect(effect);
-
+        racePlayerHorse.applyRaceEffect(effect);
         applyStaminaChange(selectedChoice.getChange());
-
         event = null;
     }
 
@@ -138,7 +145,8 @@ public class Race {
         sortCurrentStandings();
         decreaseStamina();
 
-        if (finishOrder.contains(playerHorse) || round >= MAX_NUM_ROUNDS) {
+        if (finishOrder.size() == participants.size()
+                || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
         } else {
             round++;
@@ -146,6 +154,10 @@ public class Race {
     }
 
     private void applyStaminaChange(final StaminaChange staminaChange) {
+        if (staminaChange == null) {
+            return;
+        }
+
         currentPlayerStamina += staminaChange.getChange();
 
         if (currentPlayerStamina < 0) {
@@ -181,7 +193,19 @@ public class Race {
     }
 
     public Horse getPlayerHorse() {
-        return playerHorse;
+
+        if (playerHorse != null) {
+            return new Horse(this.playerHorse);
+        }
+
+        for (RaceParticipant participant : participants) {
+
+            if (participant instanceof Horse) {
+                return (Horse) participant;
+            }
+        }
+
+        return null;
     }
 
     public List<RaceParticipant> getCurrentStandings() {
@@ -208,7 +232,9 @@ public class Race {
         final int index = finishOrder.indexOf(horse);
 
         if (index < 0) {
-            throw new IllegalArgumentException("Horse has not finished the race.");
+            throw new IllegalArgumentException(
+                    "Horse has not finished the race."
+            );
         }
 
         return Placement.values()[index];
@@ -224,8 +250,19 @@ public class Race {
 
     private void decreaseStamina() {
         if (round % STAMINA_DEPLETION_INTERVAL == 0) {
-            currentPlayerStamina--;
+            if (currentPlayerStamina > 0) {
+                currentPlayerStamina--;
+            }
         }
     }
 
+    private Horse findPlayerHorse() {
+        for (final RaceParticipant participant : participants) {
+            if (participant instanceof Horse) {
+                return (Horse) participant;
+            }
+        }
+
+        return playerHorse;
+    }
 }
