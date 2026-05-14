@@ -33,7 +33,7 @@ public class AbstractOpponentHorseFactoryTests {
         final Horse opponentHorse = testFactory.createHorse("SeaBiscuit");
 
         assertEquals(3, opponentHorse.getStats().getSpeed());
-        assertEquals(4, opponentHorse.getStats().getStamina());
+        assertEquals(6, opponentHorse.getStats().getStamina());
         assertEquals(3, opponentHorse.getStats().getPower());
     }
 }

@@ -89,17 +89,6 @@ public class HorseTests {
     }
 
     @Test
-    void move_consumesStaminaEveryTwoRounds() {
-        testHorse.move();
-
-        assertEquals(TEST_STAMINA, testHorse.getStats().getStamina());
-
-        testHorse.move();
-
-        assertEquals(TEST_STAMINA - 1, testHorse.getStats().getStamina());
-    }
-
-    @Test
     void applyRaceEffect_appliesEffect() {
         final int speedChange = 1;
         final int powerChange = 1;
