@@ -26,7 +26,7 @@ public final class RaceManager {
         initializeRaces();
     }
 
-    public RaceManager(RaceManager other) {
+    public RaceManager(final RaceManager other) {
         this.races = new ArrayList<>();
         this.random = new Random();
         this.currentRaceIndex = 0;

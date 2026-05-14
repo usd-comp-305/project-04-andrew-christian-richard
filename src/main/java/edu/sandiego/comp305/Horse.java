@@ -32,7 +32,7 @@ public class Horse implements RaceParticipant {
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
-    public Horse(Horse other) {
+    public Horse(final Horse other) {
         this.name = other.name;
         this.stats = other.stats;
         this.currentDistance = other.currentDistance;
