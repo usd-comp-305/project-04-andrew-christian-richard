@@ -1,12 +1,12 @@
 package edu.sandiego.comp305;
 
 public enum EventStatMultiplier {
-    VERYBAD(-0.5, -0.2),
-    BAD(-0.3, -0.1),
-    OKAY(-0.1, -0.05),
-    FAIR(0.1, 0.05),
-    GOOD(0.1, 0.5),
-    GREAT(0.25, 0.2);
+    VERYBAD(-0.8, -0.7),
+    BAD(-0.5, -0.5),
+    OKAY(-0.25, -0.25),
+    FAIR(0.1, 0.1),
+    GOOD(0.5, 0.25),
+    GREAT(0.7, 0.5);
 
     private final double speedMultiplier;
 

@@ -38,6 +38,7 @@ public class Display {
         final Horse player = race.getPlayerHorse();
         final List<RaceParticipant> standings = race.getCurrentStandings();
         final int trackDistance = race.getLengthInMeters();
+        final RaceEffect effect = player.getRaceEffect();
 
         System.out.println(
                 "══════════════════════════════════════════════════════");
@@ -70,7 +71,6 @@ public class Display {
 
             final String playerArrow = isPlayer ? "◄" : "";
             final String name = horse.getName();
-
             System.out.printf(
                     "%-4s %-3s %-12s %4dm left %n",
                     pos,
@@ -82,8 +82,8 @@ public class Display {
                 "══════════════════════════════════════════════════════");
         System.out.printf(
                 "YOUR HORSE'S CURRENT STATS SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
-                player.getStats().getSpeed(),
-                player.getStats().getPower(),
+                player.getStats().getMaxMovementDistance(effect),
+                player.getStats().getMinMovementDistance(effect),
                 race.getCurrentPlayerStamina(),
                 "");
         System.out.println(

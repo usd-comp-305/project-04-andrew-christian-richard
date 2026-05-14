@@ -10,13 +10,13 @@ import java.util.function.IntUnaryOperator;
  *
  *   Difficulty \ Track  | 100m | 200m | 400m
  *   --------------------+------+------+------
- *   EASY                |  10  |  34  |  58
- *   MEDIUM              |  18  |  42  |  66
- *   HARD                |  26  |  50  |  74
+ *   EASY                |  12  |  36  |  60
+ *   MEDIUM              |  20  |  44  |  68
+ *   HARD                |  28  |  52  |  76
 
  */
 public class AbstractOpponentHorseFactory implements HorseFactory {
-    private static final int BASE_STAT_POINTS = 10;
+    private static final int BASE_STAT_POINTS = 12;
 
     private static final int DIFFICULTY_STAT_INCREMENT = 8;
 

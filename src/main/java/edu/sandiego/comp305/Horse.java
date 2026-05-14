@@ -2,7 +2,7 @@ package edu.sandiego.comp305;
 
 public class Horse implements RaceParticipant {
 
-    private static final int INITIAL_UPGRADE_POINTS = 12;
+    private static final int INITIAL_UPGRADE_POINTS = 9;
 
     private final String name;
 
@@ -48,6 +48,10 @@ public class Horse implements RaceParticipant {
     public void resetCurrentDistance() {
         currentDistance = 0;
         raceEffect = RaceEffect.NO_EFFECT;
+    }
+
+    public RaceEffect getRaceEffect(){
+        return raceEffect;
     }
 
     public void resetForCurrentRace() {
