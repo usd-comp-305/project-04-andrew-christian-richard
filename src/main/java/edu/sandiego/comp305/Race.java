@@ -136,13 +136,18 @@ public class Race {
         sortCurrentStandings();
         decreaseStamina();
 
-        if (playerHorse.getCurrentDistance() >= lengthInMeters
+        if (hasPlayerFinished()
                 || finishOrder.size() == participants.size()
                 || round >= MAX_NUM_ROUNDS) {
             state = RaceState.FINISHED;
         } else {
             round++;
         }
+    }
+
+    private boolean hasPlayerFinished() {
+        return playerHorse != null
+                && playerHorse.getCurrentDistance() >= lengthInMeters;
     }
 
     private void applyStaminaChange(final StaminaChange staminaChange) {
@@ -214,7 +219,9 @@ public class Race {
 
     public Placement getPlayerPlacement() {
         if (playerHorse == null) {
-            throw new IllegalStateException("Horse DNE!");
+            throw new IllegalArgumentException(
+                    "Race does not have a player horse."
+            );
         }
 
         final int index = finishOrder.indexOf(playerHorse);

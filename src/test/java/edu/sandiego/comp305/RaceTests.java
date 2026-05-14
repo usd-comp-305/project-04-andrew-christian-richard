@@ -22,8 +22,8 @@ public class RaceTests {
     public void setUp() {
         race = new Race(Difficulty.MEDIUM, 1000);
 
-        mockHorse  = mock(Horse.class);
-        mockNPC    = mock(RaceParticipant.class);
+        mockHorse = mock(Horse.class);
+        mockNPC = mock(RaceParticipant.class);
         mockChoice = mock(EventChoice.class);
     }
 
@@ -107,7 +107,6 @@ public class RaceTests {
     public void testGetEventReturnsNullInitially() {
         assertNull(race.getEvent());
     }
-
 
     @Test
     public void resolveEvent_ThrowsWhenChoiceIsNull() {
@@ -215,7 +214,6 @@ public class RaceTests {
         race.start();
         race.executeRound();
 
-        // started at 1, should now be 2
         assertEquals(2, race.getRound());
     }
 
@@ -251,7 +249,7 @@ public class RaceTests {
         race.addParticipant(mockHorse);
         race.addParticipant(mockNPC);
         race.start();
-        race.executeRound(); // horse finishes here
+        race.executeRound();
 
         clearInvocations(mockHorse);
 
@@ -288,36 +286,47 @@ public class RaceTests {
 
     @Test
     public void getPlacement_ThrowsForHorseThatHasNotFinished() {
-        race.addParticipant(mockHorse);
-        when(mockHorse.getCurrentDistance()).thenReturn(0);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(5, 5, 5)
+        );
+
+        race.setPlayerHorse(playerHorse);
         race.start();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            race.getPlacement(mockHorse);
+            race.getPlayerPlacement();
         });
     }
 
     @Test
     public void getPlacement_ReturnsFirstForWinner() {
-        when(mockHorse.getCurrentDistance()).thenReturn(1000);
-        race.addParticipant(mockHorse);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(1001, 5, 1000)
+        );
+
+        race.setPlayerHorse(playerHorse);
         race.start();
         race.executeRound();
 
-        assertEquals(Placement.values()[0], race.getPlacement(mockHorse));
+        assertEquals(Placement.values()[0], race.getPlayerPlacement());
     }
 
     @Test
     public void getPlacement_ReturnsSecondForRunnerUp() {
-        when(mockNPC.getCurrentDistance()).thenReturn(1000);
-        when(mockHorse.getCurrentDistance()).thenReturn(1000);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(1001, 5, 1000)
+        );
 
-        // NPC added first so it finishes first
+        when(mockNPC.getCurrentDistance()).thenReturn(1000);
+
         race.addParticipant(mockNPC);
-        race.addParticipant(mockHorse);
+        race.setPlayerHorse(playerHorse);
         race.start();
         race.executeRound();
 
-        assertEquals(Placement.values()[1], race.getPlacement(mockHorse));
+        assertEquals(Placement.values()[1], race.getPlayerPlacement());
     }
 }
