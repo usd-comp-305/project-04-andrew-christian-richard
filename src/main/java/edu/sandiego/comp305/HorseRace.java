@@ -26,7 +26,6 @@ public final class HorseRace {
 
         final HorseRacingGame game =
                 new HorseRacingGame(
-                        null,
                         raceManager,
                         playerHorseFactory,
                         upgradeSystem,

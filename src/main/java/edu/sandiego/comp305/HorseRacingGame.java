@@ -29,13 +29,11 @@ public class HorseRacingGame {
     private int totalTrophies;
 
     public HorseRacingGame(
-            final Horse playerHorse,
             final RaceManager raceManager,
             final HorseFactory playerHorseFactory,
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
             final Display display) {
-        this.playerHorse = playerHorse;
         this.raceManager = new RaceManager(raceManager);
         this.upgradeSystem = progressionSystem;
         this.scanner = scanner::nextLine;
