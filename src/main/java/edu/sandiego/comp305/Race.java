@@ -8,21 +8,33 @@ import java.util.Random;
 
 public class Race {
     private static final int EVENT_ROUND_INTERVAL = 3;
+
     private static final int STAMINA_DEPLETION_INTERVAL = 5;
+
     private static final int MAX_NUM_ROUNDS = 60;
 
     private final Difficulty difficulty;
+
     private final int lengthInMeters;
+
     private final List<RaceParticipant> participants;
+
     private final List<RaceParticipant> finishOrder;
+
     private final EventDescriptionProvider descriptor;
+
     private final Random random;
 
     private AbstractEventFactory eventFactory;
+
     private RaceState state;
+
     private int round;
+
     private Event event;
+
     private Horse playerHorse;
+
     private int currentPlayerStamina;
 
     public Race(
