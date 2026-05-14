@@ -27,35 +27,11 @@ public class AbstractOpponentHorseFactory implements HorseFactory {
     private final TrackType trackType;
 
     private final String[] horseNames = {
-        "Nugget",
-        "Warrior",
-        "Sunny",
-        "Clipper",
-        "Lake",
-        "Blazer",
-        "Thunder",
-        "Magic",
-        "Celtic",
-        "Maverick",
-        "Spur",
-        "Jazz",
-        "Cavalier",
-        "Hawk",
-        "Raptor",
-        "Sixer",
-        "Net",
-        "Bully",
-        "Bucky",
-        "Pacer",
-        "Piston",
-        "Wizard",
-        "Timber",
-        "King",
-        "Rocket",
-        "Heat",
-        "Hornet",
-        "Grizzly",
-        "Pelican"
+            "Nugget", "Warrior", "Sunny", "Clipper", "Lake", "Blazer",
+            "Thunder", "Magic", "Celtic", "Maverick", "Spur", "Jazz",
+            "Cavalier", "Hawk", "Raptor", "Sixer", "Net", "Bully",
+            "Bucky", "Pacer", "Piston", "Wizard", "Timber", "King",
+            "Rocket", "Heat", "Hornet", "Grizzly", "Pelican"
     };
 
     private final Random random;
