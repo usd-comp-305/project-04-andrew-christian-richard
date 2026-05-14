@@ -114,7 +114,12 @@ public class RaceTests {
 
     @Test
     public void resolveEvent_ThrowsWhenChoiceIsNull() {
-        race.addParticipant(mockHorse);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(5, 5, 5)
+        );
+
+        race.setPlayerHorse(playerHorse);
 
         assertThrows(IllegalArgumentException.class, () -> {
             race.resolveEvent(null);
@@ -122,33 +127,68 @@ public class RaceTests {
     }
 
     @Test
-    public void resolveEvent_ThrowsWhenNoPlayerHorse() {
-        // no Horse in the race, only an NPC
-        race.addParticipant(mockNPC);
-
-        assertThrows(IllegalStateException.class, () -> {
-            race.resolveEvent(mockChoice);
-        });
-    }
-
-    @Test
     public void resolveEvent_AppliesEffect() {
-        race.addParticipant(mockHorse);
-        when(mockChoice.getEffect()).thenReturn(mockEffect);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(5, 5, 5)
+        );
+
+        final RaceEffect effect = new RaceEffect(2, 3);
+
+        race.setPlayerHorse(playerHorse);
+        when(mockChoice.getEffect()).thenReturn(effect);
+        when(mockChoice.getChange()).thenReturn(StaminaChange.FREE);
 
         race.resolveEvent(mockChoice);
 
-        verify(mockHorse).applyRaceEffect(mockEffect);
+        final Horse result = race.getPlayerHorse();
+
+        assertEquals(7, result.getStats().getMaxMovementDistance(effect));
+        assertEquals(8, result.getStats().getMinMovementDistance(effect));
     }
 
     @Test
     public void resolveEvent_ClearsTheEvent() {
-        race.addParticipant(mockHorse);
-        when(mockChoice.getEffect()).thenReturn(mockEffect);
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(5, 5, 5)
+        );
+
+        race.setPlayerHorse(playerHorse);
+        when(mockChoice.getEffect()).thenReturn(new RaceEffect(0, 0));
+        when(mockChoice.getChange()).thenReturn(StaminaChange.FREE);
 
         race.resolveEvent(mockChoice);
 
         assertFalse(race.hasEvent());
+    }
+
+    @Test
+    public void getPlayerHorse_ReturnsHorseCopyWhenPresent() {
+        final Horse playerHorse = new Horse(
+                "Player",
+                new Stats(5, 6, 7)
+        );
+
+        race.setPlayerHorse(playerHorse);
+
+        final Horse result = race.getPlayerHorse();
+
+        assertNotNull(result);
+        assertNotSame(playerHorse, result);
+        assertEquals(playerHorse.getName(), result.getName());
+        assertEquals(
+                playerHorse.getStats().getSpeed(),
+                result.getStats().getSpeed()
+        );
+        assertEquals(
+                playerHorse.getStats().getStamina(),
+                result.getStats().getStamina()
+        );
+        assertEquals(
+                playerHorse.getStats().getPower(),
+                result.getStats().getPower()
+        );
     }
 
     @Test
@@ -228,12 +268,6 @@ public class RaceTests {
     public void getPlayerHorse_ReturnsNullWhenNoHorseAdded() {
         race.addParticipant(mockNPC);
         assertNull(race.getPlayerHorse());
-    }
-
-    @Test
-    public void getPlayerHorse_ReturnsHorseWhenPresent() {
-        race.addParticipant(mockHorse);
-        assertEquals(mockHorse, race.getPlayerHorse());
     }
 
     @Test
