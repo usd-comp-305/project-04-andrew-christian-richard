@@ -214,7 +214,7 @@ public class Race {
 
     public Placement getPlayerPlacement() {
         if (playerHorse == null) {
-            throw new IllegalStateException("Race does not have a player horse.");
+            throw new IllegalStateException("Horse DNE!");
         }
 
         final int index = finishOrder.indexOf(playerHorse);
