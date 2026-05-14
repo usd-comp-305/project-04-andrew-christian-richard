@@ -57,13 +57,13 @@ public class Stats {
         );
     }
 
-    public int getMinMovementDistance(final RaceEffect effect){
-       int minMovementDistance = power + effect.getPowerChange();
+    public int getMinMovementDistance(final RaceEffect effect) {
+       final int minMovementDistance = power + effect.getPowerChange();
        return Math.max(0, minMovementDistance);
     }
 
-    public int getMaxMovementDistance(final RaceEffect effect){
-        int maxMovementDistance = speed + effect.getSpeedChange();
+    public int getMaxMovementDistance(final RaceEffect effect) {
+        final int maxMovementDistance = speed + effect.getSpeedChange();
         return Math.max(0, maxMovementDistance);
     }
 

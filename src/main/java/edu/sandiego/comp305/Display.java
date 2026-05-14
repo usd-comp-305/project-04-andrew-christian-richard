@@ -87,7 +87,8 @@ public class Display {
         System.out.println(
                 "══════════════════════════════════════════════════════");
         System.out.printf(
-                "YOUR HORSE'S CURRENT STATS SPD:%-3d  PWR:%-3d  STM:%-3d%-16s %n",
+                "YOUR HORSE'S CURRENT STATS SPD:%-3d  PWR:%-3d  " +
+                        "STM:%-3d%-16s %n",
                 player.getStats().getMaxMovementDistance(effect),
                 player.getStats().getMinMovementDistance(effect),
                 race.getCurrentPlayerStamina(),
