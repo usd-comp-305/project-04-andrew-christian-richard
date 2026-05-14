@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public final class HorseRace {
 
-    // Utility class: prevent instantiation
     private HorseRace() {
         throw new UnsupportedOperationException("Utility class");
     }
