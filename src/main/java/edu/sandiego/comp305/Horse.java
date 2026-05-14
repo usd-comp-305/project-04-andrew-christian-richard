@@ -32,6 +32,16 @@ public class Horse implements RaceParticipant {
         this.raceEffect = RaceEffect.NO_EFFECT;
     }
 
+    public Horse(Horse other) {
+        this.name = other.name;
+        this.stats = other.stats;
+        this.currentDistance = other.currentDistance;
+        this.trophyCount = other.trophyCount;
+        this.currentUpgradePoints = other.currentUpgradePoints;
+        this.roundsMoved = other.roundsMoved;
+        this.raceEffect = other.raceEffect;
+    }
+
     public void addTrophies(final int amount) {
         trophyCount += amount;
         currentUpgradePoints += amount;

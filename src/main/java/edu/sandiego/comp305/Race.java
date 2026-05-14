@@ -59,7 +59,7 @@ public class Race {
             throw new IllegalArgumentException("Player horse cannot be null.");
         }
 
-        this.playerHorse = playerHorse;
+        this.playerHorse = new Horse(playerHorse);
         this.currentPlayerStamina = playerHorse.getStats().getStamina();
 
         if (!participants.contains(playerHorse)) {
@@ -191,7 +191,7 @@ public class Race {
     public Horse getPlayerHorse() {
 
         if (playerHorse != null) {
-            return playerHorse;
+            return new Horse(this.playerHorse);
         }
 
         for (RaceParticipant participant : participants) {

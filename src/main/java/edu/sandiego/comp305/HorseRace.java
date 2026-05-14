@@ -1,8 +1,9 @@
 package edu.sandiego.comp305;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-public class HorseRace {
+public final class HorseRace {
 
     // Utility class: prevent instantiation
     private HorseRace() {
@@ -11,7 +12,7 @@ public class HorseRace {
 
     public static void main(final String[] args) {
 
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
 
         final RaceManager raceManager = new RaceManager();
 

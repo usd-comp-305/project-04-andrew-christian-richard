@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RaceManager {
+public final class RaceManager {
     private static final int ONE_HUNDRED_METERS = 100;
 
     private static final int TWO_HUNDRED_METERS = 200;
@@ -20,6 +20,13 @@ public class RaceManager {
     private int currentRaceIndex;
 
     public RaceManager() {
+        this.races = new ArrayList<>();
+        this.random = new Random();
+        this.currentRaceIndex = 0;
+        initializeRaces();
+    }
+
+    public RaceManager(RaceManager other) {
         this.races = new ArrayList<>();
         this.random = new Random();
         this.currentRaceIndex = 0;

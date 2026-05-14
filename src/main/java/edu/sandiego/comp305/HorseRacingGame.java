@@ -35,8 +35,8 @@ public class HorseRacingGame {
             final UpgradeSystem progressionSystem,
             final Scanner scanner,
             final Display display) {
-        this.playerHorse = playerHorse;
-        this.raceManager = raceManager;
+        this.playerHorse = new Horse(playerHorse);
+        this.raceManager = new RaceManager(raceManager);
         this.upgradeSystem = progressionSystem;
         this.scanner = scanner::nextLine;
         this.display = display;
